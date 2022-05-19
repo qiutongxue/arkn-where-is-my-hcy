@@ -1,0 +1,23 @@
+{
+  "name": "arkn-hcy",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@unocss/preset-uno": "^0.33.5",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "naive-ui": "^2.28.4",
+    "typescript": "^4.5.4",
+    "unocss": "^0.33.5",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
+  }
+}
