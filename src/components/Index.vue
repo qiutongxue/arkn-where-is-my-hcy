@@ -16,8 +16,6 @@ import {events, useRange, useMoonCard, useCurrent, useResult
 } from '../assets/util'
 import Calendar from './Calendar.vue'
 
-defineProps<{ msg: string }>()
-
 const {hasMoonCard, moonCardRange} = useMoonCard()
 const {rangeStart, rangeEnd} = useRange()
 const {currentOrundum, currentCard} = useCurrent()
@@ -107,6 +105,7 @@ const detailInfo = computed(() => {
 </script>
 
 <template>
+<header class="text-4xl p-4"> 我合成玉呢 </header>
     <n-grid :cols="2" class="items-center">
             <n-grid-item>
                 当前合成玉数量：
