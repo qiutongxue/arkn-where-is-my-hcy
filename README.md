@@ -1,16 +1,25 @@
-# Vue 3 + TypeScript + Vite
+# 我合成玉呢
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+**粗略**计算到夏活之前能不能攒到井换批脸陈！
 
-## Recommended IDE Setup
+~~界面布局以后再说吧~~
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## 计算范围
 
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- [x] 日常任务（每天 100 合成玉）
+- [x] 月卡 （每天 200 合成玉）
+- [x] 每日签到 （17 号赠送一抽）
+- [x] 周常任务 （500 合成玉）
+- [x] 剿灭任务 （1800 合成玉）
+- [x] 绿票商店 （一层 2 抽 + 600 合成玉， 二层 2 抽）
+- [x] 【复刻】覆潮之下 （商店 3 抽）
+- [x] 7月11号的新剿灭 （首杀 1500 合成玉）
+- [x] 【SS】新sidestory？（商店 3 抽）
+- [x] 【复刻】多索雷斯假日 （商店 3 抽）
+- [x] 【SS】夏活（包括挖矿（按一天 500 合成玉算）+ 每日一抽 + 赠送十抽）
+- [ ] 更新补偿 （大概每两周一次 200 合成玉）
+- [ ] ~~端午签到？（送的是源石？忘了）~~
+- [ ] ~~干员密录 （多久一次啊，要不不算了）~~
+- [ ] 搓玉 （按一天 250 算？（一天 260 体力，260 / 4.82 / 2 * 10 ≈ 270））
+- [ ] 能有新主线？我不信...
+- [ ] 还能有新sidestory或故事集？我不信...
