@@ -8,7 +8,9 @@ import {
     NSelect,
     NSwitch,
     NSpace,
-    NCollapseTransition
+    NCollapseTransition,
+    NCollapse,
+    NCollapseItem
     }  from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
@@ -41,7 +43,7 @@ const railStyle = ({checked, focused}: {checked: boolean, focused: boolean}) => 
     return style
 }
 
-const proxyEvents = reactive(events)
+// const proxyEvents = reactive(events)
 const showDetail = ref(true)
 
 const selectOptions = computed(() => {
@@ -98,18 +100,16 @@ const detailInfo = computed(() => {
             detail.card += awards.card || 0
         })
     })
-    console.log(details)
     return details
 })
 
 </script>
 
 <template>
-<header class="text-4xl p-4"> 我合成玉呢 </header>
     <n-grid :cols="3" y-gap="12" class="items-center">
             <n-grid-item>
                 <div class="text-xl">
-                    当前合成玉数量：
+                    当前合成玉：
                 </div>
             </n-grid-item>
             <n-grid-item :span="2">
@@ -123,7 +123,7 @@ const detailInfo = computed(() => {
             </n-grid-item>
             <n-grid-item>
                 <div class="text-xl">
-                    当前寻访凭证数量：
+                    当前寻访凭证：
                 </div>
             </n-grid-item>
             <n-grid-item :span="2">
@@ -137,7 +137,7 @@ const detailInfo = computed(() => {
             <n-grid-item>
 
                 <span class="text-xl">
-                        选择月卡日期：
+                        月卡日期：
                 </span>
                
             </n-grid-item>
@@ -166,7 +166,7 @@ const detailInfo = computed(() => {
             <n-grid-item :span="2">
                 <n-grid :cols="4" class="items-center">
                     <n-grid-item :span="1">
-                    <div class="">
+                    <div class="font-bold text-lg">
                         开始
                     </div>
                     </n-grid-item>
@@ -174,7 +174,7 @@ const detailInfo = computed(() => {
                         <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
                     </n-grid-item>
                     <n-grid-item :span="1">
-                    <div class="">
+                    <div class="font-bold text-lg">
                         结束
                     </div>
                     </n-grid-item>
@@ -182,6 +182,7 @@ const detailInfo = computed(() => {
                         <n-select :options="selectOptions" 
                         :consistent-menu-width="false"
                         :fallback-option="handleSelectFallback" 
+                        placeholder="选择活动"
                         v-model:value="rangeEnd" />
                         <n-space>
                             </n-space>
@@ -207,7 +208,7 @@ const detailInfo = computed(() => {
                 </div>
             </transition>
         </div>
-        <div>
+        <div key="idontknow">
             <div class="relative m-4" key="card">
                 <img :src="cardURL" class="w-20" alt="" />
                 <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
@@ -224,33 +225,62 @@ const detailInfo = computed(() => {
         <template #unchecked>合计</template>
     </n-switch>
 
-    <n-space vertical class="mt-4">
-    <n-switch v-model:value="showDetail">
-      <template #checked>
-        展开
-      </template>
-      <template #unchecked>
-        折叠
-      </template>
-    </n-switch>
-    <n-collapse-transition :show="showDetail" >
-      <div v-for="detail in Object.keys(detailInfo)"
-      class="flex justify-center items-center gap-4 m-2">
-      <span class="font-bold text-xl">
-          {{ detail }}
-      </span>
-      <div v-show="detailInfo[detail].orundum" class="flex items-center gap-1 font-bold text-xl text-red">
-      {{ detailInfo[detail].orundum }}
-      <img :src="orundumURL" class="w-8" alt="">
-      </div>
-      <div v-show="detailInfo[detail].card" class="flex items-center gap-1 font-bold text-xl text-amber">
-      {{ detailInfo[detail].card }}
-      <img :src="cardURL" class="w-8" alt="">
-      </div>
-      </div>
-    </n-collapse-transition>
-  </n-space>
+    <n-collapse class="mt-10">
+        <n-collapse-item title="详细信息">
+                <div v-for="detail in Object.keys(detailInfo)"
+        class="flex justify-center items-center gap-4 m-2">
+        <span class="font-bold text-xl">
+            {{ detail }}
+        </span>
+        <div v-show="detailInfo[detail].orundum" 
+        class="flex items-center gap-1 font-bold text-xl text-red">
+        {{ detailInfo[detail].orundum }}
+        <img :src="orundumURL" class="w-8" alt="">
+        </div>
+        <div v-show="detailInfo[detail].card" 
+        class="flex items-center gap-1 font-bold text-xl text-amber">
+        {{ detailInfo[detail].card }}
+        <img :src="cardURL" class="w-8" alt="">
+        </div>
+        </div>
+
+        </n-collapse-item>
+        <n-collapse-item title="日历">
     <Calendar/>
+
+        </n-collapse-item>
+    </n-collapse>
+
+    <!-- <n-space vertical class="mt-4">
+
+        <n-switch v-model:value="showDetail">
+        <template #checked>
+            展开
+        </template>
+        <template #unchecked>
+            折叠
+        </template>
+        </n-switch>
+        <n-collapse-transition :show="showDetail" >
+        <div v-for="detail in Object.keys(detailInfo)"
+        class="flex justify-center items-center gap-4 m-2">
+        <span class="font-bold text-xl">
+            {{ detail }}
+        </span>
+        <div v-show="detailInfo[detail].orundum" 
+        class="flex items-center gap-1 font-bold text-xl text-red">
+        {{ detailInfo[detail].orundum }}
+        <img :src="orundumURL" class="w-8" alt="">
+        </div>
+        <div v-show="detailInfo[detail].card" 
+        class="flex items-center gap-1 font-bold text-xl text-amber">
+        {{ detailInfo[detail].card }}
+        <img :src="cardURL" class="w-8" alt="">
+        </div>
+        </div>
+        </n-collapse-transition>
+  </n-space> -->
+    <!-- <Calendar/> -->
     <div class="text-gray flex justify-end">
         注：活动时间是我瞎猜的
     </div>

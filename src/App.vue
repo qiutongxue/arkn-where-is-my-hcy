@@ -15,6 +15,7 @@ const themeOverrides: GlobalThemeOverrides = {
 
 <template>
   <NConfigProvider :locale="zhCN" :date-locale="dateZhCN">
+  <header class="text-4xl p-4 m-4 font-bold"> 我合成玉呢 </header>
     <Index />
   </NConfigProvider>
 </template>
@@ -26,6 +27,7 @@ const themeOverrides: GlobalThemeOverrides = {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 1em 2em;
+  /* margin-top: 60px; */
 }
 </style>

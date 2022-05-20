@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toRefs } from 'vue';
 import { addOneDay, useCurrent, useResult  } from '../assets/util';
-import { NButton } from 'naive-ui';
+import { NButton, NPopover } from 'naive-ui';
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 
@@ -41,7 +41,8 @@ const computedData = computed(() => {
         return {
             date: current?.date,
             orundum,
-            card
+            card,
+            details: current?.details
         }
     })
     return res
@@ -61,33 +62,54 @@ const subMonth = () => {
 <div class="p-4">
 
     <div class="flex gap-4 justify-end">
-        <NButton @click="subMonth">←</NButton>
+        <n-button @click="subMonth">←</n-button>
          <span class="font-bold text-3xl">{{ baseDate.getFullYear() }}</span>
          <span class="font-bold text-3xl">{{ baseDate.getMonth() + 1}}</span>
-        <NButton @click="addMonth">→</NButton>
+        <n-button @click="addMonth">→</n-button>
     </div>
     <div class="grid calendar mt-4">
         <div v-for="day in days" 
         class=" h-10 flex justify-center items-center" 
         :key="day">{{ day }}</div>
         <div v-for="(tmp, idx) in tmps" 
-        class="relative min-h-10 max-h-50 flex justify-center items-center p-2" 
+        class="relative min-h-10 flex justify-center items-center p-2" 
         :key="idx"> 
-            <div v-if="tmp && computedData[idx]" class="text-xs text-white font-bold">
-                <div v-if="computedData[idx]?.orundum" class="relative">
-                    <img :src="orundumURL" class="max-w-20" alt="">
-                    <span 
-                    class="absolute block w-100% bottom-1.5 bg-gray bg-op-70 ">
-                    {{ computedData[idx]!.orundum }}
-                    </span>
+            <n-popover v-if="tmp && computedData[idx]" trigger="hover">
+                <template #trigger>
+                    <div class="text-xs text-white font-bold">
+                        <div v-if="computedData[idx]?.orundum" class="relative">
+                            <img :src="orundumURL" class="calendar-img" alt="">
+                            <span 
+                            class="absolute block w-100% bottom-1.5 bg-gray bg-op-70 ">
+                            {{ computedData[idx]!.orundum }}
+                            </span>
+                        </div>
+                        <div v-if="computedData[idx]?.card" class="relative">
+                            <img :src="cardURL" class="calendar-img" alt="">
+                            <span
+                            class="absolute block w-100% bottom-1.5 bg-gray bg-op-70">
+                            {{ computedData[idx]!.card }}</span>
+                        </div>
+                    </div>
+                </template>
+                <div class="flex flex-col">
+                    <div v-for="detail in computedData[idx]?.details" 
+                    class="px-2 py-1 flex justify-center items-center gap-4">
+                        <span>{{ detail.name }}</span> | 
+                        <div v-if="detail.awards.orundum"
+                            class="flex items-center">
+                            <span class="font-bold px-2 text-red">{{ detail.awards.orundum }}</span>
+                            <img :src="orundumURL" class="w-6" alt="hcy">
+                        </div>
+                        <div v-if="detail.awards.card"
+                            class="flex items-center">
+                            <span class="font-bold px-2 text-amber">{{ detail.awards.card }}</span>
+                            <img :src="cardURL" class="w-6" alt="gacha">
+                        </div>
+                    </div>
+                    <!-- {{ computedData[idx]?.details }} -->
                 </div>
-                <div v-if="computedData[idx]?.card" class="relative">
-                    <img :src="cardURL" class="max-w-20" alt="">
-                    <span
-                    class="absolute block w-100% bottom-1.5 bg-gray bg-op-70">
-                    {{ computedData[idx]!.card }}</span>
-                </div>
-            </div>
+            </n-popover>
             <div class=" absolute text-sm text-gray-300 right-1 bottom-0">
                 {{ tmp }}
             </div>
@@ -112,6 +134,15 @@ const subMonth = () => {
         /* outline: black solid .1em; */
         border-bottom: 1px solid #efeff3;
         border-right: 1px solid #efeff3;
+    }
+    .calendar-img {
+        max-width: calc((100vw - 30px) / 10);
+    }
+
+    @media screen and (min-width: 960px) {
+        .calendar-img {
+            max-width: 5rem;
+        }
     }
 
 </style>
