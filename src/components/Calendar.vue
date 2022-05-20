@@ -14,10 +14,12 @@ const tmps = computed(() => {
     const date = new Date(baseDate.value) 
     for (let i = 1; i < (date.getDay() || 7); i++) result.push("")
     for (let i = date, j = 0, month = baseDate.value.getMonth(); 
-    j < 40 && i.getMonth() === month; 
-    addOneDay(i), j++) {
+        j < 40 && i.getMonth() === month; 
+        addOneDay(i), j++) 
+    {
         result.push(i.getDate())
     }
+    
     return result
 })
 

@@ -149,7 +149,6 @@ const detailInfo = computed(() => {
                 </n-grid-item>
                 <n-grid-item :span="3">
                     <n-date-picker :disabled="!hasMoonCard" 
-                    class="inline-block" 
                     :is-date-disabled="isDateDisabled" 
                     type="daterange" 
                     v-model:value="moonCardRange">
@@ -172,7 +171,7 @@ const detailInfo = computed(() => {
                     </div>
                     </n-grid-item>
                     <n-grid-item :span="3">
-                        <n-date-picker v-model:value="rangeStart"/>
+                        <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
                     </n-grid-item>
                     <n-grid-item :span="1">
                     <div class="">
@@ -193,22 +192,33 @@ const detailInfo = computed(() => {
                 </n-grid>
             </n-grid-item>
     </n-grid>
-    <n-space justify="center">
-            <div v-show="!showTotalGacha" class="relative m-4 ">
-                <img :src="orundumURL" class="w-20" alt="" />
-                <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
-                    {{ totalOrundum }}
-                </span>
-            </div>
-
-            <div :class="['transition-all', 'relative m-4']">
+    <transition-group 
+        tag="div"
+        name="list"
+        class="relative flex justify-center"
+    >
+        <div class="relative" key="orundum">
+            <transition name="orundum">
+                <div v-show="!showTotalGacha"   class="relative m-4 ">
+                    <img :src="orundumURL" class="w-20" alt="" />
+                    <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
+                        {{ totalOrundum }}
+                    </span>
+                </div>
+            </transition>
+        </div>
+        <div>
+            <div class="relative m-4" key="card">
                 <img :src="cardURL" class="w-20" alt="" />
                 <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
                     {{ totalCard + (showTotalGacha ? totalOrundum / 600 | 0 : 0) }}
                 </span>
     
             </div>
-    </n-space>
+        </div>
+
+    </transition-group>
+
     <n-switch v-model:value="showTotalGacha" :rail-style="railStyle">
         <template #checked>换算</template>
         <template #unchecked>合计</template>
@@ -253,6 +263,32 @@ const detailInfo = computed(() => {
 
     .user-info {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .list-move, /* 对移动中的元素应用的过渡 */
+    .list-enter-active,
+    .list-leave-active,
+    .orundum-leave-active {
+    transition: all .5s ease;
+    }
+
+    /* .list-enter-from {
+        opacity: 0;
+    } */
+    .list-enter-from,
+    .list-leave-to,
+    .orundum-leave-to {
+        position: relative;
+        opacity: 0;
+        transform: translateX(1.5em);
+    }
+
+
+    /* 确保将离开的元素从布局流中删除
+    以便能够正确地计算移动的动画。 */
+    .list-leave-active,
+    .orundum-leave-active {
+        position: absolute;
     }
 
 </style>
