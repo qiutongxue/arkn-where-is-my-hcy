@@ -106,11 +106,13 @@ const detailInfo = computed(() => {
 
 <template>
 <header class="text-4xl p-4"> 我合成玉呢 </header>
-    <n-grid :cols="2" class="items-center">
+    <n-grid :cols="3" y-gap="12" class="items-center">
             <n-grid-item>
-                当前合成玉数量：
+                <div class="text-xl">
+                    当前合成玉数量：
+                </div>
             </n-grid-item>
-            <n-grid-item>
+            <n-grid-item :span="2">
                 <n-input-number size="large"
                     v-model:value="currentOrundum">
                     <template #suffix>
@@ -120,9 +122,11 @@ const detailInfo = computed(() => {
 
             </n-grid-item>
             <n-grid-item>
-                当前寻访凭证数量：
+                <div class="text-xl">
+                    当前寻访凭证数量：
+                </div>
             </n-grid-item>
-            <n-grid-item>
+            <n-grid-item :span="2">
                 <n-input-number size="large"
                 v-model:value="currentCard">
                     <template #suffix>
@@ -131,26 +135,62 @@ const detailInfo = computed(() => {
                 </n-input-number>
             </n-grid-item>
             <n-grid-item>
-                <n-switch v-model:value="hasMoonCard" />
-                选择月卡日期：
+
+                <span class="text-xl">
+                        选择月卡日期：
+                </span>
+               
             </n-grid-item>
-            <n-grid-item>
-                <n-date-picker :disabled="!hasMoonCard" 
-                class="inline-block" 
-                :is-date-disabled="isDateDisabled" 
-                type="daterange" 
-                v-model:value="moonCardRange">
-                </n-date-picker>
+            <n-grid-item :span="2">
+                <n-grid :cols="4" class="items-center">
+                <n-grid-item>
+                    <n-switch v-model:value="hasMoonCard" />
+
+                </n-grid-item>
+                <n-grid-item :span="3">
+                    <n-date-picker :disabled="!hasMoonCard" 
+                    class="inline-block" 
+                    :is-date-disabled="isDateDisabled" 
+                    type="daterange" 
+                    v-model:value="moonCardRange">
+                    </n-date-picker>
+                </n-grid-item>
+
+                </n-grid>
             </n-grid-item>
             <n-grid-item class="self-start pt-4">
-                选择计算日期：
+                <div class="text-xl">
+                    选择计算日期：
+                </div>
+                
             </n-grid-item>
-            <n-grid-item>
-                从
-                <n-date-picker v-model:value="rangeStart"/>
-                到
-                <n-select :options="selectOptions" :fallback-option="handleSelectFallback" v-model:value="rangeEnd" />
-                <n-date-picker v-model:value="rangeEnd"/>
+            <n-grid-item :span="2">
+                <n-grid :cols="4" class="items-center">
+                    <n-grid-item :span="1">
+                    <div class="">
+                        开始
+                    </div>
+                    </n-grid-item>
+                    <n-grid-item :span="3">
+                        <n-date-picker v-model:value="rangeStart"/>
+                    </n-grid-item>
+                    <n-grid-item :span="1">
+                    <div class="">
+                        结束
+                    </div>
+                    </n-grid-item>
+                    <n-grid-item :span="1">
+                        <n-select :options="selectOptions" 
+                        :consistent-menu-width="false"
+                        :fallback-option="handleSelectFallback" 
+                        v-model:value="rangeEnd" />
+                        <n-space>
+                            </n-space>
+                    </n-grid-item>
+                    <n-grid-item :span="2">
+                        <n-date-picker v-model:value="rangeEnd"/>
+                    </n-grid-item>
+                </n-grid>
             </n-grid-item>
     </n-grid>
     <n-space justify="center">

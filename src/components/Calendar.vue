@@ -7,7 +7,7 @@ import cardURL from '../assets/card.png'
 
 const result = useResult()
 
-const days = ["星期一", "星期二", "星期三", "星期四", "星期五",  "星期六", "星期天"]
+const days = ["周一", "周二", "周三", "周四", "周五",  "周六", "周日"]
 let baseDate = ref<Date>(new Date(new Date().setDate(1)))
 const tmps = computed(() => {
     const result = []

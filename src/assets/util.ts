@@ -57,17 +57,12 @@ export function useResult() {
                     t.details.push(event)
                 }
             }
-            // t.orundum += awardList.DAILY_EVENT_ORUNDUM // 日常
-            // if (isMoonCard(d)) { // 月卡
-            //     // t.orundum += awardList.DAILY_MOONCARD_ORUNDUM
-            // }
             if (isMonday(d)) {  // 周常 + 剿灭
                 for (const event of weeklyEvents) {
                     if (event.required(d)) {
                         t.details.push(event)
                     }
                 }
-                // t.orundum += (awardList.WEEKLY_$jiaomie_ORUNDUM + awardList.WEEKLY_EVENT)
             }
             if (isFirstDay(d)) { // 每月
                 for (const event of monthlyEvents) {
@@ -75,18 +70,12 @@ export function useResult() {
                         t.details.push(event)
                     }
                 }
-                // t.card += awardList.MOONLY_STORE_CARD
-                // t.orundum += awardList.MOONLY_STROE_ORUNDUM
             }
             // 活动
             for (const event of actEvents) {
                 if (event.required(d)) {
                     t.details.push(event)
                 }
-                // if (d.toDateString() === event.start.toDateString()) {
-                //     t.card += event.awards.card || 0
-                //     t.orundum += event.awards.orundum || 0
-                // }
             }
             res.push(t)
         }
@@ -105,13 +94,21 @@ const dailyEvents: EventType[] = [
     {
         name: "月卡",
         required: (date?: Date) => {
-            if (!date) return false
-            return isMoonCard(date)
+            return !!date && isMoonCard(date)
         },
         awards: {
             orundum: 200
         }
-    }
+    },
+    // {
+    //     name: "维护补偿",
+    //     required: (date?: Date) => {
+    //         return !!date && date.getDa
+    //     },
+    //     awards: {
+
+    //     }
+    // }
 ]
 
 const weeklyEvents: EventType[] = [
