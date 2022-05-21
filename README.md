@@ -1,8 +1,10 @@
-<h1 align="center"> 我合成玉呢 </h1>
+<p align="center">
+ <img src="./images/icon.svg">
+</p>
+<h2 align="center"> 我合成玉呢 </h2>
 
 <p align="center"><strong>粗略</strong>计算到夏活之前能不能攒到井换批脸陈！</p>
 <p align="center"><a href="https://whereismyhcy.netlify.app/">进入网站</a></p>
-
 
 ~~界面布局以后再说吧~~
 
