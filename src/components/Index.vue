@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, reactive, CSSProperties } from 'vue'
+import { ref, computed, CSSProperties } from 'vue'
 import {
     NDatePicker,
     NInputNumber,
@@ -8,7 +8,6 @@ import {
     NSelect,
     NSwitch,
     NSpace,
-    NCollapseTransition,
     NCollapse,
     NCollapseItem,
     NCheckbox
@@ -46,9 +45,6 @@ const railStyle = ({ checked, focused }: { checked: boolean, focused: boolean })
     }
     return style
 }
-
-// const proxyEvents = reactive(events)
-const showDetail = ref(true)
 
 const selectOptions = computed(() => {
     return events.map(event => {

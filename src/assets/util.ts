@@ -1,4 +1,4 @@
-import { computed, reactive, Ref, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 type AwradsType = {
     orundum?: number
@@ -57,26 +57,27 @@ export function useResult() {
                 date: new Date(d),
                 details: [] as EventType[]
             }
+            // 日常奖励
             for (const event of dailyEvents) {
                 if (event.required(d)) {
                     t.details.push(event)
                 }
             }
-            if (isMonday(d)) {  // 周常 + 剿灭
+            if (isMonday(d)) {  // 周奖励
                 for (const event of weeklyEvents) {
                     if (event.required(d)) {
                         t.details.push(event)
                     }
                 }
             }
-            if (isFirstDay(d)) { // 每月
+            if (isFirstDay(d)) { // 月奖励
                 for (const event of monthlyEvents) {
                     if (event.required(d)) {
                         t.details.push(event)
                     }
                 }
             }
-            // 活动
+            // 活动奖励
             for (const event of actEvents) {
                 if (event.required(d)) {
                     t.details.push(event)
@@ -110,6 +111,13 @@ const dailyEvents: EventType[] = [
         required: (date?: Date) => isProduceOrundum.value,
         awards: {
             orundum: 250
+        }
+    },
+    {
+        name: "每日签到",
+        required: (date?: Date) => !!date && date.getDate() === 17,
+        awards: {
+            card: 1
         }
     }
     // {
