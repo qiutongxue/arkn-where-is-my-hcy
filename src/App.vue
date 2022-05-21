@@ -5,17 +5,17 @@ import Index from './components/Index.vue'
 // import Calendar from './components/Calendar.vue'
 import { NConfigProvider, GlobalThemeOverrides, NThemeEditor, zhCN, dateZhCN } from 'naive-ui';
 
-const themeOverrides: GlobalThemeOverrides = {
-  common: {
-    primaryColor: '#f0c32d'
-  },
-}
+// const themeOverrides: GlobalThemeOverrides = {
+//   common: {
+//     primaryColor: '#f0c32d'
+//   },
+// }
 
 </script>
 
 <template>
   <NConfigProvider :locale="zhCN" :date-locale="dateZhCN">
-  <header class="text-4xl p-4 m-4 font-bold"> 我合成玉呢 </header>
+    <header class="text-4xl p-4 m-4 font-bold"> 我合成玉呢 </header>
     <Index />
   </NConfigProvider>
 </template>

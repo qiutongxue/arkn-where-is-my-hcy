@@ -1,4 +1,4 @@
-import {computed, reactive, Ref, ref} from 'vue'
+import { computed, reactive, Ref, ref } from 'vue'
 
 type AwradsType = {
     orundum?: number
@@ -12,7 +12,7 @@ type EventType = {
     awards: AwradsType
 }
 
-export const awardList = {   
+export const awardList = {
     DAILY_EVENT_ORUNDUM: 100,  // 日常
     DAILY_MOONCARD_ORUNDUM: 200,    // 月卡
     WEEKLY_$jiaomie_ORUNDUM: 1800,    // 剿灭
@@ -21,26 +21,31 @@ export const awardList = {
     MOONLY_STORE_CARD: 1 + 2 // 月初送的招募券（包含第二层） 
 }
 
-const isUsedGreenCard = reactive([true, true, false])
+const isGreenStoreLevel1 = ref(true), isGreenStoreLevel2 = ref(true)
 const hasMoonCard = ref(false)
 const moonCardRange = ref<[number, number]>([Date.now(), Date.now()])
 const rangeStart = ref<number>(Date.now()), rangeEnd = ref<number>(Date.now())
 const currentOrundum = ref<number>(0), currentCard = ref<number>(0)
+const isProduceOrundum = ref(false)
 
 export function useMoonCard() {
-    return {hasMoonCard, moonCardRange}
+    return { hasMoonCard, moonCardRange }
 }
 
-export function useCurrent() {  
-    return {currentOrundum, currentCard}
-}   
+export function useCurrent() {
+    return { currentOrundum, currentCard }
+}
 
 export function useRange() {
-    return {rangeStart, rangeEnd}
+    return { rangeStart, rangeEnd }
 }
 
 export function useGreenCard() {
-    return isUsedGreenCard
+    return { isGreenStoreLevel1, isGreenStoreLevel2 }
+}
+
+export function useProduceOrundum() {
+    return isProduceOrundum
 }
 
 export function useResult() {
@@ -49,7 +54,7 @@ export function useResult() {
         const startDate = new Date(rangeStart.value), endDate = new Date(rangeEnd.value)
         for (let d = startDate; d < endDate; addOneDay(d)) {
             let t = {
-                date: new Date(d), 
+                date: new Date(d),
                 details: [] as EventType[]
             }
             for (const event of dailyEvents) {
@@ -100,6 +105,13 @@ const dailyEvents: EventType[] = [
             orundum: 200
         }
     },
+    {
+        name: "搓玉【按 250 每天】",
+        required: (date?: Date) => isProduceOrundum.value,
+        awards: {
+            orundum: 250
+        }
+    }
     // {
     //     name: "维护补偿",
     //     required: (date?: Date) => {
@@ -131,7 +143,7 @@ const weeklyEvents: EventType[] = [
 const monthlyEvents: EventType[] = [
     {
         name: '绿票商店【一】',
-        required: (date?: Date) => isUsedGreenCard[0],
+        required: (date?: Date) => isGreenStoreLevel1.value,
         awards: {
             orundum: 600,
             card: 2
@@ -139,11 +151,11 @@ const monthlyEvents: EventType[] = [
     },
     {
         name: '绿票商店【二】',
-        required: (date?: Date) => isUsedGreenCard[1],
+        required: (date?: Date) => isGreenStoreLevel2.value,
         awards: {
             card: 2
         }
-    }, 
+    },
     {
         name: '黄票商店',
         required: (date?: Date) => false,
@@ -200,7 +212,7 @@ export const events = [
             card: 10 + 14 + 3
         }
     }
-    
+
 ]
 
 const actEvents = events.map(event => {
@@ -211,14 +223,14 @@ const actEvents = events.map(event => {
     }
 })
 
-const addOneDay = (date: Date) => {
+export const addOneDay = (date: Date) => {
     date.setDate(date.getDate() + 1)
 }
 
 const isMoonCard = (date: Date) => {
-    return hasMoonCard.value && 
-    moonCardRange.value[0] <= date.getTime() && 
-    date.getTime() <= moonCardRange.value[1]
+    return hasMoonCard.value &&
+        moonCardRange.value[0] <= date.getTime() &&
+        date.getTime() <= moonCardRange.value[1]
 }
 
 const isMonday = (date: Date) => {
@@ -226,12 +238,4 @@ const isMonday = (date: Date) => {
 }
 const isFirstDay = (date: Date) => {
     return date.getDate() === 1
-}
-
-
-export {
-    isFirstDay,
-    isMonday,
-    isMoonCard,
-    addOneDay
 }

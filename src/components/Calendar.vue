@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref, toRefs } from 'vue';
-import { addOneDay, useCurrent, useResult } from '../assets/util';
+import { computed, ref } from 'vue';
+import { addOneDay, useResult } from '../assets/util';
 import { NButton, NPopover } from 'naive-ui';
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
@@ -13,12 +13,13 @@ const tmps = computed(() => {
     const result = []
     const date = new Date(baseDate.value)
     for (let i = 1; i < (date.getDay() || 7); i++) result.push("")
-    for (let i = date, j = 0, month = baseDate.value.getMonth();
-        j < 40 && i.getMonth() === month;
-        addOneDay(i), j++) {
+    for (
+        let i = date, j = 0, month = baseDate.value.getMonth()
+        ; j < 40 && i.getMonth() === month
+        ; addOneDay(i), j++
+    ) {
         result.push(i.getDate())
     }
-
     return result
 })
 
@@ -59,7 +60,6 @@ const subMonth = () => {
 
 <template>
     <div class="p-4">
-
         <div class="flex gap-4 justify-end">
             <n-button @click="subMonth">←</n-button>
             <span class="font-bold text-3xl">{{ baseDate.getFullYear() }}</span>

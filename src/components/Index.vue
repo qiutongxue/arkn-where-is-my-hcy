@@ -10,18 +10,21 @@ import {
     NSpace,
     NCollapseTransition,
     NCollapse,
-    NCollapseItem
+    NCollapseItem,
+    NCheckbox
 } from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 import {
-    events, useRange, useMoonCard, useCurrent, useResult
+    events, useRange, useMoonCard, useCurrent, useResult, useGreenCard, useProduceOrundum
 } from '../assets/util'
 import Calendar from './Calendar.vue'
 
 const { hasMoonCard, moonCardRange } = useMoonCard()
 const { rangeStart, rangeEnd } = useRange()
 const { currentOrundum, currentCard } = useCurrent()
+const { isGreenStoreLevel1, isGreenStoreLevel2 } = useGreenCard()
+const isProduceOrundum = useProduceOrundum()
 const result = useResult()
 
 const isDateDisabled = (date: number) => {
@@ -186,6 +189,16 @@ const detailInfo = computed(() => {
                 </n-grid-item>
             </n-grid>
         </n-grid-item>
+        <n-grid-item>
+            <div class="text-xl">
+                其它
+            </div>
+        </n-grid-item>
+        <n-grid-item :span="2">
+            <n-checkbox v-model:checked="isGreenStoreLevel1"> 绿票商店【1】 </n-checkbox>
+            <n-checkbox v-model:checked="isGreenStoreLevel2"> 绿票商店【2】 </n-checkbox>
+            <n-checkbox v-model:checked="isProduceOrundum"> 搓玉(250/天) </n-checkbox>
+        </n-grid-item>
     </n-grid>
     <transition-group tag="div" name="list" class="relative flex justify-center">
         <div class="relative" key="orundum">
@@ -238,37 +251,6 @@ const detailInfo = computed(() => {
 
         </n-collapse-item>
     </n-collapse>
-
-    <!-- <n-space vertical class="mt-4">
-
-        <n-switch v-model:value="showDetail">
-        <template #checked>
-            展开
-        </template>
-        <template #unchecked>
-            折叠
-        </template>
-        </n-switch>
-        <n-collapse-transition :show="showDetail" >
-        <div v-for="detail in Object.keys(detailInfo)"
-        class="flex justify-center items-center gap-4 m-2">
-        <span class="font-bold text-xl">
-            {{ detail }}
-        </span>
-        <div v-show="detailInfo[detail].orundum" 
-        class="flex items-center gap-1 font-bold text-xl text-red">
-        {{ detailInfo[detail].orundum }}
-        <img :src="orundumURL" class="w-8" alt="">
-        </div>
-        <div v-show="detailInfo[detail].card" 
-        class="flex items-center gap-1 font-bold text-xl text-amber">
-        {{ detailInfo[detail].card }}
-        <img :src="cardURL" class="w-8" alt="">
-        </div>
-        </div>
-        </n-collapse-transition>
-  </n-space> -->
-    <!-- <Calendar/> -->
     <div class="text-gray flex justify-end">
         注：活动时间是我瞎猜的
     </div>
