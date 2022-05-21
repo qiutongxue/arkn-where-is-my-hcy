@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toRefs } from 'vue';
-import { addOneDay, useCurrent, useResult  } from '../assets/util';
+import { addOneDay, useCurrent, useResult } from '../assets/util';
 import { NButton, NPopover } from 'naive-ui';
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 
 const result = useResult()
 
-const days = ["周一", "周二", "周三", "周四", "周五",  "周六", "周日"]
+const days = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 let baseDate = ref<Date>(new Date(new Date().setDate(1)))
 const tmps = computed(() => {
     const result = []
-    const date = new Date(baseDate.value) 
+    const date = new Date(baseDate.value)
     for (let i = 1; i < (date.getDay() || 7); i++) result.push("")
-    for (let i = date, j = 0, month = baseDate.value.getMonth(); 
-        j < 40 && i.getMonth() === month; 
-        addOneDay(i), j++) 
-    {
+    for (let i = date, j = 0, month = baseDate.value.getMonth();
+        j < 40 && i.getMonth() === month;
+        addOneDay(i), j++) {
         result.push(i.getDate())
     }
-    
+
     return result
 })
 
@@ -59,90 +58,82 @@ const subMonth = () => {
 </script>
 
 <template>
-<div class="p-4">
+    <div class="p-4">
 
-    <div class="flex gap-4 justify-end">
-        <n-button @click="subMonth">←</n-button>
-         <span class="font-bold text-3xl">{{ baseDate.getFullYear() }}</span>
-         <span class="font-bold text-3xl">{{ baseDate.getMonth() + 1}}</span>
-        <n-button @click="addMonth">→</n-button>
-    </div>
-    <div class="grid calendar mt-4">
-        <div v-for="day in days" 
-        class=" h-10 flex justify-center items-center" 
-        :key="day">{{ day }}</div>
-        <div v-for="(tmp, idx) in tmps" 
-        class="relative min-h-10 flex justify-center items-center p-2" 
-        :key="idx"> 
-            <n-popover v-if="tmp && computedData[idx]" trigger="hover">
-                <template #trigger>
-                    <div class="text-xs text-white font-bold">
-                        <div v-if="computedData[idx]?.orundum" class="relative">
-                            <img :src="orundumURL" class="calendar-img" alt="">
-                            <span 
-                            class="absolute block w-100% bottom-1.5 bg-gray bg-op-70 ">
-                            {{ computedData[idx]!.orundum }}
-                            </span>
+        <div class="flex gap-4 justify-end">
+            <n-button @click="subMonth">←</n-button>
+            <span class="font-bold text-3xl">{{ baseDate.getFullYear() }}</span>
+            <span class="font-bold text-3xl">{{ baseDate.getMonth() + 1 }}</span>
+            <n-button @click="addMonth">→</n-button>
+        </div>
+        <div class="grid calendar mt-4">
+            <div v-for="day in days" class=" h-10 flex justify-center items-center" :key="day">{{ day }}</div>
+            <div v-for="(tmp, idx) in tmps" class="relative min-h-10 flex justify-center items-center p-2" :key="idx">
+                <n-popover v-if="tmp && computedData[idx]" trigger="hover">
+                    <template #trigger>
+                        <div class="text-xs text-white font-bold">
+                            <div v-if="computedData[idx]?.orundum" class="relative">
+                                <img :src="orundumURL" class="calendar-img" alt="">
+                                <span class="absolute block w-100% bottom-1.5 bg-gray bg-op-70 ">
+                                    {{ computedData[idx]!.orundum }}
+                                </span>
+                            </div>
+                            <div v-if="computedData[idx]?.card" class="relative">
+                                <img :src="cardURL" class="calendar-img" alt="">
+                                <span class="absolute block w-100% bottom-1.5 bg-gray bg-op-70">
+                                    {{ computedData[idx]!.card }}</span>
+                            </div>
                         </div>
-                        <div v-if="computedData[idx]?.card" class="relative">
-                            <img :src="cardURL" class="calendar-img" alt="">
-                            <span
-                            class="absolute block w-100% bottom-1.5 bg-gray bg-op-70">
-                            {{ computedData[idx]!.card }}</span>
+                    </template>
+                    <div class="flex flex-col">
+                        <div v-for="detail in computedData[idx]?.details"
+                            class="px-2 py-1 flex justify-center items-center gap-4">
+                            <span>{{ detail.name }}</span> |
+                            <div v-if="detail.awards.orundum" class="flex items-center">
+                                <span class="font-bold px-2 text-red">{{ detail.awards.orundum }}</span>
+                                <img :src="orundumURL" class="w-6" alt="hcy">
+                            </div>
+                            <div v-if="detail.awards.card" class="flex items-center">
+                                <span class="font-bold px-2 text-amber">{{ detail.awards.card }}</span>
+                                <img :src="cardURL" class="w-6" alt="gacha">
+                            </div>
                         </div>
+                        <!-- {{ computedData[idx]?.details }} -->
                     </div>
-                </template>
-                <div class="flex flex-col">
-                    <div v-for="detail in computedData[idx]?.details" 
-                    class="px-2 py-1 flex justify-center items-center gap-4">
-                        <span>{{ detail.name }}</span> | 
-                        <div v-if="detail.awards.orundum"
-                            class="flex items-center">
-                            <span class="font-bold px-2 text-red">{{ detail.awards.orundum }}</span>
-                            <img :src="orundumURL" class="w-6" alt="hcy">
-                        </div>
-                        <div v-if="detail.awards.card"
-                            class="flex items-center">
-                            <span class="font-bold px-2 text-amber">{{ detail.awards.card }}</span>
-                            <img :src="cardURL" class="w-6" alt="gacha">
-                        </div>
-                    </div>
-                    <!-- {{ computedData[idx]?.details }} -->
+                </n-popover>
+                <div class=" absolute text-sm text-gray-300 right-1 bottom-0">
+                    {{ tmp }}
                 </div>
-            </n-popover>
-            <div class=" absolute text-sm text-gray-300 right-1 bottom-0">
-                {{ tmp }}
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <style scoped>
-    .calendar {
-        box-sizing: border-box;
-        font-size: 1rem;
-        grid-template-columns: repeat(7, 1fr);
-        gap: .1em;
-        border-top: 1px solid #efeff3;
-        border-left: 1px solid #efeff3;
-        /* grid-auto-flow: dense; */
-    }
+.calendar {
+    box-sizing: border-box;
+    font-size: 1rem;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .1em;
+    border-top: 1px solid #efeff3;
+    border-left: 1px solid #efeff3;
+    /* grid-auto-flow: dense; */
+}
 
-    .calendar > div {
-        box-sizing: border-box;
-        /* outline: black solid .1em; */
-        border-bottom: 1px solid #efeff3;
-        border-right: 1px solid #efeff3;
-    }
+.calendar>div {
+    box-sizing: border-box;
+    /* outline: black solid .1em; */
+    border-bottom: 1px solid #efeff3;
+    border-right: 1px solid #efeff3;
+}
+
+.calendar-img {
+    max-width: calc((100vw - 30px) / 10);
+}
+
+@media screen and (min-width: 960px) {
     .calendar-img {
-        max-width: calc((100vw - 30px) / 10);
+        max-width: 5rem;
     }
-
-    @media screen and (min-width: 960px) {
-        .calendar-img {
-            max-width: 5rem;
-        }
-    }
-
+}
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {ref, computed, reactive, CSSProperties} from 'vue'
+import { ref, computed, reactive, CSSProperties } from 'vue'
 import {
-    NDatePicker, 
+    NDatePicker,
     NInputNumber,
     NGrid,
     NGridItem,
@@ -11,23 +11,24 @@ import {
     NCollapseTransition,
     NCollapse,
     NCollapseItem
-    }  from "naive-ui"
+} from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
-import {events, useRange, useMoonCard, useCurrent, useResult
+import {
+    events, useRange, useMoonCard, useCurrent, useResult
 } from '../assets/util'
 import Calendar from './Calendar.vue'
 
-const {hasMoonCard, moonCardRange} = useMoonCard()
-const {rangeStart, rangeEnd} = useRange()
-const {currentOrundum, currentCard} = useCurrent()
+const { hasMoonCard, moonCardRange } = useMoonCard()
+const { rangeStart, rangeEnd } = useRange()
+const { currentOrundum, currentCard } = useCurrent()
 const result = useResult()
 
 const isDateDisabled = (date: number) => {
     return date < (new Date().setDate(new Date().getDate() - 1))
 }
 
-const railStyle = ({checked, focused}: {checked: boolean, focused: boolean}) => {
+const railStyle = ({ checked, focused }: { checked: boolean, focused: boolean }) => {
     const style: CSSProperties = {}
     if (checked) {
         style.background = '#de9c00'
@@ -65,25 +66,25 @@ const handleSelectFallback = (value: number | string) => {
 const showTotalGacha = ref(false)
 
 const totalOrundum = computed(() => {
-    return currentOrundum.value + 
-    result.value
-    .map(v => {
-        let value = 0
-        v.details.forEach(d => value += d.awards.orundum || 0)
-        return value
-    })
-    .reduce((p, c) => p + c, 0)
+    return currentOrundum.value +
+        result.value
+            .map(v => {
+                let value = 0
+                v.details.forEach(d => value += d.awards.orundum || 0)
+                return value
+            })
+            .reduce((p, c) => p + c, 0)
 })
 
 const totalCard = computed(() => {
-    return currentCard.value + 
-    result.value
-    .map(v => {
-        let value = 0
-        v.details.forEach(d => value += d.awards.card || 0)
-        return value
-    })
-    .reduce((p, c) => p + c, 0)
+    return currentCard.value +
+        result.value
+            .map(v => {
+                let value = 0
+                v.details.forEach(d => value += d.awards.card || 0)
+                return value
+            })
+            .reduce((p, c) => p + c, 0)
 })
 
 const detailInfo = computed(() => {
@@ -95,7 +96,7 @@ const detailInfo = computed(() => {
     value.forEach(v => {
         v.details.forEach(d => {
             const name = d.name, awards = d.awards,
-            detail = details[name] || (details[name] = { orundum: 0, card: 0})
+                detail = details[name] || (details[name] = { orundum: 0, card: 0 })
             detail.orundum += awards.orundum || 0
             detail.card += awards.card || 0
         })
@@ -107,102 +108,92 @@ const detailInfo = computed(() => {
 
 <template>
     <n-grid :cols="3" y-gap="12" class="items-center">
-            <n-grid-item>
-                <div class="text-xl">
-                    当前合成玉：
-                </div>
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-input-number size="large"
-                    v-model:value="currentOrundum">
-                    <template #suffix>
-                        <img class="w-6 input-number-img" :src="orundumURL" alt="合成玉"/>
-                    </template>
-                </n-input-number>
+        <n-grid-item>
+            <div class="text-xl">
+                当前合成玉：
+            </div>
+        </n-grid-item>
+        <n-grid-item :span="2">
+            <n-input-number size="large" v-model:value="currentOrundum">
+                <template #suffix>
+                    <img class="w-6 input-number-img" :src="orundumURL" alt="合成玉" />
+                </template>
+            </n-input-number>
 
-            </n-grid-item>
-            <n-grid-item>
-                <div class="text-xl">
-                    当前寻访凭证：
-                </div>
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-input-number size="large"
-                v-model:value="currentCard">
-                    <template #suffix>
-                        <img class="w-6 input-number-img" :src="cardURL" alt="合成玉"/>
-                    </template>
-                </n-input-number>
-            </n-grid-item>
-            <n-grid-item>
+        </n-grid-item>
+        <n-grid-item>
+            <div class="text-xl">
+                当前寻访凭证：
+            </div>
+        </n-grid-item>
+        <n-grid-item :span="2">
+            <n-input-number size="large" v-model:value="currentCard">
+                <template #suffix>
+                    <img class="w-6 input-number-img" :src="cardURL" alt="合成玉" />
+                </template>
+            </n-input-number>
+        </n-grid-item>
+        <n-grid-item>
 
-                <span class="text-xl">
-                        月卡日期：
-                </span>
-               
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-grid :cols="4" class="items-center">
+            <span class="text-xl">
+                月卡日期：
+            </span>
+
+        </n-grid-item>
+        <n-grid-item :span="2">
+            <n-grid :cols="4" class="items-center">
                 <n-grid-item>
                     <n-switch v-model:value="hasMoonCard" />
 
                 </n-grid-item>
                 <n-grid-item :span="3">
-                    <n-date-picker :disabled="!hasMoonCard" 
-                    :is-date-disabled="isDateDisabled" 
-                    type="daterange" 
-                    v-model:value="moonCardRange">
+                    <n-date-picker :disabled="!hasMoonCard" :is-date-disabled="isDateDisabled" type="daterange"
+                        v-model:value="moonCardRange">
                     </n-date-picker>
                 </n-grid-item>
 
-                </n-grid>
-            </n-grid-item>
-            <n-grid-item class="self-start pt-4">
-                <div class="text-xl">
-                    选择计算日期：
-                </div>
-                
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-grid :cols="4" class="items-center">
-                    <n-grid-item :span="1">
+            </n-grid>
+        </n-grid-item>
+        <n-grid-item class="self-start pt-4">
+            <div class="text-xl">
+                选择计算日期：
+            </div>
+
+        </n-grid-item>
+        <n-grid-item :span="2">
+            <n-grid :cols="4" class="items-center">
+                <n-grid-item :span="1">
                     <div class="font-bold text-lg">
                         开始
                     </div>
-                    </n-grid-item>
-                    <n-grid-item :span="3">
-                        <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
-                    </n-grid-item>
-                    <n-grid-item :span="1">
+                </n-grid-item>
+                <n-grid-item :span="3">
+                    <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
+                </n-grid-item>
+                <n-grid-item :span="1">
                     <div class="font-bold text-lg">
                         结束
                     </div>
-                    </n-grid-item>
-                    <n-grid-item :span="1">
-                        <n-select :options="selectOptions" 
-                        :consistent-menu-width="false"
-                        :fallback-option="handleSelectFallback" 
-                        placeholder="选择活动"
-                        v-model:value="rangeEnd" />
-                        <n-space>
-                            </n-space>
-                    </n-grid-item>
-                    <n-grid-item :span="2">
-                        <n-date-picker v-model:value="rangeEnd"/>
-                    </n-grid-item>
-                </n-grid>
-            </n-grid-item>
+                </n-grid-item>
+                <n-grid-item :span="1">
+                    <n-select :options="selectOptions" :consistent-menu-width="false"
+                        :fallback-option="handleSelectFallback" placeholder="选择活动" v-model:value="rangeEnd" />
+                    <n-space>
+                    </n-space>
+                </n-grid-item>
+                <n-grid-item :span="2">
+                    <n-date-picker v-model:value="rangeEnd" />
+                </n-grid-item>
+            </n-grid>
+        </n-grid-item>
     </n-grid>
-    <transition-group 
-        tag="div"
-        name="list"
-        class="relative flex justify-center"
-    >
+    <transition-group tag="div" name="list" class="relative flex justify-center">
         <div class="relative" key="orundum">
             <transition name="orundum">
-                <div v-show="!showTotalGacha"   class="relative m-4 ">
+                <div v-show="!showTotalGacha" class="relative m-4 ">
                     <img :src="orundumURL" class="w-20" alt="" />
-                    <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
+                    <span
+                        class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
                         {{ totalOrundum }}
                     </span>
                 </div>
@@ -214,7 +205,7 @@ const detailInfo = computed(() => {
                 <span class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70">
                     {{ totalCard + (showTotalGacha ? totalOrundum / 600 | 0 : 0) }}
                 </span>
-    
+
             </div>
         </div>
 
@@ -227,26 +218,23 @@ const detailInfo = computed(() => {
 
     <n-collapse class="mt-10">
         <n-collapse-item title="详细信息">
-                <div v-for="detail in Object.keys(detailInfo)"
-        class="flex justify-center items-center gap-4 m-2">
-        <span class="font-bold text-xl">
-            {{ detail }}
-        </span>
-        <div v-show="detailInfo[detail].orundum" 
-        class="flex items-center gap-1 font-bold text-xl text-red">
-        {{ detailInfo[detail].orundum }}
-        <img :src="orundumURL" class="w-8" alt="">
-        </div>
-        <div v-show="detailInfo[detail].card" 
-        class="flex items-center gap-1 font-bold text-xl text-amber">
-        {{ detailInfo[detail].card }}
-        <img :src="cardURL" class="w-8" alt="">
-        </div>
-        </div>
+            <div v-for="detail in Object.keys(detailInfo)" class="flex justify-center items-center gap-4 m-2">
+                <span class="font-bold text-xl">
+                    {{ detail }}
+                </span>
+                <div v-show="detailInfo[detail].orundum" class="flex items-center gap-1 font-bold text-xl text-red">
+                    {{ detailInfo[detail].orundum }}
+                    <img :src="orundumURL" class="w-8" alt="">
+                </div>
+                <div v-show="detailInfo[detail].card" class="flex items-center gap-1 font-bold text-xl text-amber">
+                    {{ detailInfo[detail].card }}
+                    <img :src="cardURL" class="w-8" alt="">
+                </div>
+            </div>
 
         </n-collapse-item>
         <n-collapse-item title="日历">
-    <Calendar/>
+            <Calendar />
 
         </n-collapse-item>
     </n-collapse>
@@ -287,38 +275,38 @@ const detailInfo = computed(() => {
 </template>
 
 <style scoped>
-    .input-number-img {
-        transform: translateY(.5em);
-    }
+.input-number-img {
+    transform: translateY(.5em);
+}
 
-    .user-info {
-        grid-template-columns: 1fr 1fr;
-    }
+.user-info {
+    grid-template-columns: 1fr 1fr;
+}
 
-    .list-move, /* 对移动中的元素应用的过渡 */
-    .list-enter-active,
-    .list-leave-active,
-    .orundum-leave-active {
+.list-move,
+/* 对移动中的元素应用的过渡 */
+.list-enter-active,
+.list-leave-active,
+.orundum-leave-active {
     transition: all .5s ease;
-    }
+}
 
-    /* .list-enter-from {
+/* .list-enter-from {
         opacity: 0;
     } */
-    .list-enter-from,
-    .list-leave-to,
-    .orundum-leave-to {
-        position: relative;
-        opacity: 0;
-        transform: translateX(1.5em);
-    }
+.list-enter-from,
+.list-leave-to,
+.orundum-leave-to {
+    position: relative;
+    opacity: 0;
+    transform: translateX(1.5em);
+}
 
 
-    /* 确保将离开的元素从布局流中删除
+/* 确保将离开的元素从布局流中删除
     以便能够正确地计算移动的动画。 */
-    .list-leave-active,
-    .orundum-leave-active {
-        position: absolute;
-    }
-
+.list-leave-active,
+.orundum-leave-active {
+    position: absolute;
+}
 </style>
