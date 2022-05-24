@@ -180,8 +180,8 @@ const checkEvent = (d1: Date, d2: Date) => {
 export const events = [
     {
         name: "【复刻】覆潮之下",
-        start: new Date("2022/6/8"),
-        end: new Date("2022/6/17"),
+        start: new Date("2022/5/30"),
+        end: new Date("2022/6/13"),
         awards: {
             card: 3
         }
