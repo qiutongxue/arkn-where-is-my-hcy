@@ -4,7 +4,9 @@
 <h2 align="center"> 我合成玉呢 </h2>
 
 <p align="center"><strong>粗略</strong>计算到夏活之前能不能攒到井换批脸陈！</p>
-<p align="center"><a href="https://whereismyhcy.netlify.app/">进入网站</a></p>
+<p align="center"><a href="https://arkn-where-is-my-hcy.vercel.app/">网站1</a> | <a href="https://whereismyhcy.netlify.app/">网站2</a></p>
+
+
 
 ~~界面布局以后再说吧~~
 
@@ -24,7 +26,8 @@
 - [ ] 邮件发送（更新补偿 + 直播送？）
 - [ ] ~~端午签到？（送的是源石？忘了）~~
 - [ ] ~~干员密录 （多久一次啊，要不不算了）~~
-- [x] 搓玉 （按一天 250 算？（一天 260 体力，260 / 4.82 / 2 * 10 ≈ 270））
+- [x] 搓玉 （按一天 200 算？（一天 260 体力，260 / 4.82 / 2 * 10 ≈ 270））
+- [ ] ~~大月卡（自己算去）~~
 - [ ] 能有新主线？我不信...
 - [ ] 还能有新sidestory或故事集？我不信...
 

@@ -12,24 +12,24 @@ type EventType = {
     awards: AwradsType
 }
 
-export const awardList = {
-    DAILY_EVENT_ORUNDUM: 100,  // 日常
-    DAILY_MOONCARD_ORUNDUM: 200,    // 月卡
-    WEEKLY_$jiaomie_ORUNDUM: 1800,    // 剿灭
-    WEEKLY_EVENT: 500, // 周常
-    MOONLY_STROE_ORUNDUM: 600, // 月初送的合成玉
-    MOONLY_STORE_CARD: 1 + 2 // 月初送的招募券（包含第二层） 
-}
+// export const awardList = {
+//     DAILY_EVENT_ORUNDUM: 100,  // 日常
+//     DAILY_MOONCARD_ORUNDUM: 200,    // 月卡
+//     WEEKLY_$jiaomie_ORUNDUM: 1800,    // 剿灭
+//     WEEKLY_EVENT: 500, // 周常
+//     MOONLY_STROE_ORUNDUM: 600, // 月初送的合成玉
+//     MOONLY_STORE_CARD: 1 + 2 // 月初送的招募券（包含第二层） 
+// }
 
 const isGreenStoreLevel1 = ref(true), isGreenStoreLevel2 = ref(true)
-const hasMoonCard = ref(false)
-const moonCardRange = ref<[number, number]>([Date.now(), Date.now()])
+const hasPrimeAccess = ref(false)
+const primeAccessRange = ref<[number, number]>([Date.now(), Date.now()])
 const rangeStart = ref<number>(Date.now()), rangeEnd = ref<number>(Date.now())
 const currentOrundum = ref<number>(0), currentCard = ref<number>(0)
 const isProduceOrundum = ref(false)
 
-export function useMoonCard() {
-    return { hasMoonCard, moonCardRange }
+export function usePrimeAccess() {
+    return { hasPrimeAccess, primeAccessRange }
 }
 
 export function useCurrent() {
@@ -100,17 +100,17 @@ const dailyEvents: EventType[] = [
     {
         name: "月卡",
         required: (date?: Date) => {
-            return !!date && isMoonCard(date)
+            return !!date && isPrimeAccess(date)
         },
         awards: {
             orundum: 200
         }
     },
     {
-        name: "搓玉【按 250 每天】",
+        name: "搓玉【按 200 每天】",
         required: (date?: Date) => isProduceOrundum.value,
         awards: {
-            orundum: 250
+            orundum: 200
         }
     },
     {
@@ -235,10 +235,10 @@ export const addOneDay = (date: Date) => {
     date.setDate(date.getDate() + 1)
 }
 
-const isMoonCard = (date: Date) => {
-    return hasMoonCard.value &&
-        moonCardRange.value[0] <= date.getTime() &&
-        date.getTime() <= moonCardRange.value[1]
+const isPrimeAccess = (date: Date) => {
+    return hasPrimeAccess.value &&
+        primeAccessRange.value[0] <= date.getTime() &&
+        date.getTime() <= primeAccessRange.value[1]
 }
 
 const isMonday = (date: Date) => {
