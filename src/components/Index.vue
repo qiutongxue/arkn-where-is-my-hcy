@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, CSSProperties, onMounted } from 'vue'
+import { ref, computed, CSSProperties, onMounted, watch, watchEffect } from 'vue'
 import {
     NDatePicker,
     NDivider,
@@ -10,7 +10,9 @@ import {
     NSpace,
     NCollapse,
     NCollapseItem,
-    NCheckbox
+    NCheckbox,
+    NRadioGroup,
+    NRadioButton
 } from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
@@ -20,9 +22,8 @@ import {
 } from '../assets/util'
 import Calendar from './Calendar.vue'
 import ArknInput from './ArknInput.vue'
-import ArknDatePickerVue from './ArknDatePicker.vue'
 
-const { hasPrimeAccess, primeAccessRange } = usePrimeAccess()
+const { hasPrimeAccess, primeAccessStart, primeAccessEnd } = usePrimeAccess()
 const { rangeStart, rangeEnd } = useRange()
 const { currentOrundum, currentCard } = useCurrent()
 const { isGreenStoreLevel1, isGreenStoreLevel2 } = useGreenCard()
@@ -106,16 +107,14 @@ const detailInfo = computed(() => {
     return details
 })
 
-// const wrapper = ref<HTMLDivElement>()
-// onMounted(() => {
-//     console.log(wrapper.value)
-//     console.log(primeURL)
-//     if (wrapper.value) {
-//         wrapper.value.style.backgroundRepeat = 'no-repeat'
-//         wrapper.value.style.backgroundImage = `linear-gradient(to left, rgba(255, 255, 255, 1),  rgba(255, 255, 255, 0)), url(${primeURL})`
-//         wrapper.value.style.backgroundSize = '50%'
-//     }
-// })
+const followComputeRange = ref(1)
+
+watchEffect(() => {
+    if (followComputeRange.value) {
+        primeAccessStart.value = rangeStart.value
+        primeAccessEnd.value = rangeEnd.value
+    }
+})
 
 </script>
 
@@ -125,100 +124,76 @@ const detailInfo = computed(() => {
         </arkn-input>
         <arkn-input class="my-4" :img-src="cardURL" title="寻访凭证" v-model:value="currentCard"></arkn-input>
         <!-- <arkn-date-picker-vue class="my-4" :img-src="primeURL" title="月卡"></arkn-date-picker-vue> -->
-        <!-- <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5" ref="wrapper">
+        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5" ref="wrapper">
             <div class="flex justify-end">
 
                 <n-switch class="mr-4" v-model:value="hasPrimeAccess" />
             </div>
-            <div v-if="hasPrimeAccess">
-                <n-date-picker :disabled="!hasPrimeAccess" :is-date-disabled="isDateDisabled" type="daterange"
-                    v-model:value="primeAccessRange">
-                </n-date-picker>
+            <div v-if="hasPrimeAccess" class="mt-8 px-4">
+                <n-radio-group v-model:value="followComputeRange" class="flex" size="large">
+                    <n-radio-button :value="1" class="flex-1">
+                        月卡拉满~
+                    </n-radio-button>
+                    <n-radio-button :value="0" class="flex-1">
+                        自定义
+                    </n-radio-button>
+                </n-radio-group>
+                <div class="mt-4">
+                    <div class="flex gap-4 items-center py-2 text-#555">
+                        <div class="w-10 font-bold text-lg">开始</div>
+                        <div class="flex-1">
+                            <n-date-picker :disabled="!hasPrimeAccess || !!followComputeRange"
+                                :is-date-disabled="isDateDisabled" v-model:value="primeAccessStart">
+                            </n-date-picker>
+
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-center py-2 text-#555">
+                        <div class="w-10 font-bold text-lg">结束</div>
+                        <div class="flex-1">
+                            <n-date-picker :disabled="!hasPrimeAccess || !!followComputeRange"
+                                :is-date-disabled="isDateDisabled" v-model:value="primeAccessEnd">
+                            </n-date-picker>
+
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
-            <div class="absolute left-0 right-0">
+            <div aria-selected="false" class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
                 月卡
             </div>
-        </div> -->
-        <n-grid :cols="3" y-gap="12" class="items-center">
-            <!-- <n-grid-item>
-                <div class="text-xl">
-                    当前合成玉：
-                </div>
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-input-number size="large" v-model:value="currentOrundum">
-                    <template #suffix>
-                        <img class="w-6 input-number-img" :src="orundumURL" alt="合成玉" />
-                    </template>
-                </n-input-number>
+        </div>
 
-            </n-grid-item>
-            <n-grid-item>
-                <div class="text-xl">
-                    当前寻访凭证：
-                </div>
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-input-number size="large" v-model:value="currentCard">
-                    <template #suffix>
-                        <img class="w-6 input-number-img" :src="cardURL" alt="合成玉" />
-                    </template>
-                </n-input-number>
-            </n-grid-item> -->
-            <n-grid-item>
-
-                <span class="text-xl">
-                    月卡日期
-                </span>
-
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-grid :cols="4" class="items-center">
-                    <n-grid-item>
-                        <n-switch v-model:value="hasPrimeAccess" />
-
-                    </n-grid-item>
-                    <n-grid-item :span="3">
-                        <n-date-picker :disabled="!hasPrimeAccess" :is-date-disabled="isDateDisabled" type="daterange"
-                            v-model:value="primeAccessRange">
-                        </n-date-picker>
-                    </n-grid-item>
-
-                </n-grid>
-            </n-grid-item>
-            <n-grid-item class="self-start pt-4">
-                <div class="text-xl">
-                    选择计算日期
-                </div>
-
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-grid :cols="4" class="items-center">
-                    <n-grid-item :span="1">
-                        <div class="font-bold text-lg">
-                            开始
-                        </div>
-                    </n-grid-item>
-                    <n-grid-item :span="3">
+        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
+            <div class="mt-12 px-4">
+                <div class="flex gap-4 items-center py-2 text-#555">
+                    <div class="w-10 font-bold text-lg">开始</div>
+                    <div class="flex-1">
                         <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
-                    </n-grid-item>
-                    <n-grid-item :span="1">
-                        <div class="font-bold text-lg">
-                            结束
-                        </div>
-                    </n-grid-item>
-                    <n-grid-item :span="1">
+
+
+                    </div>
+                </div>
+                <div class="flex gap-4 items-center py-2 text-#555">
+                    <div class="w-10 font-bold text-lg text-red">结束</div>
+                    <div class="flex-1">
                         <n-select :options="selectOptions" :consistent-menu-width="false"
                             :fallback-option="handleSelectFallback" placeholder="选择活动" v-model:value="rangeEnd" />
-                        <n-space>
-                        </n-space>
-                    </n-grid-item>
-                    <n-grid-item :span="2">
+
                         <n-date-picker v-model:value="rangeEnd" />
-                    </n-grid-item>
-                </n-grid>
-            </n-grid-item>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div aria-selected="false" class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
+                计算
+            </div>
+        </div>
+        <n-grid :cols="3" y-gap="12" class="items-center">
             <n-grid-item>
                 <div class="text-xl">
                     其它
@@ -263,7 +238,8 @@ const detailInfo = computed(() => {
 
         <n-collapse class="mt-10">
             <n-collapse-item title="详细信息">
-                <div v-for="detail in Object.keys(detailInfo)" class="flex justify-center items-center gap-4 m-2">
+                <div v-if="Object.keys(detailInfo).length" v-for="detail in Object.keys(detailInfo)"
+                    class="flex justify-center items-center gap-4 m-2">
                     <span class="font-bold text-xl">
                         {{ detail }}
                     </span>
@@ -275,6 +251,9 @@ const detailInfo = computed(() => {
                         {{ detailInfo[detail].card }}
                         <img :src="cardURL" class="w-8" alt="">
                     </div>
+                </div>
+                <div v-else>
+                    还没开始计算哦
                 </div>
 
             </n-collapse-item>

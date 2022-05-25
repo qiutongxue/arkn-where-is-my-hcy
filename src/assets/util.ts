@@ -23,13 +23,13 @@ type EventType = {
 
 const isGreenStoreLevel1 = ref(true), isGreenStoreLevel2 = ref(true)
 const hasPrimeAccess = ref(false)
-const primeAccessRange = ref<[number, number]>([Date.now(), Date.now()])
+const primeAccessStart = ref<number>(Date.now()), primeAccessEnd = ref<number>(Date.now())
 const rangeStart = ref<number>(Date.now()), rangeEnd = ref<number>(Date.now())
 const currentOrundum = ref<number>(0), currentCard = ref<number>(0)
 const isProduceOrundum = ref(false)
 
 export function usePrimeAccess() {
-    return { hasPrimeAccess, primeAccessRange }
+    return { hasPrimeAccess, primeAccessStart, primeAccessEnd }
 }
 
 export function useCurrent() {
@@ -187,7 +187,7 @@ export const events = [
         }
     },
     {
-        name: "【SS】不知道",
+        name: "【SS】莱塔尼亚",
         start: new Date("2022/6/21"),
         end: new Date("2022/7/5"),
         awards: {
@@ -237,8 +237,8 @@ export const addOneDay = (date: Date) => {
 
 const isPrimeAccess = (date: Date) => {
     return hasPrimeAccess.value &&
-        primeAccessRange.value[0] <= date.getTime() &&
-        date.getTime() <= primeAccessRange.value[1]
+        primeAccessStart.value <= date.getTime() &&
+        date.getTime() <= primeAccessEnd.value
 }
 
 const isMonday = (date: Date) => {
