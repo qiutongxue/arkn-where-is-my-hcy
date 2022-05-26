@@ -187,9 +187,9 @@ export const events = [
         }
     },
     {
-        name: "【SS】莱塔尼亚",
-        start: new Date("2022/6/21"),
-        end: new Date("2022/7/5"),
+        name: "【SS】尘影余音",
+        start: new Date("2022/6/14"),
+        end: new Date("2022/6/28"),
         awards: {
             card: 3,
         }
@@ -205,7 +205,7 @@ export const events = [
     {
         name: "【复刻】多索雷斯假日",
         start: new Date("2022/7/5"),
-        end: new Date('2022/7/15'),
+        end: new Date('2022/7/19'),
         awards: {
             orundum: 2000, // 紫票商店
             card: 3 // 活动商店兑换
@@ -214,7 +214,7 @@ export const events = [
     {
         name: "【SS】2022夏活",
         start: new Date("2022/8/4"),
-        end: new Date("2022/8/19"),
+        end: new Date("2022/8/18"),
         awards: {
             orundum: 500 * 14,
             card: 10 + 14 + 3
