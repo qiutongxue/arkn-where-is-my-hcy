@@ -1,8 +1,10 @@
 <p align="center">
  <img src="./images/icon.svg">
 </p>
-<h2 align="center"> 我合成玉呢 </h2>
-
+<h1 align="center"> 我合成玉呢 </h1>
+<p align="center">
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/qiutongxue/arkn-where-is-my-hcy">
+</p>
 <p align="center"><strong>粗略</strong>计算到夏活之前能不能攒到井换批脸陈！</p>
 <p align="center"><a href="https://arkn-where-is-my-hcy.vercel.app/">网站1</a> | <a href="https://whereismyhcy.netlify.app/">网站2</a></p>
 
