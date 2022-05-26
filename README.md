@@ -5,6 +5,16 @@
 <p align="center">
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/qiutongxue/arkn-where-is-my-hcy">
 </p>
+<p align="center">
+<a href="https://arkn-where-is-my-hcy.vercel.app/">
+ <img alt="GitHub last commit" src="https://img.shields.io/badge/Vercel-143?logo=vercel&color=000&logoColor=fff">
+</a>
+<a href="https://whereismyhcy.netlify.app/">
+<img alt="GitHub last commit" src="https://img.shields.io/badge/Netlify-143?logo=netlify&color=00c7b7&logoColor=fff">
+</a>
+
+
+</p>
 <p align="center"><strong>粗略</strong>计算到夏活之前能不能攒到井换批脸陈！</p>
 <p align="center"><a href="https://arkn-where-is-my-hcy.vercel.app/">网站1</a> | <a href="https://whereismyhcy.netlify.app/">网站2</a></p>
 
