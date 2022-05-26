@@ -16,7 +16,6 @@ import {
 } from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
-import primeURL from '../assets/primeaccess.png'
 import {
     events, useRange, usePrimeAccess, useCurrent, useResult, useGreenCard, useProduceOrundum
 } from '../assets/util'
@@ -119,12 +118,12 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div>
+    <transition-group tag="div" name="list">
         <arkn-input class="my-4" :img-src="orundumURL" title="合成玉" v-model:value="currentOrundum">
         </arkn-input>
-        <arkn-input class="my-4" :img-src="cardURL" title="寻访凭证" v-model:value="currentCard"></arkn-input>
-        <!-- <arkn-date-picker-vue class="my-4" :img-src="primeURL" title="月卡"></arkn-date-picker-vue> -->
-        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5" ref="wrapper">
+        <arkn-input class="my-4" :img-src="cardURL" title="寻访凭证" v-model:value="currentCard">
+        </arkn-input>
+        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
             <div class="flex justify-end">
 
                 <n-switch class="mr-4" v-model:value="hasPrimeAccess" />
@@ -161,8 +160,25 @@ watchEffect(() => {
                 </div>
 
             </div>
-            <div aria-selected="false" class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
+            <div class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
                 月卡
+            </div>
+        </div>
+
+        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
+            <div class="flex">
+                <div class="relative w-50 bg-red self-start">
+                    <div class="absolute left--1 top--6 text-7xl text-#eee font-italic font-bold">
+                        可选
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-wrap justify-end pr-4">
+                    <n-checkbox class="w-auto" v-model:checked="isGreenStoreLevel1"> 绿票商店【1】 </n-checkbox>
+                    <n-checkbox class="w-auto" v-model:checked="isGreenStoreLevel2"> 绿票商店【2】 </n-checkbox>
+                    <n-checkbox class="w-auto" v-model:checked="isProduceOrundum"> 搓玉(200/天) </n-checkbox>
+                </div>
+
+
             </div>
         </div>
 
@@ -189,22 +205,11 @@ watchEffect(() => {
                 </div>
 
             </div>
-            <div aria-selected="false" class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
+            <div class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
                 计算
             </div>
         </div>
-        <n-grid :cols="3" y-gap="12" class="items-center">
-            <n-grid-item>
-                <div class="text-xl">
-                    其它
-                </div>
-            </n-grid-item>
-            <n-grid-item :span="2">
-                <n-checkbox v-model:checked="isGreenStoreLevel1"> 绿票商店【1】 </n-checkbox>
-                <n-checkbox v-model:checked="isGreenStoreLevel2"> 绿票商店【2】 </n-checkbox>
-                <n-checkbox v-model:checked="isProduceOrundum"> 搓玉(200/天) </n-checkbox>
-            </n-grid-item>
-        </n-grid>
+
         <n-divider></n-divider>
         <transition-group tag="div" name="list" class="relative flex justify-center">
             <div class="relative" key="orundum">
@@ -238,20 +243,25 @@ watchEffect(() => {
 
         <n-collapse class="mt-10">
             <n-collapse-item title="详细信息">
-                <div v-if="Object.keys(detailInfo).length" v-for="detail in Object.keys(detailInfo)"
-                    class="flex justify-center items-center gap-4 m-2">
-                    <span class="font-bold text-xl">
-                        {{ detail }}
-                    </span>
-                    <div v-show="detailInfo[detail].orundum" class="flex items-center gap-1 font-bold text-xl text-red">
-                        {{ detailInfo[detail].orundum }}
-                        <img :src="orundumURL" class="w-8" alt="">
+                <transition-group tag="div" v-if="Object.keys(detailInfo).length" name="list" class="relative">
+                    <div v-for="detail in Object.keys(detailInfo)" :key="detail"
+                        class="flex justify-center items-center gap-4 m-2">
+                        <span class="font-bold text-xl">
+                            {{ detail }}
+                        </span>
+                        <div v-show="detailInfo[detail].orundum"
+                            class="flex items-center gap-1 font-bold text-xl text-red">
+                            {{ detailInfo[detail].orundum }}
+                            <img :src="orundumURL" class="w-8" alt="">
+                        </div>
+                        <div v-show="detailInfo[detail].card"
+                            class="flex items-center gap-1 font-bold text-xl text-amber">
+                            {{ detailInfo[detail].card }}
+                            <img :src="cardURL" class="w-8" alt="">
+                        </div>
                     </div>
-                    <div v-show="detailInfo[detail].card" class="flex items-center gap-1 font-bold text-xl text-amber">
-                        {{ detailInfo[detail].card }}
-                        <img :src="cardURL" class="w-8" alt="">
-                    </div>
-                </div>
+
+                </transition-group>
                 <div v-else>
                     还没开始计算哦
                 </div>
@@ -266,7 +276,7 @@ watchEffect(() => {
             注：活动时间是我瞎猜的
         </div>
 
-    </div>
+    </transition-group>
 </template>
 
 <style scoped>
@@ -303,5 +313,10 @@ watchEffect(() => {
 .list-leave-active,
 .orundum-leave-active {
     position: absolute;
+    width: 100%;
 }
+
+/* .list-leave-from {
+    position: relative
+} */
 </style>

@@ -16,8 +16,11 @@ import { NConfigProvider, GlobalThemeOverrides, NThemeEditor, zhCN, dateZhCN } f
 
 <template>
   <NConfigProvider :locale="zhCN" :date-locale="dateZhCN">
-    <header class="text-4xl p-4 m-4 font-bold"> 我合成玉呢 </header>
-    <Index />
+    <div class="flex flex-col items-center justify-center">
+      <header class="text-4xl px-4 pt-4 m-4 font-bold"> 我合成玉呢 </header>
+      <div class="text-#aaa"><strong>粗略</strong>计算抽卡次数</div>
+      <Index />
+    </div>
   </NConfigProvider>
 </template>
 
@@ -29,6 +32,7 @@ import { NConfigProvider, GlobalThemeOverrides, NThemeEditor, zhCN, dateZhCN } f
   text-align: center;
   color: #2c3e50;
   margin: 1em 2em;
+  /* max-width: 960px; */
   /* margin-top: 60px; */
 }
 </style>
