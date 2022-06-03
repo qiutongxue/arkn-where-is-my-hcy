@@ -188,8 +188,8 @@ export const events = [
     },
     {
         name: "【SS】尘影余音",
-        start: new Date("2022/6/14"),
-        end: new Date("2022/6/28"),
+        start: new Date("2022/6/9"),
+        end: new Date("2022/6/23"),
         awards: {
             card: 3,
         }
