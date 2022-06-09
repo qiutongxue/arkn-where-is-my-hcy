@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, reactive, ref, toRefs } from 'vue'
 
 type AwradsType = {
     orundum?: number
@@ -12,46 +12,26 @@ type EventType = {
     awards: AwradsType
 }
 
-// export const awardList = {
-//     DAILY_EVENT_ORUNDUM: 100,  // 日常
-//     DAILY_MOONCARD_ORUNDUM: 200,    // 月卡
-//     WEEKLY_$jiaomie_ORUNDUM: 1800,    // 剿灭
-//     WEEKLY_EVENT: 500, // 周常
-//     MOONLY_STROE_ORUNDUM: 600, // 月初送的合成玉
-//     MOONLY_STORE_CARD: 1 + 2 // 月初送的招募券（包含第二层） 
-// }
+const state = reactive({
+    isGreenStoreLevel1: true,
+    isGreenStoreLevel2: true,
+    hasPrimeAccess: false,
+    primeAccessStart: Date.now(),
+    primeAccessEnd: Date.now(),
+    rangeStart: Date.now(),
+    rangeEnd: Date.now(),
+    currentOrundum: 0,
+    currentCard: 0,
+    isProduceOrundum: false
+})
 
-const isGreenStoreLevel1 = ref(true), isGreenStoreLevel2 = ref(true)
-const hasPrimeAccess = ref(false)
-const primeAccessStart = ref<number>(Date.now()), primeAccessEnd = ref<number>(Date.now())
-const rangeStart = ref<number>(Date.now()), rangeEnd = ref<number>(Date.now())
-const currentOrundum = ref<number>(0), currentCard = ref<number>(0)
-const isProduceOrundum = ref(false)
+export default toRefs(state)
 
-export function usePrimeAccess() {
-    return { hasPrimeAccess, primeAccessStart, primeAccessEnd }
-}
-
-export function useCurrent() {
-    return { currentOrundum, currentCard }
-}
-
-export function useRange() {
-    return { rangeStart, rangeEnd }
-}
-
-export function useGreenCard() {
-    return { isGreenStoreLevel1, isGreenStoreLevel2 }
-}
-
-export function useProduceOrundum() {
-    return isProduceOrundum
-}
 
 export function useResult() {
     return computed(() => {
         const res = []
-        const startDate = new Date(rangeStart.value), endDate = new Date(rangeEnd.value)
+        const startDate = new Date(state.rangeStart), endDate = new Date(state.rangeEnd)
         for (let d = startDate; d < endDate; addOneDay(d)) {
             let t = {
                 date: new Date(d),
@@ -108,7 +88,7 @@ const dailyEvents: EventType[] = [
     },
     {
         name: "搓玉【按 200 每天】",
-        required: (date?: Date) => isProduceOrundum.value,
+        required: (date?: Date) => state.isProduceOrundum,
         awards: {
             orundum: 200
         }
@@ -151,7 +131,7 @@ const weeklyEvents: EventType[] = [
 const monthlyEvents: EventType[] = [
     {
         name: '绿票商店【一】',
-        required: (date?: Date) => isGreenStoreLevel1.value,
+        required: (date?: Date) => state.isGreenStoreLevel1,
         awards: {
             orundum: 600,
             card: 2
@@ -159,7 +139,7 @@ const monthlyEvents: EventType[] = [
     },
     {
         name: '绿票商店【二】',
-        required: (date?: Date) => isGreenStoreLevel2.value,
+        required: (date?: Date) => state.isGreenStoreLevel2,
         awards: {
             card: 2
         }
@@ -236,9 +216,9 @@ export const addOneDay = (date: Date) => {
 }
 
 const isPrimeAccess = (date: Date) => {
-    return hasPrimeAccess.value &&
-        primeAccessStart.value <= date.getTime() &&
-        date.getTime() <= primeAccessEnd.value
+    return state.hasPrimeAccess &&
+        state.primeAccessStart <= date.getTime() &&
+        date.getTime() <= state.primeAccessEnd
 }
 
 const isMonday = (date: Date) => {

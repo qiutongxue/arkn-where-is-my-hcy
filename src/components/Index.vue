@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, CSSProperties, onMounted, watch, watchEffect } from 'vue'
+import { ref, computed, CSSProperties, watchEffect } from 'vue'
 import {
     NDatePicker,
     NDivider,
-    NGrid,
-    NGridItem,
     NSelect,
     NSwitch,
-    NSpace,
     NCollapse,
     NCollapseItem,
     NCheckbox,
@@ -16,17 +13,19 @@ import {
 } from "naive-ui"
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
-import {
-    events, useRange, usePrimeAccess, useCurrent, useResult, useGreenCard, useProduceOrundum
+import state, {
+    events, useResult
 } from '../assets/util'
 import Calendar from './Calendar.vue'
 import ArknInput from './ArknInput.vue'
 
-const { hasPrimeAccess, primeAccessStart, primeAccessEnd } = usePrimeAccess()
-const { rangeStart, rangeEnd } = useRange()
-const { currentOrundum, currentCard } = useCurrent()
-const { isGreenStoreLevel1, isGreenStoreLevel2 } = useGreenCard()
-const isProduceOrundum = useProduceOrundum()
+const {
+    hasPrimeAccess, primeAccessStart, primeAccessEnd,
+    rangeStart, rangeEnd,
+    currentOrundum, currentCard,
+    isGreenStoreLevel1, isGreenStoreLevel2, isProduceOrundum
+} = state
+
 const result = useResult()
 
 const isDateDisabled = (date: number) => {
