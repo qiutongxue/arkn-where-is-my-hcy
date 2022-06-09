@@ -1,16 +1,6 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Index from './components/Index.vue'
-import ArknInput from './components/ArknInput.vue'
-// import Calendar from './components/Calendar.vue'
-import { NConfigProvider, GlobalThemeOverrides, NThemeEditor, zhCN, dateZhCN } from 'naive-ui';
-
-// const themeOverrides: GlobalThemeOverrides = {
-//   common: {
-//     primaryColor: '#f0c32d'
-//   },
-// }
+import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui';
 
 </script>
 
