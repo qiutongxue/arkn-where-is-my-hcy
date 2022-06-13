@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Card from './Card.vue'
 defineProps<{
     imgSrc?: string,
     title?: string,
@@ -16,7 +17,7 @@ const handleInput = (e: Event) => {
 </script>
 
 <template>
-    <div class="border border-#efeff3 rounded-5 min-h-40 relative overflow-hidden">
+    <Card class="min-h-40 relative overflow-hidden shadow shadow-md">
         <div class="flex min-h-40 ml-40 justify-between">
             <img :src="imgSrc" draggable="false" alt="" class="absolute left--10 op-50">
             <div class="flex-1 flex relative">
@@ -26,7 +27,7 @@ const handleInput = (e: Event) => {
                 <span class="absolute bottom-0 left-0 right-0 text-#777 title">{{ title }}</span>
             </div>
         </div>
-    </div>
+    </Card>
 </template>
 
 <style scoped>

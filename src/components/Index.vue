@@ -17,7 +17,8 @@ import state, {
     events, useResult
 } from '../assets/util'
 import Calendar from './Calendar.vue'
-import ArknInput from './ArknInput.vue'
+import ArknInput from '../UI/ArknInput.vue'
+import Card from '../UI/Card.vue'
 
 const {
     hasPrimeAccess, primeAccessStart, primeAccessEnd,
@@ -122,7 +123,7 @@ watchEffect(() => {
         </arkn-input>
         <arkn-input class="my-4" :img-src="cardURL" title="寻访凭证" v-model:value="currentCard">
         </arkn-input>
-        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
+        <Card title="月卡" class="py-5 my-5">
             <div class="flex justify-end">
 
                 <n-switch class="mr-4" v-model:value="hasPrimeAccess" />
@@ -159,29 +160,19 @@ watchEffect(() => {
                 </div>
 
             </div>
-            <div class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
-                月卡
-            </div>
-        </div>
+        </Card>
 
-        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
-            <div class="flex">
-                <div class="relative w-50 bg-red self-start">
-                    <div class="absolute left--1 top--6 text-7xl text-#eee font-italic font-bold">
-                        可选
-                    </div>
-                </div>
+        <Card title="可选" class="py-5 my-5">
+            <div class="ml-40">
                 <div class="flex-1 flex flex-wrap justify-end pr-4">
                     <n-checkbox class="w-auto" v-model:checked="isGreenStoreLevel1"> 绿票商店【1】 </n-checkbox>
                     <n-checkbox class="w-auto" v-model:checked="isGreenStoreLevel2"> 绿票商店【2】 </n-checkbox>
                     <n-checkbox class="w-auto" v-model:checked="isProduceOrundum"> 搓玉(200/天) </n-checkbox>
                 </div>
-
-
             </div>
-        </div>
+        </Card>
 
-        <div class="border border-#efeff3 rounded-5 relative overflow-hidden my-4 py-5">
+        <Card title="计算" class="py-4 my-4">
             <div class="mt-12 px-4">
                 <div class="flex gap-4 items-center py-2 text-#555">
                     <div class="w-10 font-bold text-lg">开始</div>
@@ -204,10 +195,7 @@ watchEffect(() => {
                 </div>
 
             </div>
-            <div class="absolute left--1 top--1 text-7xl text-#eee font-italic font-bold">
-                计算
-            </div>
-        </div>
+        </Card>
 
         <n-divider></n-divider>
         <transition-group tag="div" name="list" class="relative flex justify-center">
