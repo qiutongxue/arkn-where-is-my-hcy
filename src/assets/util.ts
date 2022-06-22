@@ -1,6 +1,6 @@
 import { computed, reactive, ref, toRefs } from 'vue'
 
-type AwradsType = {
+type AwardsType = {
     orundum?: number
     card?: number
 }
@@ -9,7 +9,7 @@ type EventType = {
     start?: Date
     end?: Date
     required: (date?: Date) => boolean
-    awards: AwradsType
+    awards: AwardsType
 }
 
 const state = reactive({
@@ -157,48 +157,86 @@ const checkEvent = (d1: Date, d2: Date) => {
     return d1.toDateString() === d2.toDateString()
 }
 
+const eventAwards = {
+    SideStory(retro = false) {
+        return {
+            card: 3,
+            orundum: retro ? 2000 : 0
+        }
+    },
+    StorySet() {
+        return {
+            card: 0
+        }
+    },
+    Limited() {
+        return {
+            orundum: 500 * 14,
+            card: 14 + 10
+        }
+    },
+    Others(orundum: number = 0, card: number = 0) {
+        return {
+            orundum,
+            card
+        }
+    }
+}
+
+const mixingEvent = (...events: (() => AwardsType)[]) => {
+    const result: AwardsType = {}
+    events.forEach((event) => {
+        const e = event()
+        let objKeys = Object.keys(e) as Array<keyof AwardsType>
+        objKeys.forEach(k => {
+            result[k] = (result[k] || 0) + (e[k] || 0)
+        })
+    })
+    return result
+}
+
 export const events = [
     {
         name: "【复刻】覆潮之下",
         start: new Date("2022/5/30"),
         end: new Date("2022/6/13"),
-        awards: {
-            card: 3
-        }
+        awards: eventAwards.SideStory(true)
     },
     {
         name: "【SS】尘影余音",
         start: new Date("2022/6/9"),
         end: new Date("2022/6/23"),
-        awards: {
-            card: 3,
-        }
+        awards: eventAwards.SideStory()
     },
     {
-        name: "【新剿灭400杀】",
+        name: "【SS】绿野幻梦",
+        start: new Date("2022/7/5"),
+        end: new Date('2022/7/19'),
+        awards: eventAwards.SideStory()
+    },
+    {
+        name: "新剿灭400杀",
         start: new Date("2022/7/11"),
         end: new Date("2022/7/11"),
-        awards: {
-            orundum: 1500,
-        }
+        awards: eventAwards.Others(1500)
+    },
+    {
+        name: "【故事集】未尽篇章",
+        start: new Date("2022/7/19"),
+        end: new Date("2022/7/26"),
+        awards: eventAwards.StorySet()
     },
     {
         name: "【复刻】多索雷斯假日",
-        start: new Date("2022/7/5"),
-        end: new Date('2022/7/19'),
-        awards: {
-            orundum: 2000, // 紫票商店
-            card: 3 // 活动商店兑换
-        }
+        start: new Date("2022/7/28"),
+        end: new Date('2022/8/11'),
+        awards: eventAwards.SideStory(true)
     },
     {
         name: "【SS】2022夏活",
-        start: new Date("2022/8/4"),
-        end: new Date("2022/8/18"),
-        awards: {
-            orundum: 500 * 14,
-            card: 10 + 14 + 3
-        }
+        start: new Date("2022/8/16"),
+        end: new Date("2022/8/30"),
+        awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory)
     }
 
 ]
@@ -211,8 +249,12 @@ const actEvents = events.map(event => {
     }
 })
 
+const addDays = (date: Date, days: number) => {
+    date.setDate(date.getDate() + days)
+}
+
 export const addOneDay = (date: Date) => {
-    date.setDate(date.getDate() + 1)
+    addDays(date, 1)
 }
 
 const isPrimeAccess = (date: Date) => {
