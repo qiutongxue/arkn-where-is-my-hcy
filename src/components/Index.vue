@@ -14,8 +14,8 @@ import {
 } from 'naive-ui'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
-import state, {
-  useResult,
+import {
+  result, state,
 } from '../composables/util'
 import events from '../composables/events'
 import ArknInput from '../UI/ArknInput.vue'
@@ -28,8 +28,6 @@ const {
   currentOrundum, currentCard,
   isGreenStoreLevel1, isGreenStoreLevel2, isProduceOrundum,
 } = toRefs(state)
-
-const result = useResult()
 
 const isDateDisabled = (date: number) => {
   return date < (new Date().setDate(new Date().getDate() - 1))

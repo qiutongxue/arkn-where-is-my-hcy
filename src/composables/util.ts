@@ -86,34 +86,31 @@ const formatDate = (date: Date) => {
 
 const partsStartTimeSet = new Set(events.parts.map(event => formatDate(new Date(event.start!))))
 
-function useResult() {
-  return computed(() => {
-    const res = []
-    const startDate = new Date(state.rangeStart); const endDate = new Date(state.rangeEnd)
-    for (let d = startDate; d < endDate; d = addDays(d, 1)) {
-      const t = {
-        date: new Date(d),
-        details: [] as EventMap[],
-      }
-
-      addToDetails(eventsMap.daily, t, d) // 每日奖励
-
-      if (isMonday(d)) { // 周奖励
-        addToDetails(eventsMap.weekly, t, d)
-      }
-      if (isFirstDayOfMonth(d)) { // 月奖励
-        addToDetails(eventsMap.monthly, t, d)
-      }
-      if (partsStartTimeSet.has(formatDate(d))) { // 活动奖励
-        addToDetails(eventsMap.parts, t, d)
-      }
-      res.push(t)
+const result = computed(() => {
+  const res = []
+  const startDate = new Date(state.rangeStart); const endDate = new Date(state.rangeEnd)
+  for (let d = startDate; d < endDate; d = addDays(d, 1)) {
+    const t = {
+      date: new Date(d),
+      details: [] as EventMap[],
     }
-    return res
-  })
-}
+
+    addToDetails(eventsMap.daily, t, d) // 每日奖励
+
+    if (isMonday(d)) { // 周奖励
+      addToDetails(eventsMap.weekly, t, d)
+    }
+    if (isFirstDayOfMonth(d)) { // 月奖励
+      addToDetails(eventsMap.monthly, t, d)
+    }
+    if (partsStartTimeSet.has(formatDate(d))) { // 活动奖励
+      addToDetails(eventsMap.parts, t, d)
+    }
+    res.push(t)
+  }
+  return res
+})
 
 export {
-  useResult,
+  result, state,
 }
-export default state

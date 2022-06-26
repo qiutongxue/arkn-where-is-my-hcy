@@ -2,11 +2,9 @@
 import { computed, ref } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
 import { addDays } from 'date-fns'
-import { useResult } from '../composables/util'
+import { result } from '../composables/util'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
-
-const result = useResult()
 
 const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 const baseDate = ref<Date>(new Date(new Date().setDate(1)))
