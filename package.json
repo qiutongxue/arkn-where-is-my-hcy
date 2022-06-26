@@ -1,19 +1,24 @@
 {
   "name": "arkn-hcy",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
+    "date-fns": "^2.28.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.25.2",
     "@unocss/preset-uno": "^0.33.5",
     "@vitejs/plugin-vue": "^2.3.3",
+    "eslint": "^8.18.0",
     "naive-ui": "^2.28.4",
     "typescript": "^4.5.4",
     "unocss": "^0.33.5",
