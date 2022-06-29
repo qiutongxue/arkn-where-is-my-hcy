@@ -142,7 +142,7 @@ const events: {
     {
       name: '【SS】绿野幻梦',
       start: '2022/7/5',
-      end: '2022/7/19',
+      end: '2022/7/18',
       required: 'equalStart',
       awards: eventAwards.SideStory(),
     },
@@ -156,21 +156,21 @@ const events: {
     {
       name: '【故事集】未尽篇章',
       start: '2022/7/19',
-      end: '2022/7/26',
+      end: '2022/7/25',
       required: 'equalStart',
       awards: eventAwards.StorySet(),
     },
     {
       name: '【复刻】多索雷斯假日',
       start: '2022/7/28',
-      end: '2022/8/11',
+      end: '2022/8/10',
       required: 'equalStart',
       awards: eventAwards.SideStory(true),
     },
     {
       name: '【SS】2022夏活',
       start: '2022/8/16',
-      end: '2022/8/30',
+      end: '2022/8/29',
       required: 'equalStart',
       awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory),
     },
