@@ -53,7 +53,7 @@ const eventsMap = {} as Record<keyof typeof events, EventMap[]>
 const entries = Object.entries(events) as unknown as ([keyof typeof events, Event[]])[]
 entries.forEach(([key, value]) => {
   eventsMap[key] = value.map((event) => {
-    const { name, awards, required, start } = event
+    const { name, awards, required, start, end } = event
     if (!required) {
       return {
         name, awards, required: () => true,
@@ -68,7 +68,7 @@ entries.forEach(([key, value]) => {
       return requires[fnName].apply(event, [...args, date])
     }
     return {
-      name, awards, required: rfn,
+      name, awards, required: rfn, start, end,
     }
   })
 })

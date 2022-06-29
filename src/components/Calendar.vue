@@ -1,58 +1,139 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
-import { addDays } from 'date-fns'
+import {
+  addDays, addMonths, addWeeks, endOfMonth, endOfWeek,
+  getWeeksInMonth, isToday, startOfMonth, startOfWeek, subMonths,
+} from 'date-fns'
 import { result } from '../composables/util'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 
-const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-const baseDate = ref<Date>(new Date(new Date().setDate(1)))
-const tmps = computed(() => {
+const getDateId = (date: Date) => {
+  return (date.getFullYear() * 10000) + (date.getMonth() * 100) + date.getDate()
+}
+
+interface CalendarEvent {
+  start: Date
+  end: Date
+  name: string
+  awards: {
+    orundum?: number
+    card?: number
+  }
+  color: string
+  width?: number
+  isEmpty?: boolean
+}
+
+interface DayType {
+  date: Date
+  out: boolean
+  events: CalendarEvent[]
+}
+
+const colors = ['#4caf50', '#fb353e', '#4b9cbe', '#9d987b', '#ff9800',
+  '#673ab7', '#1E88E5', '#00ACC1', '#00897B']
+const getColor = () => {
+  return colors[Math.random() * colors.length | 0]
+}
+
+const events = computed(() => {
+  const events = result.value.reduce<CalendarEvent[]>((events, cur) => {
+    const eventsInOneDay = cur.details.map((detail) => {
+      const start = detail.start ? new Date(detail.start) : cur.date
+      const end = detail.end ? new Date(detail.end) : cur.date
+      return {
+        start,
+        end,
+        name: detail.name,
+        awards: detail.awards,
+        color: getColor(),
+      }
+    })
+    events.push(...eventsInOneDay)
+    return events
+  }, [])
+  return events
+})
+
+const weekHeads = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+const baseDate = ref<Date>(startOfMonth(Date.now()))
+
+function checkRecentEventFromIndex(week: DayType[], day: Date, idx: number) {
+  for (let i = (day.getDay() + 5) % 7; i >= 0; i--) {
+    if (!week[i] || week[i].events.length - 1 < idx || week[i].events[idx].isEmpty)
+      continue
+
+    const recent = week[i].events[idx]
+    return recent.end >= day
+  }
+  return false
+}
+const getEvents = (day: Date, week: DayType[]) => {
+  const dayId = getDateId(day)
+  const result = events.value.filter(e => getDateId(e.start) === dayId
+  || (day.getDay() === 1 && e.start <= day && day <= e.end))
+  const res: CalendarEvent[] = []
+  // if (day.getDay() > 1) {
+  result.forEach((r) => {
+    while (checkRecentEventFromIndex(week, day, res.length)) {
+      res.push({
+        ...r,
+        name: '',
+        color: 'transparent',
+        isEmpty: true,
+      })
+    }
+    res.push(r)
+  })
+  // }
+  // else {
+  //   res.push(...result)
+  // }
+
+  return res.map((e) => {
+    let width = 90
+    for (let i = addDays(day, 1), last = endOfWeek(day, { weekStartsOn: 1 }); i <= e.end && i <= last; i = addDays(i, 1))
+      width += 100
+    return {
+      ...e,
+      width,
+    }
+  })
+  // return result
+}
+
+const weeks = computed(() => {
+  const weeksCount = getWeeksInMonth(baseDate.value, { weekStartsOn: 1 })
+  const firstDayOfMonth = startOfMonth(baseDate.value)
+  const lastDayOfMonth = endOfMonth(baseDate.value)
   const result = []
-  const date = new Date(baseDate.value)
-  for (let i = 1; i < (date.getDay() || 7); i++) result.push('')
-  for (
-    let i = date, j = 0, month = baseDate.value.getMonth()
-    ; j < 40 && i.getMonth() === month
-    ; i = addDays(i, 1), j++
-  )
-    result.push(i.getDate())
+  for (let i = 0, date = baseDate.value; i < weeksCount; i++, date = addWeeks(date, 1)) {
+    const start = startOfWeek(date, { weekStartsOn: 1 })
+    const end = endOfWeek(date, { weekStartsOn: 1 })
+    const week: DayType[] = []
+    for (let d = start; d <= end; d = addDays(d, 1)) {
+      const events = getEvents(d, week)
+      week.push({
+        date: d,
+        out: d < firstDayOfMonth || d > lastDayOfMonth,
+        events,
+      })
+    }
+    result.push(week)
+  }
   return result
 })
 
-const computedData = computed(() => {
-  const maps = [...tmps.value]
-  const data = result.value.filter(d =>
-    d.date.getFullYear() === baseDate.value.getFullYear()
-        && d.date.getMonth() === baseDate.value.getMonth(),
-  )
-  const res = maps.map((m) => {
-    if (!m)
-      return null
-    const current = data.find(v => v.date.getDate() === m)
-    let orundum = 0; let card = 0
-    current?.details.forEach((d) => {
-      orundum += d.awards.orundum || 0
-      card += d.awards.card || 0
-    })
-    return {
-      date: current?.date,
-      orundum,
-      card,
-      details: current?.details,
-    }
-  })
-  return res
-})
 const addMonth = () => {
   const date = baseDate.value
-  baseDate.value = new Date(date.setMonth(date.getMonth() + 1))
+  baseDate.value = addMonths(date, 1)
 }
 
 const subMonth = () => {
   const date = baseDate.value
-  baseDate.value = new Date(date.setMonth(date.getMonth() - 1))
+  baseDate.value = subMonths(date, 1)
 }
 </script>
 
@@ -68,48 +149,45 @@ const subMonth = () => {
         →
       </n-button>
     </div>
-    <div class="grid calendar mt-4">
-      <div v-for="day in days" :key="day" class=" h-10 flex justify-center items-center">
-        {{ day }}
+
+    <div class="calendar flex mt-4 w-100% h-100% flex-col">
+      <div class="week-head flex">
+        <div
+          v-for="weekHead in weekHeads"
+          :key="weekHead" class="flex-1 week-head"
+        >
+          {{ weekHead }}
+        </div>
       </div>
-      <div v-for="(tmp, idx) in tmps" :key="idx" class="relative min-h-10 flex justify-center items-center p-2">
-        <n-popover v-if="tmp && computedData[idx]" trigger="hover">
-          <template #trigger>
-            <div class="text-xs text-white font-bold">
-              <div v-if="computedData[idx]?.orundum" class="relative">
-                <img :src="orundumURL" class="calendar-img" alt="">
-                <span class="absolute block w-100% bottom-1.5 bg-gray bg-op-70 ">
-                  {{ computedData[idx]!.orundum }}
-                </span>
+      <div v-for="week, idx in weeks" :key="idx" class="week-days flex">
+        <div
+          v-for="day in week"
+          :key="day.date.getTime()" class="week-day flex-1" :class="[{ outday: day.out }]"
+        >
+          <span class="block p-2 m-2" :class="isToday(day.date) ? 'today' : ''">{{ day.date.getDate() }}</span>
+          <template v-if="!day.out">
+            <n-popover v-for="event in day.events" :key="event.name">
+              <template #trigger>
+                <div
+                  class="event" :class="[event.isEmpty ? 'empty-event' : '']"
+                  :style="{ width: `${event.width}%`, height: '21px', backgroundColor: event.color }"
+                >
+                  {{ event.name }}
+                </div>
+              </template>
+              <div class="flex justify-center items-center gap-4">
+                <div v-if="event.awards.orundum" class="flex justify-center items-center gap-2">
+                  <img :src="orundumURL" class="w-10" alt="合成玉">
+                  <span class="font-bold text-red">{{ event.awards.orundum }}</span>
+                </div>
+                <div v-if="event.awards.card" class="flex justify-center items-center gap-2">
+                  <img :src="cardURL" class="w-10" alt="合成玉">
+                  <span class="font-bold text-amber">{{ event.awards.card }}</span>
+                </div>
+                <span v-if="!event.awards.orundum && !event.awards.card">好像什么都拿不到诶</span>
               </div>
-              <div v-if="computedData[idx]?.card" class="relative">
-                <img :src="cardURL" class="calendar-img" alt="">
-                <span class="absolute block w-100% bottom-1.5 bg-gray bg-op-70">
-                  {{ computedData[idx]!.card }}</span>
-              </div>
-            </div>
+            </n-popover>
           </template>
-          <div class="flex flex-col">
-            <div
-              v-for="detail in computedData[idx]?.details"
-              :key="detail.name"
-              class="px-2 py-1 flex justify-center items-center gap-4"
-            >
-              <span>{{ detail.name }}</span> |
-              <div v-if="detail.awards.orundum" class="flex items-center">
-                <span class="font-bold px-2 text-red">{{ detail.awards.orundum }}</span>
-                <img :src="orundumURL" class="w-6" alt="hcy">
-              </div>
-              <div v-if="detail.awards.card" class="flex items-center">
-                <span class="font-bold px-2 text-amber">{{ detail.awards.card }}</span>
-                <img :src="cardURL" class="w-6" alt="gacha">
-              </div>
-            </div>
-            <!-- {{ computedData[idx]?.details }} -->
-          </div>
-        </n-popover>
-        <div class=" absolute text-sm text-gray-300 right-1 bottom-0">
-          {{ tmp }}
         </div>
       </div>
     </div>
@@ -120,22 +198,51 @@ const subMonth = () => {
 .calendar {
     box-sizing: border-box;
     font-size: 1rem;
-    grid-template-columns: repeat(7, 1fr);
-    gap: .1em;
+    /* grid-template-columns: repeat(7, 1fr); */
+    /* gap: .1em; */
     border-top: 1px solid #efeff3;
     border-left: 1px solid #efeff3;
+    overflow: hidden;
     /* grid-auto-flow: dense; */
-}
-
-.calendar>div {
-    box-sizing: border-box;
-    /* outline: black solid .1em; */
-    border-bottom: 1px solid #efeff3;
-    border-right: 1px solid #efeff3;
 }
 
 .calendar-img {
     max-width: calc((100vw - 30px) / 10);
+}
+
+.outday {
+  background: #efeff3;
+  color: #aeaeae;
+}
+
+.today {
+  /* font-weight: bold; */
+  background: #2a73c5;
+  /* border-radius: 50%; */
+  color: white;
+  font-weight: bold;
+}
+
+.event {
+  /* display: flex; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  justify-content: start;
+  align-items: center;
+  font-size: small;
+  text-align: left;
+  border-radius: 5px;
+  color: white;
+  margin-top: 1px;
+  padding-left: 3px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.empty-event {
+  z-index: -1;
 }
 
 @media screen and (min-width: 960px) {
