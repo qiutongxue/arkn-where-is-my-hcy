@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { NConfigProvider, dateZhCN, zhCN } from 'naive-ui'
+import { NConfigProvider, darkTheme, dateZhCN, zhCN } from 'naive-ui'
+import { useDark, useToggle } from '@vueuse/core'
 import Index from './components/Index.vue'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
-  <NConfigProvider :locale="zhCN" :date-locale="dateZhCN">
-    <div class="flex flex-col items-center justify-center">
-      <header class="text-4xl px-4 pt-4 m-4 font-bold">
-        我合成玉呢
-      </header>
-      <div class="text-#aaa">
-        <strong>粗略</strong>计算抽卡次数
-      </div>
+  <NConfigProvider :locale="zhCN" :date-locale="dateZhCN" :theme="isDark ? darkTheme : undefined">
+    <header class="flex justify-end gap-3">
+      <a href="https://github.com/qiutongxue/arkn-where-is-my-hcy" class="icon-button i-ri-github-fill" />
+      <button class="icon-button border-none i-ri-sun-line dark:i-ri-moon-line" @click="() => toggleDark()" />
+    </header>
+    <main class="flex flex-col items-center justify-center">
       <Index />
-    </div>
+    </main>
   </NConfigProvider>
 </template>
 
@@ -23,9 +25,27 @@ import Index from './components/Index.vue'
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /* color: #2c3e50; */
   margin: 1em 2em;
   /* max-width: 960px; */
   /* margin-top: 60px; */
+}
+
+html.dark {
+  background: #222;
+  color: #eee;
+  color-scheme: dark;
+}
+
+.icon-button {
+  color: rgba(156,163,175, 1);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all .5s;
+  opacity: .7;
+}
+
+.icon-button:hover {
+  opacity: 1;
 }
 </style>

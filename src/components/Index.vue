@@ -112,6 +112,12 @@ watchEffect(() => {
 </script>
 
 <template>
+  <div class="text-4xl px-4 pt-4 m-4 font-bold">
+    我合成玉呢
+  </div>
+  <div class="text-#aaa">
+    <strong>粗略</strong>计算抽卡次数
+  </div>
   <transition-group tag="div" name="list">
     <arkn-input key="orundumInput" v-model:value="currentOrundum" class="my-4" :img-src="orundumURL" title="合成玉" placeholder="你有多少" />
     <arkn-input key="cardInput" v-model:value="currentCard" class="my-4" :img-src="cardURL" title="寻访凭证" placeholder="你有多少" />
@@ -129,7 +135,7 @@ watchEffect(() => {
           </n-radio-button>
         </n-radio-group>
         <div class="mt-4">
-          <div class="flex gap-4 items-center py-2 text-#555">
+          <div class="flex gap-4 items-center py-2">
             <div class="w-10 font-bold text-lg">
               开始
             </div>
@@ -140,7 +146,7 @@ watchEffect(() => {
               />
             </div>
           </div>
-          <div class="flex gap-4 items-center py-2 text-#555">
+          <div class="flex gap-4 items-center py-2 ">
             <div class="w-10 font-bold text-lg">
               结束
             </div>
@@ -173,7 +179,7 @@ watchEffect(() => {
 
     <Card key="computeCard" title="计算" class="py-4 my-4">
       <div class="mt-12 px-4">
-        <div class="flex gap-4 items-center py-2 text-#555">
+        <div class="flex gap-4 items-center py-2">
           <div class="w-10 font-bold text-lg">
             开始
           </div>
@@ -181,7 +187,7 @@ watchEffect(() => {
             <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
           </div>
         </div>
-        <div class="flex gap-4 items-center py-2 text-#555">
+        <div class="flex gap-4 items-center py-2">
           <div class="w-10 font-bold text-lg text-red">
             结束
           </div>

@@ -162,26 +162,31 @@ const subMonth = () => {
       <div v-for="week, idx in weeks" :key="idx" class="week-days flex">
         <div
           v-for="day in week"
-          :key="day.date.getTime()" class="week-day flex-1" :class="[{ outday: day.out }]"
+          :key="day.date.getTime()" class="week-day flex-1" :class="day.out ? (
+            'bg-#efeff3 text-#aeaeae dark:bg-#343434 text-#444'
+          ) : '' "
         >
           <span class="block p-2 m-2" :class="isToday(day.date) ? 'today' : ''">{{ day.date.getDate() }}</span>
           <template v-if="!day.out">
             <n-popover v-for="event in day.events" :key="event.name">
               <template #trigger>
                 <div
-                  class="event" :class="[event.isEmpty ? 'empty-event' : '']"
+                  class="event dark:op-70" :class="[event.isEmpty ? 'empty-event' : '']"
                   :style="{ width: `${event.width}%`, height: '21px', backgroundColor: event.color }"
                 >
                   {{ event.name }}
                 </div>
               </template>
+              <div class="text-center">
+                {{ event.name }}
+              </div>
               <div class="flex justify-center items-center gap-4">
                 <div v-if="event.awards.orundum" class="flex justify-center items-center gap-2">
                   <img :src="orundumURL" class="w-10" alt="合成玉">
                   <span class="font-bold text-red">{{ event.awards.orundum }}</span>
                 </div>
                 <div v-if="event.awards.card" class="flex justify-center items-center gap-2">
-                  <img :src="cardURL" class="w-10" alt="合成玉">
+                  <img :src="cardURL" class="w-10" alt="寻访凭证">
                   <span class="font-bold text-amber">{{ event.awards.card }}</span>
                 </div>
                 <span v-if="!event.awards.orundum && !event.awards.card">好像什么都拿不到诶</span>
@@ -200,8 +205,8 @@ const subMonth = () => {
     font-size: 1rem;
     /* grid-template-columns: repeat(7, 1fr); */
     /* gap: .1em; */
-    border-top: 1px solid #efeff3;
-    border-left: 1px solid #efeff3;
+    /* border-top: 1px solid #efeff3;
+    border-left: 1px solid #efeff3; */
     overflow: hidden;
     /* grid-auto-flow: dense; */
 }
@@ -239,6 +244,13 @@ const subMonth = () => {
   cursor: pointer;
   position: relative;
   z-index: 1;
+  transition: all .5s;
+  opacity: 1
+
+}
+
+.event:hover {
+  opacity: .8;
 }
 
 .empty-event {
