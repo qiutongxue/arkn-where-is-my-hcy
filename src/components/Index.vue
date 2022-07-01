@@ -2,16 +2,19 @@
 import type { CSSProperties } from 'vue'
 import { computed, ref, toRefs, watchEffect } from 'vue'
 import {
+  NCard,
   NCheckbox,
   NCollapse,
   NCollapseItem,
   NDatePicker,
   NDivider,
+  NModal,
   NRadioButton,
   NRadioGroup,
   NSelect,
   NSwitch,
 } from 'naive-ui'
+import { useToggle } from '@vueuse/core'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 import {
@@ -109,14 +112,40 @@ watchEffect(() => {
     primeAccessEnd.value = rangeEnd.value
   }
 })
+
+const [showRules, toggleShowRules] = useToggle(false)
 </script>
 
 <template>
   <div class="text-4xl px-4 pt-4 m-4 font-bold">
     我合成玉呢
   </div>
-  <div class="text-#aaa">
-    <strong>粗略</strong>计算抽卡次数
+  <div class="text-#aaa flex items-center">
+    <span><strong>粗略</strong>计算抽卡次数</span>
+    <div class="ml-1 w-4 h-4 i-ri:question-fill" @click="() => toggleShowRules()" />
+    <NModal v-model:show="showRules">
+      <n-card
+        class="w-80%"
+        title="计算规则"
+      >
+        <span>当前统计</span>
+        <li>日常任务：从【任务】中领取的合成玉，100/天</li>
+        <li>周常任务：同上，500/周</li>
+        <li>Side Story：【活动商店】兑换 3 抽 | 复刻时【紫票商店】兑换 2000 合成玉</li>
+        <li>搓玉：按每天 200 合成玉算，不计算额外体力</li>
+        <li>月卡：200 合成玉</li>
+        <li>绿票商店：默认全部换满，一层 2 抽 + 600 合成玉 | 二层 2 抽</li>
+        <li>剿灭任务：默认打满，1800合成玉/周 | 新剿灭额外 1500 合成玉</li>
+        <li>签到：每个月第 17 天签到送 1 抽</li>
+        <li>故事集：是否有合成玉 or 抽</li>
+        <br>
+        <span>暂时没统计的</span>
+        <li>黄票商店：换满 38 抽</li>
+        <li>源石换算：因人而异</li>
+        <li>大月卡：每月 10 抽</li>
+        <li>邮件送的：太复杂了，不考虑</li>
+      </n-card>
+    </NModal>
   </div>
   <transition-group tag="div" name="list">
     <arkn-input key="orundumInput" v-model:value="currentOrundum" class="my-4" :img-src="orundumURL" title="合成玉" placeholder="你有多少" />
