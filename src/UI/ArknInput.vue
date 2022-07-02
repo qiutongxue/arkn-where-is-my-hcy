@@ -17,16 +17,31 @@ const handleInput = (e: Event) => {
 </script>
 
 <template>
-  <Card class="min-h-40 relative overflow-hidden shadow shadow-md">
-    <div class="flex min-h-40 ml-40 justify-between">
-      <img :src="imgSrc" draggable="false" alt="" class="absolute left--10 op-50">
-      <div class="flex-1 flex relative">
+  <Card min-h-40 relative overflow-hidden shadow="~ md">
+    <div flex min-h-40 ml-40 justify-between>
+      <img
+        :src="imgSrc" draggable="false" alt=""
+        absolute
+        left--10
+        op-50
+      >
+      <div flex="~ 1" relative>
         <input
           type="number"
-          class="input border-0 text-center text-5xl text-#555 dark:text-#eee font-bold focus:outline-none flex-1 w-100% dark:bg-#222"
+          class="input"
+          border-0
+          text="center 5xl #555 dark:#eee"
+          font-bold
+          focus:outline-none
+          flex-1 w="100%"
+          bg="dark:#222"
           :value="value || null" :placeholder="placeholder" @input="handleInput"
         >
-        <span class="absolute bottom-0 left-0 right-0 text-#777 dark:text-#eee title">{{ title }}</span>
+        <span
+          class="title"
+          absolute bottom-0 left-0 right-0
+          text="#777 dark:#eee"
+        >{{ title }}</span>
       </div>
     </div>
   </Card>

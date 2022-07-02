@@ -9,11 +9,24 @@ const toggleDark = useToggle(isDark)
 
 <template>
   <NConfigProvider :locale="zhCN" :date-locale="dateZhCN" :theme="isDark ? darkTheme : undefined">
-    <header class="flex justify-end gap-3">
-      <a href="https://github.com/qiutongxue/arkn-where-is-my-hcy" class="icon-button i-ri-github-fill" />
-      <button class="icon-button border-none i-ri-sun-line dark:i-ri-moon-line" @click="() => toggleDark()" />
+    <header
+      flex="~ gap-3"
+      justify-end
+    >
+      <a href="https://github.com/qiutongxue/arkn-where-is-my-hcy" class="icon-button" i-ri-github-fill />
+      <button
+        class="icon-button"
+        border-none
+        i-ri-sun-line
+        dark:i-ri-moon-line
+        @click="() => toggleDark()"
+      />
     </header>
-    <main class="flex flex-col items-center justify-center">
+    <main
+      flex="~ col"
+      items-center
+      justify-center
+    >
       <Index />
     </main>
   </NConfigProvider>

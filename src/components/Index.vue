@@ -117,15 +117,26 @@ const [showRules, toggleShowRules] = useToggle(false)
 </script>
 
 <template>
-  <div class="text-4xl px-4 pt-4 m-4 font-bold">
+  <div
+    text="4xl"
+    p="x-4 t-4"
+    m="4"
+    font="bold"
+  >
     我合成玉呢
   </div>
-  <div class="text-#aaa flex items-center">
+  <div flex items-center text="#aaa">
     <span><strong>粗略</strong>计算抽卡次数</span>
-    <div class="ml-1 w-4 h-4 i-ri:question-fill" @click="() => toggleShowRules()" />
+    <div
+      m="l-1"
+      w="4"
+      h="4"
+      i-ri:question-fill
+      @click="() => toggleShowRules()"
+    />
     <NModal v-model:show="showRules">
       <n-card
-        class="w-80%"
+        w="80%"
         title="计算规则"
       >
         <span>当前统计</span>
@@ -148,38 +159,75 @@ const [showRules, toggleShowRules] = useToggle(false)
     </NModal>
   </div>
   <transition-group tag="div" name="list">
-    <arkn-input key="orundumInput" v-model:value="currentOrundum" class="my-4" :img-src="orundumURL" title="合成玉" placeholder="你有多少" />
-    <arkn-input key="cardInput" v-model:value="currentCard" class="my-4" :img-src="cardURL" title="寻访凭证" placeholder="你有多少" />
-    <Card key="primeCard" title="月卡" class="py-5 my-5">
-      <div class="flex justify-end">
-        <n-switch v-model:value="hasPrimeAccess" class="mr-4" />
+    <arkn-input
+      key="orundumInput"
+      v-model:value="currentOrundum"
+      :img-src="orundumURL" title="合成玉" placeholder="你有多少"
+      m="y-4"
+    />
+    <arkn-input
+      key="cardInput"
+      v-model:value="currentCard"
+      :img-src="cardURL" title="寻访凭证" placeholder="你有多少"
+      m="y-4"
+    />
+    <Card
+      key="primeCard" title="月卡"
+      p="y-5"
+      m="y-5"
+    >
+      <div flex justify-end>
+        <n-switch
+          v-model:value="hasPrimeAccess"
+          m="r-4"
+        />
       </div>
-      <div v-if="hasPrimeAccess" class="mt-8 px-4">
-        <n-radio-group v-model:value="followComputeRange" class="flex" size="large">
-          <n-radio-button :value="1" class="flex-1">
+      <div
+        v-if="hasPrimeAccess"
+        m="t-8"
+        p="x-4"
+      >
+        <n-radio-group v-model:value="followComputeRange" size="large" flex>
+          <n-radio-button :value="1" flex="1">
             月卡拉满~
           </n-radio-button>
-          <n-radio-button :value="0" class="flex-1">
+          <n-radio-button :value="0" flex="1">
             自定义
           </n-radio-button>
         </n-radio-group>
-        <div class="mt-4">
-          <div class="flex gap-4 items-center py-2">
-            <div class="w-10 font-bold text-lg">
+        <div m="t-4">
+          <div
+            flex="~ gap-4"
+            items-center
+            p="y-2"
+          >
+            <div
+              w="10"
+              font="bold"
+              text="lg"
+            >
               开始
             </div>
-            <div class="flex-1">
+            <div flex-1>
               <n-date-picker
                 v-model:value="primeAccessStart"
                 :disabled="!hasPrimeAccess || !!followComputeRange" :is-date-disabled="isDateDisabled"
               />
             </div>
           </div>
-          <div class="flex gap-4 items-center py-2 ">
-            <div class="w-10 font-bold text-lg">
+          <div
+            flex="~ gap-4"
+            items-center
+            p="y-2"
+          >
+            <div
+              w="10"
+              font="bold"
+              text="lg"
+            >
               结束
             </div>
-            <div class="flex-1">
+            <div flex-1>
               <n-date-picker
                 v-model:value="primeAccessEnd"
                 :disabled="!hasPrimeAccess || !!followComputeRange" :is-date-disabled="isDateDisabled"
@@ -190,37 +238,69 @@ const [showRules, toggleShowRules] = useToggle(false)
       </div>
     </Card>
 
-    <Card key="choseCard" title="可选" class="py-5 my-5">
-      <div class="ml-40">
-        <div class="flex-1 flex flex-wrap justify-end pr-4">
-          <n-checkbox v-model:checked="isGreenStoreLevel1" class="w-auto">
+    <Card
+      key="choseCard" title="可选"
+      p="y-5"
+      m="y-5"
+    >
+      <div ml-40>
+        <div
+          flex="~ 1 wrap"
+          p="r-4"
+          justify-end
+        >
+          <n-checkbox
+            v-model:checked="isGreenStoreLevel1"
+            w="auto"
+          >
             绿票商店【1】
           </n-checkbox>
-          <n-checkbox v-model:checked="isGreenStoreLevel2" class="w-auto">
+          <n-checkbox
+            v-model:checked="isGreenStoreLevel2"
+            w="auto"
+          >
             绿票商店【2】
           </n-checkbox>
-          <n-checkbox v-model:checked="isProduceOrundum" class="w-auto">
+          <n-checkbox
+            v-model:checked="isProduceOrundum"
+            w="auto"
+          >
             搓玉(200/天)
           </n-checkbox>
         </div>
       </div>
     </Card>
 
-    <Card key="computeCard" title="计算" class="py-4 my-4">
-      <div class="mt-12 px-4">
-        <div class="flex gap-4 items-center py-2">
-          <div class="w-10 font-bold text-lg">
+    <Card
+      key="computeCard" title="计算"
+      p="y-4"
+      m="y-4"
+    >
+      <div
+        m="t-12"
+        p="x-4"
+      >
+        <div
+          flex="~ gap-4"
+          items-center
+          p="y-2"
+        >
+          <div w-10 font-bold text-lg>
             开始
           </div>
-          <div class="flex-1">
+          <div flex-1>
             <n-date-picker v-model:value="rangeStart" :is-date-disabled="isDateDisabled" />
           </div>
         </div>
-        <div class="flex gap-4 items-center py-2">
-          <div class="w-10 font-bold text-lg text-red">
+        <div
+          flex="~ gap-4"
+          items-center
+          p="y-2"
+        >
+          <div w-10 font-bold text="lg red">
             结束
           </div>
-          <div class="flex-1">
+          <div flex-1>
             <n-select
               v-model:value="rangeEnd" :options="selectOptions"
               :consistent-menu-width="false" :fallback-option="handleSelectFallback" placeholder="选择活动"
@@ -233,13 +313,27 @@ const [showRules, toggleShowRules] = useToggle(false)
     </Card>
 
     <n-divider key="divider" />
-    <transition-group key="transitionGroup1" tag="div" name="list" class="relative flex justify-center">
-      <div key="orundum" class="relative">
+    <transition-group
+      key="transitionGroup1" tag="div" name="list"
+      relative
+      flex
+      justify-center
+    >
+      <div key="orundum" relative>
         <transition name="orundum">
-          <div v-show="!showTotalGacha" class="relative m-4 ">
-            <img :src="orundumURL" class="w-20" alt="">
+          <div
+            v-show="!showTotalGacha"
+            relative m-4
+          >
+            <img :src="orundumURL" w-20 alt="合成玉">
             <span
-              class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70"
+              absolute
+              block
+              bottom="1.5"
+              text="white shadow-md"
+              bg="gray op-70"
+              w="100%"
+              font="bold"
             >
               {{ totalOrundum }}
             </span>
@@ -247,10 +341,23 @@ const [showRules, toggleShowRules] = useToggle(false)
         </transition>
       </div>
       <div key="idontknow">
-        <div key="card" class="relative m-4">
-          <img :src="cardURL" class="w-20" alt="">
+        <div
+          key="card"
+          relative
+          m="4"
+        >
+          <img
+            :src="cardURL" alt="寻访凭证"
+            w="20"
+          >
           <span
-            class=" absolute block bottom-1.5 text-white text-shadow-md font-bold bg-gray w-100% bg-op-70"
+            absolute
+            block
+            bottom="1.5"
+            text="white shadow-md"
+            bg="gray op-70"
+            w="100%"
+            font-bold
           >
             {{ totalCard + (showTotalGacha ? totalOrundum / 600 | 0 : 0) }}
           </span>
@@ -267,29 +374,36 @@ const [showRules, toggleShowRules] = useToggle(false)
       </template>
     </n-switch>
 
-    <n-collapse key="collapse" class="mt-10">
+    <n-collapse key="collapse" mt-10>
       <n-collapse-item title="详细信息">
-        <transition-group v-if="Object.keys(detailInfo).length" tag="div" name="list" class="relative">
+        <transition-group
+          v-if="Object.keys(detailInfo).length" tag="div" name="list"
+          relative
+        >
           <div
             v-for="detail in Object.keys(detailInfo)" :key="detail"
-            class="flex justify-center items-center gap-4 m-2"
+            flex="~ gap-4" justify-center items-center m-2
           >
-            <span class="font-bold text-xl">
+            <span font-bold text-xl>
               {{ detail }}
             </span>
             <div
               v-show="detailInfo[detail].orundum"
-              class="flex items-center gap-1 font-bold text-xl text-red"
+              flex="~ gap-1"
+              text="xl red"
+              items-center font-bold
             >
               {{ detailInfo[detail].orundum }}
-              <img :src="orundumURL" class="w-8" alt="">
+              <img :src="orundumURL" alt="合成玉" w-8>
             </div>
             <div
               v-show="detailInfo[detail].card"
-              class="flex items-center gap-1 font-bold text-xl text-amber"
+              flex="~ gap-1"
+              text="xl amber"
+              items-center font-bold
             >
               {{ detailInfo[detail].card }}
-              <img :src="cardURL" class="w-8" alt="">
+              <img :src="cardURL" alt="寻访凭证" w-8>
             </div>
           </div>
         </transition-group>
@@ -301,7 +415,7 @@ const [showRules, toggleShowRules] = useToggle(false)
         <Calendar />
       </n-collapse-item>
     </n-collapse>
-    <div key="footTag" class="text-gray flex justify-end">
+    <div key="footTag" text-gray flex justify-end>
       注：活动时间是我瞎猜的
     </div>
   </transition-group>

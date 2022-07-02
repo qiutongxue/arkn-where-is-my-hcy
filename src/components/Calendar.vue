@@ -34,6 +34,7 @@ interface DayType {
 
 const colors = ['#4caf50', '#fb353e', '#4b9cbe', '#9d987b', '#ff9800',
   '#673ab7', '#1E88E5', '#00ACC1', '#00897B']
+
 const getColor = () => {
   return colors[Math.random() * colors.length | 0]
 }
@@ -70,6 +71,7 @@ function checkRecentEventFromIndex(week: DayType[], day: Date, idx: number) {
   }
   return false
 }
+
 const getEvents = (day: Date, week: DayType[]) => {
   const dayId = getDateId(day)
   const result = events.value.filter(e => getDateId(e.start) === dayId
@@ -138,35 +140,51 @@ const subMonth = () => {
 </script>
 
 <template>
-  <div class="p-4">
-    <div class="flex gap-4 justify-end">
+  <div p="4">
+    <div flex="~ gap-4" justify-end>
       <n-button @click="subMonth">
         ←
       </n-button>
-      <span class="font-bold text-3xl">{{ baseDate.getFullYear() }}</span>
-      <span class="font-bold text-3xl">{{ baseDate.getMonth() + 1 }}</span>
+      <span font-bold text-3xl>{{ baseDate.getFullYear() }}</span>
+      <span font-bold text-3xl>{{ baseDate.getMonth() + 1 }}</span>
       <n-button @click="addMonth">
         →
       </n-button>
     </div>
 
-    <div class="calendar flex mt-4 w-100% h-100% flex-col">
-      <div class="week-head flex">
+    <div
+      box-border
+      overflow-hidden
+      text="4"
+      flex="~ col"
+      m="t-4"
+      w="100%"
+      h="100%"
+    >
+      <div flex>
         <div
           v-for="weekHead in weekHeads"
-          :key="weekHead" class="flex-1 week-head"
+          :key="weekHead"
+          flex="1"
         >
           {{ weekHead }}
         </div>
       </div>
-      <div v-for="week, idx in weeks" :key="idx" class="week-days flex">
+      <div
+        v-for="week, idx in weeks" :key="idx"
+        flex
+      >
         <div
           v-for="day in week"
-          :key="day.date.getTime()" class="week-day flex-1" :class="day.out ? (
-            'bg-#efeff3 text-#aeaeae dark:bg-#343434 text-#444'
-          ) : '' "
+          :key="day.date.getTime()"
+          :bg="day.out ? '#efeff3 dark:#343434' : ''"
+          :text="day.out ? '#aeaeae' : ''"
+          flex="1"
         >
-          <span class="block p-2 m-2" :class="isToday(day.date) ? 'today' : ''">{{ day.date.getDate() }}</span>
+          <span
+            :class="isToday(day.date) ? 'today' : ''"
+            block p-2 m-2
+          >{{ day.date.getDate() }}</span>
           <template v-if="!day.out">
             <n-popover v-for="event in day.events" :key="event.name">
               <template #trigger>
@@ -177,17 +195,28 @@ const subMonth = () => {
                   {{ event.name }}
                 </div>
               </template>
-              <div class="text-center">
+              <div text-center>
                 {{ event.name }}
               </div>
-              <div class="flex justify-center items-center gap-4">
-                <div v-if="event.awards.orundum" class="flex justify-center items-center gap-2">
-                  <img :src="orundumURL" class="w-10" alt="合成玉">
-                  <span class="font-bold text-red">{{ event.awards.orundum }}</span>
+              <div
+                flex="~ gap-4"
+                justify-center items-center
+              >
+                <div
+                  v-if="event.awards.orundum"
+                  flex="~ gap-2"
+                  justify-center items-center
+                >
+                  <img :src="orundumURL" alt="合成玉" w-10>
+                  <span font="bold" text="red">{{ event.awards.orundum }}</span>
                 </div>
-                <div v-if="event.awards.card" class="flex justify-center items-center gap-2">
-                  <img :src="cardURL" class="w-10" alt="寻访凭证">
-                  <span class="font-bold text-amber">{{ event.awards.card }}</span>
+                <div
+                  v-if="event.awards.card"
+                  flex="~ gap-2"
+                  justify-center items-center
+                >
+                  <img :src="cardURL" alt="寻访凭证" w-10>
+                  <span font="bold" text="amber">{{ event.awards.card }}</span>
                 </div>
                 <span v-if="!event.awards.orundum && !event.awards.card">好像什么都拿不到诶</span>
               </div>
@@ -200,17 +229,6 @@ const subMonth = () => {
 </template>
 
 <style scoped>
-.calendar {
-    box-sizing: border-box;
-    font-size: 1rem;
-    /* grid-template-columns: repeat(7, 1fr); */
-    /* gap: .1em; */
-    /* border-top: 1px solid #efeff3;
-    border-left: 1px solid #efeff3; */
-    overflow: hidden;
-    /* grid-auto-flow: dense; */
-}
-
 .calendar-img {
     max-width: calc((100vw - 30px) / 10);
 }
