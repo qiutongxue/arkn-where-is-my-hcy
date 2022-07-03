@@ -22,6 +22,7 @@ import {
 } from '../composables/util'
 import events from '../composables/events'
 import ArknInput from '../UI/ArknInput.vue'
+import ArknCheckbox from '../UI/ArknCheckbox.vue'
 import Card from '../UI/Card.vue'
 import Calendar from './Calendar.vue'
 
@@ -243,30 +244,29 @@ const [showRules, toggleShowRules] = useToggle(false)
       p="y-5"
       m="y-5"
     >
-      <div ml-40>
+      <div mt-14 px-4>
         <div
-          flex="~ 1 wrap"
-          p="r-4"
-          justify-end
+          flex="~ 1 wrap col gap-4"
+          p="4"
         >
-          <n-checkbox
+          <ArknCheckbox
             v-model:checked="isGreenStoreLevel1"
             w="auto"
           >
-            绿票商店【1】
-          </n-checkbox>
-          <n-checkbox
+            绿票商店一层
+          </ArknCheckbox>
+          <ArknCheckbox
             v-model:checked="isGreenStoreLevel2"
             w="auto"
           >
-            绿票商店【2】
-          </n-checkbox>
-          <n-checkbox
+            绿票商店二层
+          </ArknCheckbox>
+          <ArknCheckbox
             v-model:checked="isProduceOrundum"
             w="auto"
           >
             搓玉(200/天)
-          </n-checkbox>
+          </ArknCheckbox>
         </div>
       </div>
     </Card>
