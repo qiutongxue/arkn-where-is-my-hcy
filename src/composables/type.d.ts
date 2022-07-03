@@ -1,7 +1,7 @@
 declare interface ArknEvent {
   name: string
   awards: AwardsType
-  required?: Requires
+  required?: (date: Date) => boolean
   start?: string
   end?: string
 }
@@ -29,13 +29,13 @@ interface AwardsType {
   card?: number
 }
 
-type Requires = 'prime' | 'orundumProd' | 'sign17' | 'equalStart' | StringTemplate<'greenStoreLevel', '1' | '2'>
+// type Requires = 'prime' | 'orundumProd' | 'sign17' | 'equalStart' | StringTemplate<'greenStoreLevel', '1' | '2'>
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Split<T extends string> = T extends `${infer K}:${infer V}` ? K : T
+// type Split<T extends string> = T extends `${infer K}:${infer V}` ? K : T
 
-type ParsedRequires = Split<Requires>
+// type ParsedRequires = Split<Requires>
 
-type EventMap = Omit<ArknEvent, 'required'> & {
-  required: Function
-}
+// type EventMap = Omit<ArknEvent, 'required'> & {
+//   required: Function
+// }

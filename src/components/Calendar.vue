@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
-import {
-  addDays, addMonths, addWeeks, endOfMonth, endOfWeek,
-  getWeeksInMonth, isToday, startOfMonth, startOfWeek, subMonths,
-} from 'date-fns'
+import { isToday } from 'date-fns'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
 import { useCalendar } from '../composables/calendar'
@@ -13,8 +10,7 @@ import { useColor } from '../composables/colors'
 
 const weekHeads = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 
-const colors = ['#4caf50', '#fb353e', '#4b9cbe', '#9d987b', '#ff9800',
-  '#673ab7', '#1E88E5', '#00ACC1', '#00897B']
+const colors = ['#4caf50', '#fb353e', '#4b9cbe', '#9d987b', '#ff9800', '#673ab7', '#1E88E5', '#00ACC1', '#00897B']
 const { getRandomColor } = useColor(...colors)
 
 const calendarEvents = computed(() => {

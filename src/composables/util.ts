@@ -15,57 +15,58 @@ const state = reactive({
   isProduceOrundum: false,
 })
 
-const isPrimeAccess = (date: Date) => {
-  return state.hasPrimeAccess
-          && state.primeAccessStart <= date.getTime()
-          && date.getTime() <= state.primeAccessEnd
-}
+// const requires: Record<ParsedRequires, Function> & ThisType<Event> = {
+//   prime(date: Date) {
+//     return !!date && isPrimeAccess(date)
+//   },
+//   orundumProd() {
+//     return state.isProduceOrundum
+//   },
+//   sign17(date: Date) {
+//     return !!date && date.getDate() === 17
+//   },
+//   equalStart(start: string, date: Date): boolean {
+//     return date!.toDateString() === new Date(start).toDateString()
+//   },
+//   greenStoreLevel(level: 1 | 2) {
+//     return state[`isGreenStoreLevel${level}`]
+//   },
+// }
 
-const requires: Record<ParsedRequires, Function> & ThisType<Event> = {
-  prime(date: Date) {
-    return !!date && isPrimeAccess(date)
-  },
-  orundumProd() {
-    return state.isProduceOrundum
-  },
-  sign17(date: Date) {
-    return !!date && date.getDate() === 17
-  },
-  equalStart(start: string, date: Date): boolean {
-    return date!.toDateString() === new Date(start).toDateString()
-  },
-  greenStoreLevel(level: 1 | 2) {
-    return state[`isGreenStoreLevel${level}`]
-  },
-}
-
-const eventsMap = {} as Record<keyof typeof events, EventMap[]>
+const eventsMap = {} as Record<keyof typeof events, ArknEvent[]>
 const entries = Object.entries(events) as unknown as ([keyof typeof events, ArknEvent[]])[]
 entries.forEach(([key, value]) => {
   eventsMap[key] = value.map((event) => {
-    const { name, awards, required, start, end } = event
-    if (!required) {
+    const { required, start } = event
+    if (key === 'parts') {
       return {
-        name, awards, required: () => true,
+        ...event,
+        required: (date?: Date) => !!start && !!date && date.toDateString() === new Date(start).toDateString(),
       }
     }
-    const arr = required.split(':')
-    const fnName = arr[0] as ParsedRequires; const args = arr.slice(1)
-    if (start)
-      args.push(start)
-
-    const rfn = function (date: Date) {
-      return requires[fnName].apply(event, [...args, date])
+    if (!required) {
+      return {
+        ...event,
+        required: () => true,
+      }
     }
     return {
-      name, awards, required: rfn, start, end,
+      ...event,
     }
+    // const arr = required.split(':')
+    // const fnName = arr[0] as ParsedRequires; const args = arr.slice(1)
+    // if (start)
+    //   args.push(start)
+
+    // const rfn = function (date: Date) {
+    //   return requires[fnName].apply(event, [...args, date])
+    // }
   })
 })
 
-const addToDetails = (events: EventMap[], t: { details: EventMap[] }, d: Date) => {
+const addToDetails = (events: ArknEvent[], t: { details: ArknEvent[] }, d: Date) => {
   events.forEach((event) => {
-    if (event.required(d))
+    if (event.required && event.required(d))
       t.details.push(event)
   })
 }
@@ -82,7 +83,7 @@ const result = computed(() => {
   for (let d = startDate; d < endDate; d = addDays(d, 1)) {
     const t = {
       date: new Date(d),
-      details: [] as EventMap[],
+      details: [] as ArknEvent[],
     }
 
     addToDetails(eventsMap.daily, t, d) // 每日奖励
