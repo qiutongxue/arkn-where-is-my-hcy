@@ -1,17 +1,6 @@
 import { computed, reactive } from 'vue'
 import { addDays, isFirstDayOfMonth, isMonday } from 'date-fns'
-import type { Event } from './events'
 import events from './events'
-
-type StringTemplate<key extends string, value extends string> = `${key}:${value}`
-
-export type Requires = 'prime' | 'orundumProd' | 'sign17' | 'equalStart' | StringTemplate<'greenStoreLevel', '1' | '2'>
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Split<T extends string> = T extends `${infer K}:${infer V}` ? K : T
-type ParsedRequires = Split<Requires>
-type EventMap = Omit<Event, 'required'> & {
-  required: Function
-}
 
 const state = reactive({
   isGreenStoreLevel1: true,
@@ -49,8 +38,9 @@ const requires: Record<ParsedRequires, Function> & ThisType<Event> = {
     return state[`isGreenStoreLevel${level}`]
   },
 }
+
 const eventsMap = {} as Record<keyof typeof events, EventMap[]>
-const entries = Object.entries(events) as unknown as ([keyof typeof events, Event[]])[]
+const entries = Object.entries(events) as unknown as ([keyof typeof events, ArknEvent[]])[]
 entries.forEach(([key, value]) => {
   eventsMap[key] = value.map((event) => {
     const { name, awards, required, start, end } = event

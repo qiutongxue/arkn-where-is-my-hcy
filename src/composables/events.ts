@@ -1,18 +1,3 @@
-import type { Requires } from './util'
-
-interface AwardsType {
-  orundum?: number
-  card?: number
-}
-
-export interface Event {
-  name: string
-  awards: AwardsType
-  required?: Requires
-  start?: string
-  end?: string
-}
-
 const eventAwards = {
   SideStory(retro = false) {
     return {
@@ -52,10 +37,10 @@ const mixingEvent = (...events: (() => AwardsType)[]) => {
 }
 
 const events: {
-  daily: Event[]
-  weekly: Event[]
-  monthly: Event[]
-  parts: Event[]
+  daily: ArknEvent[]
+  weekly: ArknEvent[]
+  monthly: ArknEvent[]
+  parts: ArknEvent[]
 } = {
   daily: [
     {
@@ -72,7 +57,7 @@ const events: {
       },
     },
     {
-      name: '搓玉【按 200 每天】',
+      name: '搓玉',
       awards: {
         orundum: 200,
       },

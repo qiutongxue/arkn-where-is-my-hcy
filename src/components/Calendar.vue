@@ -1,45 +1,23 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
 import {
   addDays, addMonths, addWeeks, endOfMonth, endOfWeek,
   getWeeksInMonth, isToday, startOfMonth, startOfWeek, subMonths,
 } from 'date-fns'
-import { result } from '../composables/util'
 import orundumURL from '../assets/orundum.png'
 import cardURL from '../assets/card.png'
+import { useCalendar } from '../composables/calendar'
+import { result } from '../composables/util'
+import { useColor } from '../composables/colors'
 
-const getDateId = (date: Date) => {
-  return (date.getFullYear() * 10000) + (date.getMonth() * 100) + date.getDate()
-}
-
-interface CalendarEvent {
-  start: Date
-  end: Date
-  name: string
-  awards: {
-    orundum?: number
-    card?: number
-  }
-  color: string
-  width?: number
-  isEmpty?: boolean
-}
-
-interface DayType {
-  date: Date
-  out: boolean
-  events: CalendarEvent[]
-}
+const weekHeads = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 
 const colors = ['#4caf50', '#fb353e', '#4b9cbe', '#9d987b', '#ff9800',
   '#673ab7', '#1E88E5', '#00ACC1', '#00897B']
+const { getRandomColor } = useColor(...colors)
 
-const getColor = () => {
-  return colors[Math.random() * colors.length | 0]
-}
-
-const events = computed(() => {
+const calendarEvents = computed(() => {
   const events = result.value.reduce<CalendarEvent[]>((events, cur) => {
     const eventsInOneDay = cur.details.map((detail) => {
       const start = detail.start ? new Date(detail.start) : cur.date
@@ -49,7 +27,7 @@ const events = computed(() => {
         end,
         name: detail.name,
         awards: detail.awards,
-        color: getColor(),
+        color: getRandomColor(),
       }
     })
     events.push(...eventsInOneDay)
@@ -58,85 +36,7 @@ const events = computed(() => {
   return events
 })
 
-const weekHeads = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-const baseDate = ref<Date>(startOfMonth(Date.now()))
-
-function checkRecentEventFromIndex(week: DayType[], day: Date, idx: number) {
-  for (let i = (day.getDay() + 5) % 7; i >= 0; i--) {
-    if (!week[i] || week[i].events.length - 1 < idx || week[i].events[idx].isEmpty)
-      continue
-
-    const recent = week[i].events[idx]
-    return recent.end >= day
-  }
-  return false
-}
-
-const getEvents = (day: Date, week: DayType[]) => {
-  const dayId = getDateId(day)
-  const result = events.value.filter(e => getDateId(e.start) === dayId
-  || (day.getDay() === 1 && e.start <= day && day <= e.end))
-  const res: CalendarEvent[] = []
-  // if (day.getDay() > 1) {
-  result.forEach((r) => {
-    while (checkRecentEventFromIndex(week, day, res.length)) {
-      res.push({
-        ...r,
-        name: '',
-        color: 'transparent',
-        isEmpty: true,
-      })
-    }
-    res.push(r)
-  })
-  // }
-  // else {
-  //   res.push(...result)
-  // }
-
-  return res.map((e) => {
-    let width = 90
-    for (let i = addDays(day, 1), last = endOfWeek(day, { weekStartsOn: 1 }); i <= e.end && i <= last; i = addDays(i, 1))
-      width += 100
-    return {
-      ...e,
-      width,
-    }
-  })
-  // return result
-}
-
-const weeks = computed(() => {
-  const weeksCount = getWeeksInMonth(baseDate.value, { weekStartsOn: 1 })
-  const firstDayOfMonth = startOfMonth(baseDate.value)
-  const lastDayOfMonth = endOfMonth(baseDate.value)
-  const result = []
-  for (let i = 0, date = baseDate.value; i < weeksCount; i++, date = addWeeks(date, 1)) {
-    const start = startOfWeek(date, { weekStartsOn: 1 })
-    const end = endOfWeek(date, { weekStartsOn: 1 })
-    const week: DayType[] = []
-    for (let d = start; d <= end; d = addDays(d, 1)) {
-      const events = getEvents(d, week)
-      week.push({
-        date: d,
-        out: d < firstDayOfMonth || d > lastDayOfMonth,
-        events,
-      })
-    }
-    result.push(week)
-  }
-  return result
-})
-
-const addMonth = () => {
-  const date = baseDate.value
-  baseDate.value = addMonths(date, 1)
-}
-
-const subMonth = () => {
-  const date = baseDate.value
-  baseDate.value = subMonths(date, 1)
-}
+const { getYear, getMonth, subMonth, addMonth, weeks } = useCalendar(calendarEvents)
 </script>
 
 <template>
@@ -145,8 +45,8 @@ const subMonth = () => {
       <n-button @click="subMonth">
         ←
       </n-button>
-      <span font-bold text-3xl>{{ baseDate.getFullYear() }}</span>
-      <span font-bold text-3xl>{{ baseDate.getMonth() + 1 }}</span>
+      <span font-bold text-3xl>{{ getYear() }}</span>
+      <span font-bold text-3xl>{{ getMonth() }}</span>
       <n-button @click="addMonth">
         →
       </n-button>
