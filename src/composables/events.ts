@@ -1,4 +1,4 @@
-import { state } from './util'
+import state from './state'
 
 const eventAwards = {
   SideStory(retro = false) {

@@ -2,10 +2,9 @@
 import { computed } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
 import { isToday } from 'date-fns'
-import orundumURL from '../assets/orundum.png'
-import cardURL from '../assets/card.png'
+import { cardURL, orundumURL } from '../misc/urls'
 import { useCalendar } from '../composables/calendar'
-import { result } from '../composables/util'
+import result from '../composables/result'
 import { useColor } from '../composables/colors'
 
 const weekHeads = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']

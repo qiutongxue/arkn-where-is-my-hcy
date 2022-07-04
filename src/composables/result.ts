@@ -1,37 +1,8 @@
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { addDays, isFirstDayOfMonth, isMonday } from 'date-fns'
+import { formatDate } from '../misc/utils'
 import events from './events'
-
-const state = reactive({
-  isGreenStoreLevel1: true,
-  isGreenStoreLevel2: true,
-  hasPrimeAccess: false,
-  primeAccessStart: Date.now(),
-  primeAccessEnd: Date.now(),
-  rangeStart: Date.now(),
-  rangeEnd: Date.now(),
-  currentOrundum: 0,
-  currentCard: 0,
-  isProduceOrundum: false,
-})
-
-// const requires: Record<ParsedRequires, Function> & ThisType<Event> = {
-//   prime(date: Date) {
-//     return !!date && isPrimeAccess(date)
-//   },
-//   orundumProd() {
-//     return state.isProduceOrundum
-//   },
-//   sign17(date: Date) {
-//     return !!date && date.getDate() === 17
-//   },
-//   equalStart(start: string, date: Date): boolean {
-//     return date!.toDateString() === new Date(start).toDateString()
-//   },
-//   greenStoreLevel(level: 1 | 2) {
-//     return state[`isGreenStoreLevel${level}`]
-//   },
-// }
+import state from './state'
 
 const eventsMap = {} as Record<keyof typeof events, ArknEvent[]>
 const entries = Object.entries(events) as unknown as ([keyof typeof events, ArknEvent[]])[]
@@ -53,14 +24,6 @@ entries.forEach(([key, value]) => {
     return {
       ...event,
     }
-    // const arr = required.split(':')
-    // const fnName = arr[0] as ParsedRequires; const args = arr.slice(1)
-    // if (start)
-    //   args.push(start)
-
-    // const rfn = function (date: Date) {
-    //   return requires[fnName].apply(event, [...args, date])
-    // }
   })
 })
 
@@ -69,10 +32,6 @@ const addToDetails = (events: ArknEvent[], t: { details: ArknEvent[] }, d: Date)
     if (event.required && event.required(d))
       t.details.push(event)
   })
-}
-
-const formatDate = (date: Date) => {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
 
 const partsStartTimeSet = new Set(events.parts.map(event => formatDate(new Date(event.start!))))
@@ -102,6 +61,4 @@ const result = computed(() => {
   return res
 })
 
-export {
-  result, state,
-}
+export default result
