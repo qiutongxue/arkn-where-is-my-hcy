@@ -18,13 +18,17 @@ const handleInput = (e: Event) => {
 
 <template>
   <Card min-h-40 relative overflow-hidden shadow="~ md">
-    <div flex min-h-40 ml-40 justify-between>
-      <img
-        :src="imgSrc" draggable="false" alt=""
-        absolute
-        left--10
+    <div flex min-h-40 justify-between>
+      <div
+        :style="{
+          backgroundImage: `url(${imgSrc})`,
+        }"
+        :src="imgSrc" draggable="false"
+        px-25
+        bg-no-repeat
+        ml--10
         op-50
-      >
+      />
       <div flex="~ 1" relative>
         <input
           type="number"

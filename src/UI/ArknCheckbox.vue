@@ -10,10 +10,10 @@ const emits = defineEmits(['update:checked'])
 
 const [checked, toggleChecked] = useToggle(props.checked)
 
-const checkbox = ref<HTMLDivElement>()
+const checkboxRef = ref<HTMLDivElement>()
 
 onMounted(() => {
-  checkbox.value?.addEventListener('click', () => {
+  checkboxRef.value?.addEventListener('click', () => {
     toggleChecked()
     emits('update:checked', checked.value)
   })
@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="checkbox" class="checkbox" py-4 :border="`~ rounded-1 ${checked ? '#34ba9d dark:green' : 'red'}`">
+  <div ref="checkboxRef" class="checkbox" py-4 :border="`~ rounded-1 ${checked ? '#34ba9d dark:green' : 'red'}`">
     <div flex="~" justify-between px-4>
       <div text-lg>
         <slot />
