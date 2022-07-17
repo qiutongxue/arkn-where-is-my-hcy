@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     Calendar: typeof import('./src/components/Calendar.vue')['default']
     Card: typeof import('./src/UI/Card.vue')['default']
     ChooseRange: typeof import('./src/components/ChooseRange.vue')['default']
-    Compute: typeof import('./src/components/Compute.vue')['default']
     Details: typeof import('./src/components/Details.vue')['default']
     Index: typeof import('./src/components/Index.vue')['default']
     NCard: typeof import('naive-ui')['NCard']

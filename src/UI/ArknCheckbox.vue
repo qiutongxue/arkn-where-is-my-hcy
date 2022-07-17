@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="checkboxRef" class="checkbox" py-4 :border="`~ rounded-1 ${checked ? '#34ba9d dark:green' : 'red'}`">
+  <div ref="checkboxRef" cursor-pointer py-4 :border="`~ rounded-1 ${checked ? '#34ba9d dark:green' : 'red'}`">
     <div flex="~" justify-between px-4>
       <div text-lg>
         <slot />
@@ -32,7 +32,4 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.checkbox {
-  cursor: pointer;
-}
 </style>

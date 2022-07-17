@@ -1,5 +1,5 @@
-import orundumURL from '../assets/orundum.png'
-import cardURL from '../assets/card.png'
+import orundumURL from '../assets/orundum.svg'
+import cardURL from '../assets/card.svg'
 
 export {
   orundumURL,

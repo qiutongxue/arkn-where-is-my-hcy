@@ -37,11 +37,13 @@ const mixingEvent = (...events: (() => AwardsType)[]) => {
   })
   return result
 }
+
 const isPrimeAccess = (date: Date) => {
   return state.hasPrimeAccess
           && state.primeAccessStart <= date.getTime()
           && date.getTime() <= state.primeAccessEnd
 }
+
 const events: {
   daily: ArknEvent[]
   weekly: ArknEvent[]

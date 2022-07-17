@@ -12,4 +12,9 @@ const state = reactive({
   currentCard: 0,
   isProduceOrundum: false,
 })
+
+export const updatePrimeRange = (start: number, end: number) => {
+  state.primeAccessStart = start
+  state.primeAccessEnd = end
+}
 export default state

@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import { isDateDisabled } from '../misc/utils'
-import state from '../composables/state'
+import state, { updatePrimeRange } from '../composables/state'
 
 const followComputeRange = ref(1)
 
 watchEffect(() => {
-  if (followComputeRange.value) {
-    state.primeAccessStart = state.rangeStart
-    state.primeAccessEnd = state.rangeEnd
-  }
+  if (followComputeRange.value)
+    updatePrimeRange(state.rangeStart, state.rangeEnd)
 })
 </script>
 
