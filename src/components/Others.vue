@@ -1,22 +1,10 @@
 <script setup lang="ts">
-import { useDark } from '@vueuse/core'
-import { Ref, computed, watch } from 'vue'
 import state from '../composables/state'
-import GreenShopIcon from '../UI/icons/GreenShopIcon.vue'
-import OrundumIcon from '../UI/Icons/OrundumIcon.vue'
 import { isDark } from '../composables/dark'
 
 type Keys = keyof Pick<typeof state, 'isGreenStoreLevel1' | 'isGreenStoreLevel2' | 'isProduceOrundum'>
 const light = 'white'
 const dark = '#555'
-const handleFill = (key: Keys) => {
-  return computed(() => {
-    return state[key] || isDark ? light : dark
-  })
-}
-const greenLevel1 = computed(() => {
-  return state.isGreenStoreLevel1 || isDark ? light : dark
-})
 </script>
 
 <template>
