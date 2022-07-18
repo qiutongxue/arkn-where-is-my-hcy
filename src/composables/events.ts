@@ -1,3 +1,4 @@
+import { isToday } from 'date-fns'
 import state from './state'
 
 const eventAwards = {
@@ -78,6 +79,13 @@ const events: {
       },
       required: (date: Date) => date.getDate() === 17,
     },
+    {
+      name: '黄票商店',
+      required: (date: Date) => state.isYellowStore && isToday(date),
+      awards: {
+        card: 38,
+      },
+    },
   ],
   weekly: [
     {
@@ -109,13 +117,7 @@ const events: {
         card: 2,
       },
     },
-    // {
-    //     name: '黄票商店',
-    //     required: (date?: Date) => false,
-    //     awards: {
-    //         card: 38
-    //     }
-    // }
+
   ],
   parts: [
     {

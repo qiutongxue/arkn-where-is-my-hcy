@@ -33,7 +33,7 @@ onMounted(() => {
       <!-- <div> -->
       <slot name="icon" />
       <div
-        text-lg ml-4 :text="`${checked ? '#f8fcfd' : '#555 dark:white'}`"
+        text-lg ml-4 flex-1 :text="`${checked ? '#f8fcfd' : '#555 dark:white'}`"
       >
         <slot />
       </div>

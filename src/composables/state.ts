@@ -3,6 +3,7 @@ import { reactive } from 'vue'
 const state = reactive({
   isGreenStoreLevel1: true,
   isGreenStoreLevel2: true,
+  isYellowStore: false,
   hasPrimeAccess: false,
   primeAccessStart: Date.now(),
   primeAccessEnd: Date.now(),

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import state from '../composables/state'
 import { isDark } from '../composables/dark'
+import YellowShopIcon from '../UI/Icons/YellowShopIcon.vue'
 
 type Keys = keyof Pick<typeof state, 'isGreenStoreLevel1' | 'isGreenStoreLevel2' | 'isProduceOrundum'>
 const light = 'white'
@@ -54,6 +55,18 @@ const dark = '#555'
             />
           </template>
           搓玉(200/天)
+        </ArknCheckbox>
+        <ArknCheckbox
+          v-model:checked="state.isYellowStore"
+          w="60"
+        >
+          <template #icon>
+            <YellowShopIcon
+              s-15
+              :fill="state.isYellowStore || isDark ? light : dark"
+            />
+          </template>
+          黄票商店（兑换一次）
         </ArknCheckbox>
       </div>
     </div>

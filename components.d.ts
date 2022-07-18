@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     PrimeCard: typeof import('./src/components/PrimeCard.vue')['default']
     Result: typeof import('./src/components/Result.vue')['default']
     Rules: typeof import('./src/components/Rules.vue')['default']
+    YellowShopIcon: typeof import('./src/UI/Icons/YellowShopIcon.vue')['default']
   }
 
 }
