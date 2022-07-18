@@ -12,12 +12,13 @@
 <a href="https://whereismyhcy.netlify.app/">
 <img alt="GitHub last commit" src="https://img.shields.io/badge/Netlify-143?logo=netlify&color=00c7b7&logoColor=fff">
 </a>
-
+<a href="https://www.figma.com/file/eZAtnOIAXGN7ItKNEqixQz/Arkn?node-id=0%3A1">
+  <img src="https://img.shields.io/badge/Figma-100?&logo=figma&color=a25aff&logoColor=white&" />
+</a>
 
 </p>
 <p align="center"><strong>粗略</strong>计算到夏活之前能不能攒到井换批脸陈！</p>
 <p align="center"><a href="https://whereismyhcy.vercel.app/">网站1</a> | <a href="https://whereismyhcy.netlify.app/">网站2</a></p>
-
 
 ~~界面布局以后再说吧~~
 
@@ -34,14 +35,18 @@
 - [x] 【SS】新sidestory？（商店 3 抽）
 - [x] 【复刻】多索雷斯假日 （商店 3 抽）
 - [x] 【SS】夏活（包括挖矿（按一天 500 合成玉算）+ 每日一抽 + 赠送十抽）
-- [ ] 邮件发送（更新补偿 + 直播送？）
-- [ ] ~~端午签到？（送的是源石？忘了）~~
-- [ ] ~~干员密录 （多久一次啊，要不不算了）~~
 - [x] 搓玉 （按一天 200 算？（一天 260 体力，260 / 4.82 / 2 * 10 ≈ 270））
+- [X] ~~还能有新sidestory或故事集？我不信...~~（还真有了，新增一个故事集和一个SS）
+- [X] 黄票兑换
 - [ ] ~~大月卡（自己算去）~~
 - [ ] 能有新主线？我不信...
-- [X] ~~还能有新sidestory或故事集？我不信...~~（还真有了，新增一个故事集和一个SS）
+- [ ] ~~干员密录 （多久一次啊，要不不算了）~~
+- [ ] 邮件发送（更新补偿 + 直播送？）
+- [ ] 计算黄票 OR 源石？
 
----
 
-- [ ] 计算黄票 or 源石？
+
+## 其它
+
+
+
