@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import type { Component } from 'vue'
+import { h, onMounted, ref } from 'vue'
 import { useToggle } from '@vueuse/core'
+// import { greenCard1URL } from '../misc/urls'
 const props = defineProps<{
   // title: string
   checked: boolean
@@ -21,12 +23,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="checkboxRef" cursor-pointer py-4 :border="`~ rounded-1 ${checked ? '#34ba9d dark:green' : 'red'}`">
-    <div flex="~" justify-between px-4>
-      <div text-lg>
+  <div
+    ref="checkboxRef"
+    cursor-pointer py-4 relative z-0 overflow-hidden
+    :bg="checked ? '#0092d3' : ''"
+    shadow="md #6e6e6e"
+  >
+    <div flex items-center px-4>
+      <!-- <div> -->
+      <slot name="icon" />
+      <div
+        text-lg ml-4 :text="`${checked ? '#f8fcfd' : '#555 dark:white'}`"
+      >
         <slot />
       </div>
-      <div :class="checked ? 'i-ri:check-fill text-green' : 'i-ri:close-fill text-red'" p-2 />
+      <div
+        :class="checked ? 'i-ri:checkbox-circle-line text-#0074ac' : ''"
+        s-20 absolute top-8 right--5 z--1
+      />
     </div>
   </div>
 </template>

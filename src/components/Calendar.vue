@@ -53,8 +53,7 @@ const { getYear, getMonth, subMonth, addMonth, weeks } = useCalendar(calendarEve
       text="4"
       flex="~ col"
       m="t-4"
-      w="100%"
-      h="100%"
+      s="100%"
     >
       <div flex>
         <div

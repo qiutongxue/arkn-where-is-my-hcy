@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { NConfigProvider, darkTheme, dateZhCN, zhCN } from 'naive-ui'
 import { useDark, useToggle } from '@vueuse/core'
+import { watch } from 'vue'
+import { isDark, toggleDark } from './composables/dark'
 import Index from './components/Index.vue'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+// const isDark = useDark()
+// const toggled = useToggle(isDark)
+// const toggleDark = () => {
+//   toggled()
+// }
+// watch(isDark, () => {
+//   console.log('changed', isDark.value)
+// })
 </script>
 
 <template>

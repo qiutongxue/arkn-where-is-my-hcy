@@ -1,0 +1,29 @@
+<script setup lang="ts">
+const props = defineProps<{
+  level: number
+  fill: string
+}>()
+</script>
+
+<template>
+  <svg width="328" height="328" viewBox="0 0 328 328" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="65.6" height="16.4" :fill="fill" />
+    <rect y="65.6" width="65.6" height="16.4" transform="rotate(-90 0 65.6)" :fill="fill" />
+    <rect y="328" width="65.6" height="16.4" transform="rotate(-90 0 328)" :fill="fill" />
+    <rect x="65.6" y="328" width="65.6" height="16.4" transform="rotate(-180 65.6 328)" :fill="fill" />
+    <rect x="328" y="328" width="65.6" height="16.4" transform="rotate(-180 328 328)" :fill="fill" />
+    <rect x="328" y="262.4" width="65.6" height="16.4" transform="rotate(90 328 262.4)" :fill="fill" />
+    <rect x="328" width="65.6" height="16.4" transform="rotate(90 328 0)" :fill="fill" />
+    <rect x="262.4" width="65.6" height="16.4" :fill="fill" />
+    <template v-if="level === 1">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M295.2 32.8H32.8V295.2H295.2V32.8ZM176.755 171.545L164.073 132.512L151.39 171.545H110.349L143.552 195.668L130.87 234.701L164.073 210.578L197.276 234.701L184.594 195.668L217.797 171.545H176.755ZM120.704 157.44V32.8H208.608V157.44L165.678 65.4925L120.704 157.44ZM164.5 275C171.404 275 177 269.404 177 262.5C177 255.596 171.404 250 164.5 250C157.596 250 152 255.596 152 262.5C152 269.404 157.596 275 164.5 275Z" :fill="fill" />
+    </template>
+    <template v-if="level === 2">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M295.2 32.8H32.8V295.2H295.2V32.8ZM176.755 171.545L164.073 132.512L151.39 171.545H110.349L143.552 195.668L130.87 234.701L164.073 210.578L197.276 234.701L184.594 195.668L217.797 171.545H176.755ZM120.704 157.44V32.8H208.608V157.44L165.678 65.4925L120.704 157.44ZM156 262.5C156 269.404 150.404 275 143.5 275C136.596 275 131 269.404 131 262.5C131 255.596 136.596 250 143.5 250C150.404 250 156 255.596 156 262.5ZM198 262.5C198 269.404 192.404 275 185.5 275C178.596 275 173 269.404 173 262.5C173 255.596 178.596 250 185.5 250C192.404 250 198 255.596 198 262.5Z" :fill="fill" />
+    </template>
+  </svg>
+</template>
+
+<style scoped>
+
+</style>

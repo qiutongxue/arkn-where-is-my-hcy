@@ -1,0 +1,11 @@
+<svg width="328" height="328" viewBox="0 0 328 328" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="65.6" height="16.4" fill="black"/>
+<rect y="65.6" width="65.6" height="16.4" transform="rotate(-90 0 65.6)" fill="black"/>
+<rect y="328" width="65.6" height="16.4" transform="rotate(-90 0 328)" fill="black"/>
+<rect x="65.6" y="328" width="65.6" height="16.4" transform="rotate(-180 65.6 328)" fill="black"/>
+<rect x="328" y="328" width="65.6" height="16.4" transform="rotate(-180 328 328)" fill="black"/>
+<rect x="328" y="262.4" width="65.6" height="16.4" transform="rotate(90 328 262.4)" fill="black"/>
+<rect x="328" width="65.6" height="16.4" transform="rotate(90 328 0)" fill="black"/>
+<rect x="262.4" width="65.6" height="16.4" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M295.2 32.8H32.8V295.2H295.2V32.8ZM176.755 171.545L164.073 132.512L151.39 171.545H110.349L143.552 195.668L130.87 234.701L164.073 210.578L197.276 234.701L184.594 195.668L217.797 171.545H176.755ZM120.704 157.44V32.8H208.608V157.44L165.678 65.4925L120.704 157.44ZM164.5 275C171.404 275 177 269.404 177 262.5C177 255.596 171.404 250 164.5 250C157.596 250 152 255.596 152 262.5C152 269.404 157.596 275 164.5 275Z" fill="black"/>
+</svg>

@@ -7,8 +7,7 @@ const [showRules, toggleShowRules] = useToggle(false)
 <template>
   <div
     m="l-1"
-    w="4"
-    h="4"
+    s-4
     i-ri:question-fill
     @click="() => toggleShowRules()"
   />

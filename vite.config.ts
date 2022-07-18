@@ -15,6 +15,13 @@ export default defineConfig({
         presetIcons(),
         presetAttributify(),
       ],
+      rules: [
+        [/^s-(\d+%?)$/, ([, d]) => ({
+          width: d.endsWith('%') ? d : `${+d / 4}rem`,
+          height: d.endsWith('%') ? d : `${+d / 4}rem`,
+        }
+        )],
+      ],
     }),
     Components({
       dirs: ['src/components', 'src/UI'],
