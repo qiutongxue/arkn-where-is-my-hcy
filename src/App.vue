@@ -1,22 +1,41 @@
 <script setup lang="ts">
+import type { GlobalThemeOverrides } from 'naive-ui'
 import { NConfigProvider, darkTheme, dateZhCN, zhCN } from 'naive-ui'
-import { useDark, useToggle } from '@vueuse/core'
-import { watch } from 'vue'
 import { isDark, toggleDark } from './composables/dark'
 import Index from './components/Index.vue'
 
-// const isDark = useDark()
-// const toggled = useToggle(isDark)
-// const toggleDark = () => {
-//   toggled()
-// }
-// watch(isDark, () => {
-//   console.log('changed', isDark.value)
-// })
+const lightThemeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: '#0092d3',
+    primaryColorHover: '#00acf7',
+    primaryColorPressed: '#006e9e',
+    primaryColorSuppl: '#0092d3',
+  },
+}
+
+const darkThemeOverrides: GlobalThemeOverrides = {
+  common: {
+    baseColor: '#ffffff',
+    primaryColor: '#60b7fe',
+    primaryColorHover: '#63ceff',
+    primaryColorPressed: '#62b9ff',
+    primaryColorSuppl: '#529cd8',
+  },
+  Radio: {
+    buttonColor: '#0092d3',
+    buttonColorActive: '#0092d3',
+    buttonBorderColorActive: '#0092d3',
+    buttonBorderColorHover: '#0092d3',
+    buttonBoxShadowFocus: 'none',
+  },
+}
 </script>
 
 <template>
-  <NConfigProvider :locale="zhCN" :date-locale="dateZhCN" :theme="isDark ? darkTheme : undefined">
+  <NConfigProvider
+    :locale="zhCN" :date-locale="dateZhCN" :theme="isDark ? darkTheme : undefined"
+    :theme-overrides="isDark ? darkThemeOverrides : lightThemeOverrides"
+  >
     <header
       flex="~ gap-3"
       justify-end
