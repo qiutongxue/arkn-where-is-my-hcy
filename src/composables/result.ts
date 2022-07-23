@@ -39,7 +39,7 @@ const partsStartTimeSet = new Set(events.parts.map(event => formatDate(new Date(
 const result = computed(() => {
   const res = []
   const startDate = new Date(state.rangeStart); const endDate = new Date(state.rangeEnd)
-  for (let d = startDate; d < endDate; d = addDays(d, 1)) {
+  for (let d = startDate; d <= endDate; d = addDays(d, 1)) {
     const t = {
       date: new Date(d),
       details: [] as ArknEvent[],
