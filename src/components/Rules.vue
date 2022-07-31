@@ -9,6 +9,7 @@ const [showRules, toggleShowRules] = useToggle(false)
     m="l-1"
     s-4
     i-ri:question-fill
+    cursor-pointer
     @click="() => toggleShowRules()"
   />
   <NModal v-model:show="showRules">
@@ -20,6 +21,11 @@ const [showRules, toggleShowRules] = useToggle(false)
       <li>日常任务：从【任务】中领取的合成玉，100/天</li>
       <li>周常任务：同上，500/周</li>
       <li>Side Story：【活动商店】兑换 3 抽 | 复刻时【紫票商店】兑换 2000 合成玉</li>
+      限定活动附加：
+      <ul>
+        <li>每天送合成玉（按平均500/天），共 14 * 500 = 7000</li>
+        <li>每天送单抽 + 第一天送 10 抽，共 14 + 10 = 24 抽</li>
+      </ul>
       <li>搓玉：按每天 200 合成玉算，不计算额外体力</li>
       <li>月卡：200 合成玉</li>
       <li>绿票商店：默认全部换满，一层 2 抽 + 600 合成玉 | 二层 2 抽</li>
