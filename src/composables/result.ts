@@ -7,27 +7,25 @@ import state from './state'
 const eventsMap = {} as Record<keyof typeof events, ArknEvent[]>
 const entries = Object.entries(events) as unknown as ([keyof typeof events, ArknEvent[]])[]
 entries.forEach(([key, value]) => {
-  eventsMap[key] = value.map((event) => {
-    const { required, start } = event
-    if (key === 'parts') {
-      return {
-        ...event,
-        required: (date?: Date) => !!start && !!date && date.toDateString() === new Date(start).toDateString(),
-      }
-    }
-    if (!required) {
-      return {
-        ...event,
-        required: () => true,
-      }
-    }
-    return {
-      ...event,
-    }
+  eventsMap[key] = value.map((oriEvent) => {
+    const { required, start } = oriEvent
+    const event = { ...oriEvent }
+
+    if (key === 'parts')
+      event.required = (date?: Date) => !!start && !!date && date.toDateString() === new Date(start).toDateString()
+
+    else if (!required)
+      event.required = () => true
+
+    return event
   })
 })
 
-const addToDetails = (events: ArknEvent[], t: { details: ArknEvent[] }, d: Date) => {
+const addToDetails = (
+  events: ArknEvent[],
+  t: { details: ArknEvent[] },
+  d: Date,
+) => {
   events.forEach((event) => {
     if (event.required && event.required(d))
       t.details.push(event)

@@ -1,5 +1,5 @@
 import { addDays, addMonths, addWeeks, endOfMonth, endOfWeek, getWeeksInMonth, startOfMonth, startOfWeek, subMonths } from 'date-fns'
-import type { ComputedRef, Ref } from 'vue'
+import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 // import { result } from './util'
 
@@ -9,8 +9,11 @@ const getDateId = (date: Date) => {
 
 const checkRecentEventFromIndex = (week: DayType[], day: Date, idx: number) => {
   for (let i = (day.getDay() + 5) % 7; i >= 0; i--) {
-    if (!week[i] || week[i].events.length - 1 < idx || week[i].events[idx].isEmpty)
-      continue
+    if (
+      !week[i]
+      || week[i].events.length - 1 < idx
+      || week[i].events[idx].isEmpty
+    ) continue
 
     const recent = week[i].events[idx]
     return recent.end >= day
@@ -20,10 +23,11 @@ const checkRecentEventFromIndex = (week: DayType[], day: Date, idx: number) => {
 
 const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
   const dayId = getDateId(day)
-  const result = events.filter(e => getDateId(e.start) === dayId
-  || (day.getDay() === 1 && e.start <= day && day <= e.end))
+  const result = events.filter((e) => {
+    return getDateId(e.start) === dayId
+          || (day.getDay() === 1 && e.start <= day && day <= e.end)
+  })
   const res: CalendarEvent[] = []
-  // if (day.getDay() > 1) {
   result.forEach((r) => {
     while (checkRecentEventFromIndex(week, day, res.length)) {
       res.push({
@@ -38,7 +42,10 @@ const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
 
   return res.map((e) => {
     let width = 90
-    for (let i = addDays(day, 1), last = endOfWeek(day, { weekStartsOn: 1 }); i <= e.end && i <= last; i = addDays(i, 1))
+    for (let i = addDays(day, 1), last = endOfWeek(day, { weekStartsOn: 1 })
+      ; i <= e.end && i <= last
+      ; i = addDays(i, 1)
+    )
       width += 100
     return {
       ...e,
@@ -47,10 +54,7 @@ const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
   })
 }
 
-export function useCalendar(
-  calendarEvents: Ref<CalendarEvent[]>,
-  initDate?: Date,
-): { weeks: ComputedRef<DayType[][]>; addMonth: () => void; subMonth: () => void; getYear: () => number; getMonth: () => number } {
+export function useCalendar(calendarEvents: Ref<CalendarEvent[]>, initDate?: Date) {
   const baseDate = ref<Date>(startOfMonth(initDate ? initDate.getTime() : Date.now()))
 
   const weeks = computed(() => {
