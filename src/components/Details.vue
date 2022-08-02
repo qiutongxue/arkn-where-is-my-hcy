@@ -2,12 +2,19 @@
 import { computed } from 'vue'
 import { cardURL, orundumURL } from '../misc/urls'
 import result from '../composables/result'
+import state from '../composables/state'
 
 const detailInfo = computed(() => {
   const details: Record<string, {
     orundum: number
     card: number
   }> = {}
+  if (state.currentOrundum || state.currentOrundum) {
+    details['库存'] = {
+      orundum: state.currentOrundum,
+      card: state.currentCard,
+    }
+  }
   const value = result.value
   value.forEach((v) => {
     v.details.forEach((d) => {
@@ -17,6 +24,7 @@ const detailInfo = computed(() => {
       detail.card += awards.card || 0
     })
   })
+
   return details
 })
 </script>
