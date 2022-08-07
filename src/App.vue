@@ -88,4 +88,18 @@ html.dark {
 .icon-button:hover {
   opacity: 1;
 }
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #80808077;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #808080aa;
+}
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 </style>
