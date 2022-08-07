@@ -163,7 +163,7 @@ const events: {
       awards: eventAwards.SideStory(true),
     },
     {
-      name: '【SS】2022夏活',
+      name: '【SS】理想城：长夏狂欢季',
       start: '2022/8/11',
       end: '2022/8/24',
       // required: 'equalStart',
