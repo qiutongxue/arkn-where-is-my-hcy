@@ -3,11 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/progress.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>我合成玉呢</title>
   </head>
+
   <body>
     <div id="app"></div>
+
+    <div id="loading">
+      <div class="progress progress-left">
+      </div>
+      <span class="progress-num"></span>
+      <div class="progress progress-right">
+      </div>
+    </div>
+
+    <script src="/progress.js"></script>
+    
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
