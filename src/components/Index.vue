@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { cardURL, orundumURL } from '../misc/urls'
+import { cardURL, orignitePrimeURL, orundumURL } from '../misc/urls'
+import { resultHelper } from '../misc/utils'
 import state from '../composables/state'
+// import { capitalize } from 'vue';
+
+function capitalize<T extends string>(str: T): Capitalize<T> {
+  return `${str.charAt(0).toUpperCase()}${str.slice(1)}` as Capitalize<T>
+}
 </script>
 
 <template>
@@ -12,18 +18,14 @@ import state from '../composables/state'
     <Rules />
   </div>
   <transition-group tag="div" name="list">
-    <ArknInput
-      key="orundumInput"
-      v-model:value="state.currentOrundum"
-      :img-src="orundumURL" title="合成玉" placeholder="你有多少"
-      m="y-4"
-    />
-    <ArknInput
-      key="cardInput"
-      v-model:value="state.currentCard"
-      :img-src="cardURL" title="寻访凭证" placeholder="你有多少"
-      m="y-4"
-    />
+    <template v-for="type in resultHelper" :key="`${type.name}Input`">
+      <ArknInput
+        v-model:value="state[`current${capitalize(type.name)}`]"
+        :img-src="type.img" :title="type.alt" placeholder="你有多少"
+        m="y-4"
+      />
+    </template>
+
     <PrimeCard key="primeCard" />
     <Others key="choseCard" />
     <ChooseRange key="computeCard" />
@@ -32,6 +34,7 @@ import state from '../composables/state'
 
     <Result key="transitionGroup1" />
     <Details key="collapse" />
+
     <div key="footTag" text-gray flex justify-end>
       注：活动时间是我瞎猜的
     </div>

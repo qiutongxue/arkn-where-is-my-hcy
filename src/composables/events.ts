@@ -3,28 +3,32 @@ import state from './state'
 
 type EventKey = 'daily' | 'monthly' | 'weekly' | 'parts'
 
-const eventAwards = {
+const eventAwards/* : Record<string, (...args: any[]) => AwardsType> */ = {
   SideStory(retro = false) {
     return {
       card: 3,
       orundum: retro ? 2000 : 0,
+      orignitePrime: retro ? 0 : (10 + 16),
     }
   },
-  StorySet() {
+  StorySet(orignitePrime = 16) {
     return {
       card: 0,
+      orignitePrime, // 假设有 8 关（实际上故事集关卡不固定）
     }
   },
-  Limited() {
+  Limited(orignitePrime = 5) {
     return {
       orundum: 500 * 14,
       card: 14 + 10,
+      orignitePrime, // 假设普通关（包括教学）有 10 关，EX 8 关。还会有 5~9 个多余高难关
     }
   },
-  Others(orundum = 0, card = 0) {
+  Others(orundum = 0, card = 0, orignitePrime = 0) {
     return {
       orundum,
       card,
+      orignitePrime,
     }
   },
 }
@@ -178,7 +182,7 @@ const events: {
       name: '主线第十一章',
       start: '2022/9/13',
       end: '2022/9/26',
-      awards: eventAwards.Others(),
+      awards: eventAwards.Others(0, 0, 38), // 按照第十章的源石数量：有 38 个
     },
     {
       name: '【SS】未知SideStory1',

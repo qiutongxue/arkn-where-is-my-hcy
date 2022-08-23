@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
 import { isToday } from 'date-fns'
 import { cardURL, orundumURL } from '../misc/urls'
+import { resultHelper } from '../misc/utils'
 import { useCalendar } from '../composables/calendar'
 import result from '../composables/result'
 import { useColor } from '../composables/colors'
@@ -48,17 +49,12 @@ const { getYear, getMonth, subMonth, addMonth, weeks } = useCalendar(calendarEve
     </div>
 
     <div
-      box-border
-      overflow-hidden
-      text="4"
-      flex="~ col"
-      m="t-4"
-      s="100%"
+      box-border overflow-hidden
+      text="4" flex="~ col" m="t-4" s="100%"
     >
       <div flex>
         <div
-          v-for="weekHead in weekHeads"
-          :key="weekHead"
+          v-for="weekHead in weekHeads" :key="weekHead"
           flex="1"
         >
           {{ weekHead }}
@@ -92,27 +88,18 @@ const { getYear, getMonth, subMonth, addMonth, weeks } = useCalendar(calendarEve
               <div text-center>
                 {{ event.name }}
               </div>
-              <div
-                flex="~ gap-4"
-                justify-center items-center
-              >
-                <div
-                  v-if="event.awards.orundum"
-                  flex="~ gap-2"
-                  justify-center items-center
-                >
-                  <img :src="orundumURL" alt="合成玉" w-10>
-                  <span font="bold" text="red">{{ event.awards.orundum }}</span>
-                </div>
-                <div
-                  v-if="event.awards.card"
-                  flex="~ gap-2"
-                  justify-center items-center
-                >
-                  <img :src="cardURL" alt="寻访凭证" w-10>
-                  <span font="bold" text="amber">{{ event.awards.card }}</span>
-                </div>
-                <span v-if="!event.awards.orundum && !event.awards.card">好像什么都拿不到诶</span>
+              <div flex="~ gap-4" justify-center items-center>
+                <template v-for="type in resultHelper" :key="type.name">
+                  <div
+                    v-if="event.awards[type.name]"
+                    flex="~ gap-2"
+                    justify-center items-center
+                  >
+                    <img :src="type.img" :alt="type.alt" w-10>
+                    <span font="bold" :text="type.color">{{ event.awards[type.name] }}</span>
+                  </div>
+                </template>
+                <span v-if="resultHelper.map(r => r.name).every(name => !event.awards[name])">好像什么都拿不到诶</span>
               </div>
             </n-popover>
           </template>

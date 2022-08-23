@@ -27,6 +27,7 @@ type StringTemplate<key extends string, value extends string> = `${key}:${value}
 interface AwardsType {
   orundum?: number
   card?: number
+  orignitePrime?: number
 }
 
 // type Requires = 'prime' | 'orundumProd' | 'sign17' | 'equalStart' | StringTemplate<'greenStoreLevel', '1' | '2'>

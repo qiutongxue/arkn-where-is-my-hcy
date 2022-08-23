@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import { computed, ref } from 'vue'
-import { cardURL, orundumURL } from '../misc/urls'
+import { cardURL, orignitePrimeURL, orundumURL } from '../misc/urls'
 import state from '../composables/state'
 import result from '../composables/result'
 
@@ -22,7 +22,7 @@ const railStyle = ({ checked, focused }: { checked: boolean; focused: boolean })
 
 const showTotalGacha = ref(false)
 
-const countResultAwards = (key: 'orundum' | 'card') => {
+const countResultAwards = (key: keyof AwardsType) => {
   return result.value
     .map((v) => {
       let value = 0
@@ -39,39 +39,48 @@ const totalOrundum = computed(() => {
 const totalCard = computed(() => {
   return state.currentCard + countResultAwards('card')
 })
+
+const totalOrignitePrime = computed(() => {
+  return state.currentOrignitePrime + countResultAwards('orignitePrime')
+})
 </script>
 
 <template>
   <div>
-    <transition-group
+    <div
+      class="results"
       tag="div" name="list"
       relative flex justify-center
     >
-      <div key="orundum" relative>
-        <transition name="orundum">
-          <div v-show="!showTotalGacha" relative m-4>
-            <img :src="orundumURL" w-20 alt="合成玉">
-            <span
-              absolute block bottom="1.5" font-bold w="100%"
-              text="white shadow-md" bg="gray op-70"
-            >
-              {{ totalOrundum }}
-            </span>
-          </div>
-        </transition>
+      <div :class="showTotalGacha ? 'inactive' : 'active'" relative m-4>
+        <img :src="orundumURL" w-20 alt="合成玉">
+        <span
+          absolute block bottom="1.5" font-bold w="100%"
+          text="white shadow-md" bg="gray op-70"
+        >
+          {{ totalOrundum }}
+        </span>
       </div>
-      <div key="idontknow">
-        <div key="card" relative m-4>
-          <img :src="cardURL" alt="寻访凭证" w="20">
-          <span
-            absolute block bottom="1.5" font-bold w="100%"
-            text="white shadow-md" bg="gray op-70"
-          >
-            {{ totalCard + (showTotalGacha ? totalOrundum / 600 | 0 : 0) }}
-          </span>
-        </div>
+
+      <div key="card" relative m-4>
+        <img :src="cardURL" alt="寻访凭证" w="20">
+        <span
+          absolute block bottom="1.5" font-bold w="100%"
+          text="white shadow-md" bg="gray op-70"
+        >
+          {{ totalCard + (showTotalGacha ? (totalOrundum + 180 * totalOrignitePrime) / 600 | 0 : 0) }}
+        </span>
       </div>
-    </transition-group>
+      <div :class="showTotalGacha ? 'inactive' : 'active'" relative m-4>
+        <img :src="orignitePrimeURL" w-20 alt="至纯源石">
+        <span
+          absolute block bottom="1.5" font-bold w="100%"
+          text="white shadow-md" bg="gray op-70"
+        >
+          {{ totalOrignitePrime }}
+        </span>
+      </div>
+    </div>
 
     <n-switch key="switch" v-model:value="showTotalGacha" :rail-style="railStyle">
       <template #checked>
@@ -85,30 +94,22 @@ const totalCard = computed(() => {
 </template>
 
 <style scoped>
-.list-move,
-/* 对移动中的元素应用的过渡 */
-.list-enter-active,
-.list-leave-active,
-.orundum-leave-active {
-    transition: all .5s ease;
+.results > div {
+  transition: .5s ease-in-out;
+  position: relative;
 }
 
-/* .list-enter-from {
-        opacity: 0;
-    } */
-.list-enter-from,
-.list-leave-to,
-.orundum-leave-to {
-    position: relative;
-    opacity: 0;
-    transform: translateX(1.5em);
+.inactive {
+  opacity: 0;
+  transform: translateX(-6rem);
+  z-index: -2;
 }
 
-/* 确保将离开的元素从布局流中删除
-    以便能够正确地计算移动的动画。 */
-.list-leave-active,
-.orundum-leave-active {
-    position: absolute;
-    width: 100%;
+.active {
+  opacity: 1;;
+}
+
+.inactive:nth-child(1) {
+  transform: translateX(6rem);
 }
 </style>

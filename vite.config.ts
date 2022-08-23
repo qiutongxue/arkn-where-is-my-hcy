@@ -22,6 +22,9 @@ export default defineConfig({
         }
         )],
       ],
+      safelist: [
+        ...['red', 'amber', 'blue'].map(color => [`text-${color}`, `[text~="${color}"]`]).flat(),
+      ],
     }),
     Components({
       dirs: ['src/components', 'src/UI'],

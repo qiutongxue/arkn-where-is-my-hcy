@@ -14,6 +14,7 @@ const state = reactive({
   rangeEnd: now,
   currentOrundum: 0,
   currentCard: 0,
+  currentOrignitePrime: 0,
   isProduceOrundum: false,
 })
 
