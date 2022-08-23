@@ -1,6 +1,8 @@
 import { isToday } from 'date-fns'
 import state from './state'
 
+type EventKey = 'daily' | 'monthly' | 'weekly' | 'parts'
+
 const eventAwards = {
   SideStory(retro = false) {
     return {
@@ -46,10 +48,7 @@ const isPrimeAccess = (date: Date) => {
 }
 
 const events: {
-  daily: ArknEvent[]
-  weekly: ArknEvent[]
-  monthly: ArknEvent[]
-  parts: ArknEvent[]
+  [K in EventKey]: ArknEvent[]
 } = {
   daily: [
     {
@@ -166,6 +165,43 @@ const events: {
       name: '【SS】理想城：长夏狂欢季',
       start: '2022/8/11',
       end: '2022/8/24',
+      // required: 'equalStart',
+      awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory),
+    },
+    {
+      name: '新剿灭400杀',
+      start: '2022/9/5',
+      end: '2022/9/5',
+      awards: eventAwards.Others(1500),
+    },
+    {
+      name: '主线第十一章',
+      start: '2022/9/13',
+      end: '2022/9/26',
+      awards: eventAwards.Others(),
+    },
+    {
+      name: '【SS】未知SideStory1',
+      start: '2022/9/29',
+      end: '2022/10/12',
+      awards: eventAwards.SideStory(),
+    },
+    {
+      name: '【复刻】长夜临光',
+      start: '2022/10/13',
+      end: '2022/10/23',
+      awards: eventAwards.SideStory(true),
+    },
+    {
+      name: '感谢庆典直播',
+      start: '2022/10/23',
+      end: '2022/10/23',
+      awards: eventAwards.Others(1200, 0),
+    },
+    {
+      name: '【SS】3.5周年活动',
+      start: '2022/11/1',
+      end: '2022/11/14',
       // required: 'equalStart',
       awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory),
     },
