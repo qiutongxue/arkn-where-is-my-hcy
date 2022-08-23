@@ -1,14 +1,17 @@
 import { reactive } from 'vue'
+import { startOfDay } from 'date-fns'
+
+const now = startOfDay(Date.now()).getTime()
 
 const state = reactive({
   isGreenStoreLevel1: true,
   isGreenStoreLevel2: true,
   isYellowStore: false,
   hasPrimeAccess: false,
-  primeAccessStart: Date.now(),
-  primeAccessEnd: Date.now(),
-  rangeStart: Date.now(),
-  rangeEnd: Date.now(),
+  primeAccessStart: now,
+  primeAccessEnd: now,
+  rangeStart: now,
+  rangeEnd: now,
   currentOrundum: 0,
   currentCard: 0,
   isProduceOrundum: false,

@@ -1,4 +1,4 @@
-import { addDays, addMonths, addWeeks, endOfMonth, endOfWeek, getWeeksInMonth, startOfMonth, startOfWeek, subMonths } from 'date-fns'
+import { addDays, addMonths, addWeeks, endOfMonth, endOfWeek, getWeeksInMonth, min, startOfMonth, startOfWeek, subMonths } from 'date-fns'
 import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 // import { result } from './util'
@@ -8,6 +8,8 @@ const getDateId = (date: Date) => {
 }
 
 const checkRecentEventFromIndex = (week: DayType[], day: Date, idx: number) => {
+  if (day.getDate() === 1)
+    return false
   for (let i = (day.getDay() + 5) % 7; i >= 0; i--) {
     if (
       !week[i]
@@ -25,7 +27,7 @@ const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
   const dayId = getDateId(day)
   const result = events.filter((e) => {
     return getDateId(e.start) === dayId
-          || (day.getDay() === 1 && e.start <= day && day <= e.end)
+          || ((day.getDay() === 1 || day.getDate() === 1) && e.start <= day && day <= e.end)
   })
   const res: CalendarEvent[] = []
   result.forEach((r) => {
@@ -42,7 +44,7 @@ const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
 
   return res.map((e) => {
     let width = 90
-    for (let i = addDays(day, 1), last = endOfWeek(day, { weekStartsOn: 1 })
+    for (let i = addDays(day, 1), last = min([endOfWeek(day, { weekStartsOn: 1 }), endOfMonth(day)])
       ; i <= e.end && i <= last
       ; i = addDays(i, 1)
     )
