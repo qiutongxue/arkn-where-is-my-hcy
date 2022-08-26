@@ -179,22 +179,36 @@ const events: {
       awards: eventAwards.Others(1500),
     },
     {
-      name: '主线第十一章',
-      start: '2022/9/13',
-      end: '2022/9/26',
-      awards: eventAwards.Others(0, 0, 38), // 按照第十章的源石数量：有 38 个
+      name: '【故事集】日暮寻路',
+      start: '2022/9/8',
+      end: '2022/9/14',
+      // required: 'equalStart',
+      awards: eventAwards.StorySet(),
     },
     {
-      name: '【SS】未知SideStory1',
-      start: '2022/9/29',
-      end: '2022/10/12',
-      awards: eventAwards.SideStory(),
+      name: '【故事集】好久不见',
+      start: '2022/9/15',
+      end: '2022/9/21',
+      // required: 'equalStart',
+      awards: eventAwards.StorySet(),
     },
     {
       name: '【复刻】长夜临光',
-      start: '2022/10/13',
-      end: '2022/10/23',
+      start: '2022/9/22',
+      end: '2022/10/1',
       awards: eventAwards.SideStory(true),
+    },
+    {
+      name: '主线第十一章',
+      start: '2022/10/4',
+      end: '2022/10/17',
+      awards: eventAwards.Others(0, 0, 38), // 按照第十章的源石数量：有 38 个
+    },
+    {
+      name: '【SS】未知',
+      start: '2022/10/18',
+      end: '2022/10/31',
+      awards: eventAwards.SideStory(),
     },
     {
       name: '感谢庆典直播',
