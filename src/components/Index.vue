@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { cardURL, orignitePrimeURL, orundumURL } from '../misc/urls'
-import { resultHelper } from '../misc/utils'
+import { capitalize, resultHelper } from '../misc/utils'
 import state from '../composables/state'
-// import { capitalize } from 'vue';
-
-function capitalize<T extends string>(str: T): Capitalize<T> {
-  return `${str.charAt(0).toUpperCase()}${str.slice(1)}` as Capitalize<T>
-}
 </script>
 
 <template>
@@ -49,9 +43,6 @@ function capitalize<T extends string>(str: T): Capitalize<T> {
     transition: all .5s ease;
 }
 
-/* .list-enter-from {
-        opacity: 0;
-    } */
 .list-enter-from,
 .list-leave-to {
     position: relative;
@@ -65,8 +56,4 @@ function capitalize<T extends string>(str: T): Capitalize<T> {
     position: absolute;
     width: 100%;
 }
-
-/* .list-leave-from {
-    position: relative
-} */
 </style>

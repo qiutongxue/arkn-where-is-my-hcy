@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { NButton, NPopover } from 'naive-ui'
 import { isToday } from 'date-fns'
-import { cardURL, orundumURL } from '../misc/urls'
 import { resultHelper } from '../misc/utils'
 import { useCalendar } from '../composables/calendar'
 import result from '../composables/result'

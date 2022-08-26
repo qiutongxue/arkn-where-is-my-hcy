@@ -8,6 +8,10 @@ export const isDateDisabled = (date: number) => {
   return date < (new Date().setDate(new Date().getDate() - 1))
 }
 
+export function capitalize<T extends string>(str: T): Capitalize<T> {
+  return `${str.charAt(0).toUpperCase()}${str.slice(1)}` as Capitalize<T>
+}
+
 export const resultHelper: {
   name: keyof AwardsType
   color: string
