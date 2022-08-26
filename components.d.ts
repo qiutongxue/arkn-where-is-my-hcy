@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     GreenShopIcon: typeof import('./src/UI/Icons/GreenShopIcon.vue')['default']
     Index: typeof import('./src/components/Index.vue')['default']
     NCard: typeof import('naive-ui')['NCard']
+    NCheckbox: typeof import('naive-ui')['NCheckbox']
     NCollapse: typeof import('naive-ui')['NCollapse']
     NCollapseItem: typeof import('naive-ui')['NCollapseItem']
     NDatePicker: typeof import('naive-ui')['NDatePicker']
