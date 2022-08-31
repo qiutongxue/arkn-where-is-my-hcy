@@ -22,7 +22,7 @@ const [showRules, toggleShowRules] = useToggle(false)
       <ul>
         <li>每天送合成玉（按平均500/天），共 14 * 500 = 7000</li>
         <li>每天送单抽 + 第一天送 10 抽，共 14 + 10 = 24 抽</li>
-        <li>额外高难关卡 5 ~ 9 关，按 5 源石算</li>
+        <li><del>额外高难关卡 5 ~ 9 关，按 5 源石算</del></li>
       </ul>
       <li>故事集：商店 3 抽 + 新关卡约 16 源石</li>
       <li>新主线：按第十章 38 源石计算</li>

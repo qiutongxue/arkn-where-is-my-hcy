@@ -12,6 +12,19 @@ export function capitalize<T extends string>(str: T): Capitalize<T> {
   return `${str.charAt(0).toUpperCase()}${str.slice(1)}` as Capitalize<T>
 }
 
+export function mergeObjOfNumberValue<T extends { [x: string]: number }>(...objs: T[]) {
+  const result: {
+    [k in keyof T]?: number
+  } = {}
+  objs.forEach((obj) => {
+    const keys = Object.keys(obj) as (keyof T)[]
+    keys.forEach((k) => {
+      result[k] = (result[k] || 0) + (obj[k] || 0)
+    })
+  })
+  return result
+}
+
 export const resultHelper: {
   name: keyof AwardsType
   color: string

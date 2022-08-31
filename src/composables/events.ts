@@ -1,4 +1,5 @@
 import { isToday } from 'date-fns'
+import { mergeObjOfNumberValue } from '../misc/utils'
 import state from './state'
 
 type EventKey = 'daily' | 'monthly' | 'weekly' | 'parts'
@@ -31,18 +32,6 @@ const eventAwards/* : Record<string, (...args: any[]) => AwardsType> */ = {
       orignitePrime,
     }
   },
-}
-
-const mixingEvent = (...events: (() => AwardsType)[]) => {
-  const result: AwardsType = {}
-  events.forEach((event) => {
-    const e = event()
-    const objKeys = Object.keys(e) as Array<keyof AwardsType>
-    objKeys.forEach((k) => {
-      result[k] = (result[k] || 0) + (e[k] || 0)
-    })
-  })
-  return result
 }
 
 const isPrimeAccess = (date: Date) => {
@@ -170,7 +159,9 @@ const events: {
       start: '2022/8/11',
       end: '2022/8/24',
       // required: 'equalStart',
-      awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory),
+      awards: mergeObjOfNumberValue(
+        eventAwards.Limited(),
+        eventAwards.SideStory()),
     },
     {
       name: '新剿灭400杀',
@@ -221,7 +212,9 @@ const events: {
       start: '2022/11/1',
       end: '2022/11/14',
       // required: 'equalStart',
-      awards: mixingEvent(eventAwards.Limited, eventAwards.SideStory),
+      awards: mergeObjOfNumberValue(
+        eventAwards.Limited(0),
+        eventAwards.SideStory()),
     },
   ],
 }
