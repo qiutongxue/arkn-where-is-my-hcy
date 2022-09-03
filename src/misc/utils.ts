@@ -19,7 +19,7 @@ export function mergeObjOfNumberValue<T extends { [x: string]: number }>(...objs
   objs.forEach((obj) => {
     const keys = Object.keys(obj) as (keyof T)[]
     keys.forEach((k) => {
-      result[k] = (result[k] || 0) + (obj[k] || 0)
+      result[k] = <number>(result[k] || 0) + <number>(obj[k] || 0)
     })
   })
   return result
