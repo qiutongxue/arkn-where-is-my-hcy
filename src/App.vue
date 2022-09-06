@@ -65,9 +65,13 @@ const darkThemeOverrides: GlobalThemeOverrides = {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* color: #2c3e50; */
-  margin: 1em 2em;
-  /* max-width: 960px; */
+  margin: 1em auto;
+  max-width: 1080px;
+  padding: auto 1rem;
   /* margin-top: 60px; */
 }
 

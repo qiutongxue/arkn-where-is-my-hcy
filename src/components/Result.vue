@@ -72,24 +72,6 @@ const mapper = resultHelper.map((r) => {
 
   return { ...r, total, show, tweened, display }
 })
-
-// const transitionAfterLeaveBeforeEnter = (el: Element) => {
-//   (el as HTMLElement).style.top = ''
-//   ;(el as HTMLElement).style.left = ''
-//   ;(el as HTMLElement).style.width = ''
-// }
-
-// const transitionBeforeLeave = (el: Element) => {
-//   const elRect = el.getBoundingClientRect()
-//   const paRect = el.parentElement?.getBoundingClientRect() || { top: 0, left: 0 }
-//   const left = elRect.left - paRect.left
-//   const top = elRect.top - paRect.top
-//   const width = elRect.width
-
-//   ;(el as HTMLElement).style.top = `${top}px`
-//   ;(el as HTMLElement).style.left = `${left}px`
-//   ;(el as HTMLElement).style.width = `${width}px`
-// }
 </script>
 
 <template>

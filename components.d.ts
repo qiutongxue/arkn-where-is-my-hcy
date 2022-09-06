@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     Calendar: typeof import('./src/components/Calendar.vue')['default']
     Card: typeof import('./src/UI/Card.vue')['default']
     ChooseRange: typeof import('./src/components/ChooseRange.vue')['default']
+    DetailItem: typeof import('./src/components/DetailItem.vue')['default']
     Details: typeof import('./src/components/Details.vue')['default']
     GreenShopIcon: typeof import('./src/UI/Icons/GreenShopIcon.vue')['default']
     Index: typeof import('./src/components/Index.vue')['default']
