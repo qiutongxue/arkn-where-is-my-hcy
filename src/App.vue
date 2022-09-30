@@ -71,7 +71,7 @@ const darkThemeOverrides: GlobalThemeOverrides = {
   /* color: #2c3e50; */
   margin: 1em auto;
   max-width: 1080px;
-  padding: auto 1rem;
+  padding: 1rem;
   /* margin-top: 60px; */
 }
 
