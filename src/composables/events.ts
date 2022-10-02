@@ -174,14 +174,14 @@ const events: {
       start: '2022/9/8',
       end: '2022/9/14',
       // required: 'equalStart',
-      awards: eventAwards.StorySet(),
+      awards: eventAwards.StorySet(18),
     },
     {
       name: '【故事集】好久不见',
       start: '2022/9/15',
       end: '2022/9/21',
       // required: 'equalStart',
-      awards: eventAwards.StorySet(),
+      awards: eventAwards.StorySet(17),
     },
     {
       name: '【复刻】长夜临光',
@@ -191,8 +191,8 @@ const events: {
     },
     {
       name: '主线第十一章',
-      start: '2022/10/4',
-      end: '2022/10/17',
+      start: '2022/10/11',
+      end: '2022/10/24',
       awards: eventAwards.Others(0, 0, 38), // 按照第十章的源石数量：有 38 个
     },
     {
