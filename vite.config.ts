@@ -21,9 +21,18 @@ export default defineConfig({
           height: d.endsWith('%') ? d : `${+d / 4}rem`,
         }
         )],
+        [/^shadow-line-(\d+)$/, ([, d]) => ({
+          'box-shadow': `inset 0 -${d}px 0 0 var(--un-shadow-color)`,
+        })],
       ],
       safelist: [
-        ...['red', 'amber', 'blue'].map(color => [`text-${color}`, `[text~="${color}"]`]).flat(),
+        ...['red', 'amber', 'blue']
+          .map(color =>
+            ['text', 'shadow', 'bg']
+              .map(attr => [`${attr}-${color}`, `[${attr}~="${color}"]`])
+              .flat(),
+          )
+          .flat(),
       ],
     }),
     Components({
