@@ -1,11 +1,12 @@
-import { addDays, addMonths, addWeeks, endOfMonth, endOfWeek, getWeeksInMonth, min, startOfMonth, startOfWeek, subMonths } from 'date-fns'
+import { endOfWeek as _endOfWeek, startOfWeek as _startOfWeek, addDays, addMonths, addWeeks, endOfMonth, getWeeksInMonth, min, startOfMonth, subMonths } from 'date-fns'
 import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
-// import { result } from './util'
 
-const getDateId = (date: Date) => {
-  return (date.getFullYear() * 10000) + (date.getMonth() * 100) + date.getDate()
-}
+const getDateId = (date: Date) =>
+  (date.getFullYear() * 10000) + (date.getMonth() * 100) + date.getDate()
+
+const endOfWeek = (day: Date) => _endOfWeek(day, { weekStartsOn: 1 })
+const startOfWeek = (day: Date) => _startOfWeek(day, { weekStartsOn: 1 })
 
 const checkRecentEventFromIndex = (week: DayType[], day: Date, idx: number) => {
   if (day.getDate() === 1)
@@ -44,7 +45,7 @@ const getEvents = (day: Date, week: DayType[], events: CalendarEvent[]) => {
 
   return res.map((e) => {
     let width = 90
-    for (let i = addDays(day, 1), last = min([endOfWeek(day, { weekStartsOn: 1 }), endOfMonth(day)])
+    for (let i = addDays(day, 1), last = min([endOfWeek(day), endOfMonth(day)])
       ; i <= e.end && i <= last
       ; i = addDays(i, 1)
     )
@@ -65,8 +66,8 @@ export function useCalendar(calendarEvents: Ref<CalendarEvent[]>, initDate?: Dat
     const lastDayOfMonth = endOfMonth(baseDate.value)
     const result = []
     for (let i = 0, date = baseDate.value; i < weeksCount; i++, date = addWeeks(date, 1)) {
-      const start = startOfWeek(date, { weekStartsOn: 1 })
-      const end = endOfWeek(date, { weekStartsOn: 1 })
+      const start = startOfWeek(date)
+      const end = endOfWeek(date)
       const week: DayType[] = []
       for (let d = start; d <= end; d = addDays(d, 1)) {
         const events = getEvents(d, week, calendarEvents.value)
