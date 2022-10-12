@@ -193,13 +193,7 @@ const events: {
       name: '主线第十一章',
       start: '2022/10/11',
       end: '2022/10/24',
-      awards: eventAwards.Others(0, 0, 38), // 按照第十章的源石数量：有 38 个
-    },
-    {
-      name: '【SS】未知',
-      start: '2022/10/18',
-      end: '2022/10/31',
-      awards: eventAwards.SideStory(),
+      awards: eventAwards.Others(0, 0, 42), // 按照第十章的源石数量：有 38 个
     },
     {
       name: '感谢庆典直播',
