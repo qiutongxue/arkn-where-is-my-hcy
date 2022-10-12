@@ -8,14 +8,15 @@ const eventsMap = {} as Record<keyof typeof events, ArknEvent[]>
 const entries = Object.entries(events) as unknown as ([keyof typeof events, ArknEvent[]])[]
 entries.forEach(([key, value]) => {
   eventsMap[key] = value.map((oriEvent) => {
-    const { required, start } = oriEvent
+    const { required, end } = oriEvent
     const event = { ...oriEvent }
 
-    if (key === 'parts')
-      event.required = (date?: Date) => !!start && !!date && date.toDateString() === new Date(start).toDateString()
+    if (key === 'parts') {
+      event.required = (date?: Date) =>
+        !!end && !!date && date.toDateString() === new Date(end).toDateString()
+    }
 
-    else if (!required)
-      event.required = () => true
+    else if (!required) { event.required = () => true }
 
     return event
   })
@@ -32,7 +33,9 @@ const addToDetails = (
   })
 }
 
-const partsStartTimeSet = new Set(events.parts.map(event => formatDate(new Date(event.start!))))
+const partsStartTimeSet = new Set(
+  events.parts.map(event => formatDate(new Date(event.end!))),
+)
 
 const result = computed(() => {
   const res = []
