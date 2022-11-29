@@ -210,6 +210,18 @@ const events: {
         eventAwards.Limited(0),
         eventAwards.SideStory()),
     },
+    {
+      name: '【复刻】风雪过境',
+      start: '2022/12/1',
+      end: '2022/12/10',
+      awards: eventAwards.SideStory(true),
+    },
+    {
+      name: '新剿灭400杀',
+      start: '2022/12/26',
+      end: '2022/12/26',
+      awards: eventAwards.Others(1500),
+    },
   ],
 }
 
