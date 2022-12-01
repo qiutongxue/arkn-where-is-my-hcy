@@ -238,8 +238,17 @@ const events: {
     {
       name: '【复刻】将进酒',
       start: '2022/1/3',
-      end: '2022/1/12',
+      end: '2023/1/12',
       awards: eventAwards.RetroSideStory(),
+    },
+    {
+      name: '【SS】春节活动',
+      start: '2023/1/19',
+      end: '2023/2/1',
+      awards: mergeObjOfNumberValue(
+        eventAwards.Limited(0),
+        eventAwards.SideStory(),
+      ),
     },
   ],
 }
