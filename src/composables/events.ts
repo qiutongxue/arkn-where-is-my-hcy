@@ -5,11 +5,18 @@ import state from './state'
 type EventKey = 'daily' | 'monthly' | 'weekly' | 'parts'
 
 const eventAwards/* : Record<string, (...args: any[]) => AwardsType> */ = {
-  SideStory(retro = false) {
+  SideStory(orignitePrime = 26) {
     return {
       card: 3,
-      orundum: retro ? 2000 : 0,
-      orignitePrime: retro ? 0 : (10 + 16),
+      orundum: 0,
+      orignitePrime,
+    }
+  },
+  RetroSideStory(orignitePrime = 0) {
+    return {
+      card: 3,
+      orundum: 2000, /* 紫票商店兑换 */
+      orignitePrime,
     }
   },
   StorySet(orignitePrime = 16) {
@@ -117,7 +124,7 @@ const events: {
       start: '2022/5/30',
       end: '2022/6/13',
       // required: 'start',
-      awards: eventAwards.SideStory(true),
+      awards: eventAwards.RetroSideStory(),
     },
     {
       name: '【SS】尘影余音',
@@ -152,7 +159,7 @@ const events: {
       start: '2022/7/26',
       end: '2022/8/8',
       // required: 'equalStart',
-      awards: eventAwards.SideStory(true),
+      awards: eventAwards.RetroSideStory(),
     },
     {
       name: '【SS】理想城：长夏狂欢季',
@@ -187,7 +194,7 @@ const events: {
       name: '【复刻】长夜临光',
       start: '2022/9/22',
       end: '2022/10/1',
-      awards: eventAwards.SideStory(true),
+      awards: eventAwards.RetroSideStory(),
     },
     {
       name: '主线第十一章',
@@ -214,7 +221,7 @@ const events: {
       name: '【复刻】风雪过境',
       start: '2022/12/1',
       end: '2022/12/10',
-      awards: eventAwards.SideStory(true),
+      awards: eventAwards.RetroSideStory(),
     },
     {
       name: '新剿灭400杀',
