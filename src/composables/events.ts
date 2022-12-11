@@ -237,7 +237,7 @@ const events: {
     },
     {
       name: '【复刻】将进酒',
-      start: '2022/1/3',
+      start: '2023/1/3',
       end: '2023/1/12',
       awards: eventAwards.RetroSideStory(),
     },
