@@ -233,7 +233,7 @@ const events: {
       name: '【SS】照我似火',
       start: '2022/12/13',
       end: '2022/12/26',
-      awards: eventAwards.SideStory(),
+      awards: eventAwards.SideStory(29),
     },
     {
       name: '【复刻】将进酒',
