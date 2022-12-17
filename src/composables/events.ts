@@ -230,7 +230,7 @@ const events: {
       awards: eventAwards.Others(1500),
     },
     {
-      name: '【SS】照我似火',
+      name: '【SS】照我以火',
       start: '2022/12/13',
       end: '2022/12/26',
       awards: eventAwards.SideStory(29),
