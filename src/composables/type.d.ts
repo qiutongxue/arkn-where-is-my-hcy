@@ -1,4 +1,4 @@
-declare interface ArknEvent {
+interface ArknEvent {
   name: string
   awards: AwardsType
   required?: (date: Date) => boolean
