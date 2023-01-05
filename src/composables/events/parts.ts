@@ -156,8 +156,8 @@ const parts: ArknEvent[] = [
   },
   {
     name: '【复刻】将进酒',
-    start: '2023/1/3',
-    end: '2023/1/12',
+    start: '2023/1/1',
+    end: '2023/1/10',
     awards: eventAwards.RetroSideStory(),
   },
   {
