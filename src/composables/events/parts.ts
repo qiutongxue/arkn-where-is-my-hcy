@@ -161,9 +161,9 @@ const parts: ArknEvent[] = [
     awards: eventAwards.RetroSideStory(),
   },
   {
-    name: '【SS】春节活动',
-    start: '2023/1/19',
-    end: '2023/2/1',
+    name: '【SS】登临意',
+    start: '2023/1/17',
+    end: '2023/1/30',
     awards: mergeObjOfNumberValue(
       eventAwards.Limited(0),
       eventAwards.SideStory(),
