@@ -144,8 +144,8 @@ const parts: ArknEvent[] = [
   },
   {
     name: '新剿灭400杀',
-    start: '2022/12/26',
-    end: '2022/12/26',
+    start: '2022/1/9',
+    end: '2022/1/9',
     awards: eventAwards.Others({ orundum: 1500 }),
   },
   {
