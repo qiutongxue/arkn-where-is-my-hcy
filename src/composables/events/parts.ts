@@ -41,14 +41,26 @@ const parts: ArknEvent[] = [
     start: '2023/1/29',
     end: '2023/3/11',
     awards: {
-      card: 0,
+      card: 3,
     },
   },
   {
-    name: '【故事集】春分',
+    name: '故事集「春分」',
     start: '2023/2/14',
     end: '2023/2/20',
     awards: eventAwards.StorySet(18),
+  },
+  {
+    name: 'SideStory「吾导先路」【复刻】',
+    start: '2023/2/21',
+    end: '2023/3/6',
+    awards: eventAwards.RetroSideStory(),
+  },
+  {
+    name: '剿灭作战【龙门商业街】',
+    start: '2023/3/6',
+    end: '2023/3/6',
+    awards: eventAwards.Others({ orundum: 1500 }),
   },
 ]
 
