@@ -53,7 +53,7 @@ const parts: ArknEvent[] = [
   {
     name: 'SideStory「吾导先路」【复刻】',
     start: '2023/2/21',
-    end: '2023/3/6',
+    end: '2023/3/2',
     awards: eventAwards.RetroSideStory(),
   },
   {
@@ -61,6 +61,12 @@ const parts: ArknEvent[] = [
     start: '2023/3/6',
     end: '2023/3/6',
     awards: eventAwards.Others({ orundum: 1500 }),
+  },
+  {
+    name: 'SideStory「落叶逐火」',
+    start: '2023/3/7',
+    end: '2023/3/27',
+    awards: eventAwards.Others({ card: 23, orignitePrime: 16 }),
   },
 ]
 
