@@ -1,3 +1,5 @@
+import { mergeObjOfNumberValue } from '../../misc/utils'
+
 const eventAwards/* : Record<string, (...args: any[]) => AwardsType> */ = {
   SideStory(orignitePrime = 26) {
     return {
@@ -79,6 +81,12 @@ const parts: ArknEvent[] = [
     start: '2023/4/18',
     end: '2023/4/28',
     awards: eventAwards.RetroSideStory(),
+  },
+  {
+    name: 'SideStory（四周年庆典）',
+    start: '2023/5/1',
+    end: '2023/5/14',
+    awards: mergeObjOfNumberValue(eventAwards.SideStory(), eventAwards.Limited(0)),
   },
 ]
 
