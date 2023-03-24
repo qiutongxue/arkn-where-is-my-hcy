@@ -17,7 +17,7 @@
 </a>
 
 </p>
-<p align="center"><strong>粗略</strong>计算抽卡次数【展望怪物猎人联动】</p>
+<p align="center"><strong>粗略</strong>计算抽卡次数【展望四周年庆典】</p>
 <p align="center"><a href="https://whereismyhcy.vercel.app/">网站1</a> | <a href="https://whereismyhcy.netlify.app/">网站2</a></p>
 
 ## 计算范围

@@ -68,6 +68,18 @@ const parts: ArknEvent[] = [
     end: '2023/3/27',
     awards: eventAwards.Others({ card: 23, orignitePrime: 16 }),
   },
+  {
+    name: '主线剧情「残阳」',
+    start: '2023/4/6',
+    end: '2023/4/16',
+    awards: eventAwards.Others({ orignitePrime: 40 }),
+  },
+  {
+    name: 'SideStory「愚人号」【复刻】',
+    start: '2023/4/18',
+    end: '2023/4/28',
+    awards: eventAwards.RetroSideStory(),
+  },
 ]
 
 export default parts
