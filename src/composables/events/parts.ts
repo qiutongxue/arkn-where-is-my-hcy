@@ -88,6 +88,12 @@ const parts: ArknEvent[] = [
     end: '2023/5/14',
     awards: mergeObjOfNumberValue(eventAwards.SideStory(), eventAwards.Limited(0)),
   },
+  {
+    name: 'SideStory「空想花庭」',
+    start: '2023/6/8',
+    end: '2023/6/22',
+    awards: eventAwards.Others({ orignitePrime: 16 }),
+  },
 ]
 
 export default parts
